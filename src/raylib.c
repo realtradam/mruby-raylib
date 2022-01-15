@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include <mruby.h>
+#include <mruby/array.h>
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
 #endif
@@ -32,11 +33,20 @@ mrb_platform(mrb_state *mrb, mrb_value self)
 mrb_draw_text(mrb_state *mrb, mrb_value self)
 {
 	char* text = "Default Text";
-	int x = 0;
-	int y = 0;
-	int fontSize = 16;
+	mrb_int x = 0;
+	mrb_int y = 0;
+	mrb_int fontSize = 16;
+	/*mrb_value color = mrb_ary_new(mrb);
+	  mrb_int temp = 200;
+	  mrb_int temp2 = 255;
+	  mrb_ary_push(mrb, color, temp);
+	  mrb_ary_push(mrb, color, temp);
+	  mrb_ary_push(mrb, color, temp);
+	  mrb_ary_push(mrb, color, temp2);*/
 	mrb_get_args(mrb, "|ziii", &text, &x, &y, &fontSize);
-	DrawText(text, x, y, fontSize, LIGHTGRAY);
+	//mrb_value mrb_ary_ref(mrb_state *, mrb_value, mrb_int)
+	//Color result_color = {mrb_ary_ref(mrb,color,0),mrb_ary_ref(mrb,color,1),mrb_ary_ref(mrb,color,2),mrb_ary_ref(mrb,color,3),};
+	DrawText(text, x, y, fontSize, RED);
 	return mrb_nil_value();
 }
 
