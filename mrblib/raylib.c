@@ -20,7 +20,7 @@ mrb_init_window(mrb_state, *mrb, mrb_value self)
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	struct RClass *class_cextension = mrb_define_module(mrb, "Raylib");
-	mrb_define_class_method(mrb, class_cextension, "init_window", mrb_init_window, MRB_ARGS_REQ(2));
+	mrb_define_class_method(mrb, class_cextension, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
 }
 
 void
