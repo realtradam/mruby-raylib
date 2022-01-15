@@ -36,16 +36,16 @@ mrb_draw_text(mrb_state *mrb, mrb_value self)
 	mrb_int x = 0;
 	mrb_int y = 0;
 	mrb_int fontSize = 16;
-	/*mrb_value color = mrb_ary_new(mrb);
-	  mrb_int temp = 200;
-	  mrb_int temp2 = 255;
-	  mrb_ary_push(mrb, color, temp);
-	  mrb_ary_push(mrb, color, temp);
-	  mrb_ary_push(mrb, color, temp);
-	  mrb_ary_push(mrb, color, temp2);*/
-	mrb_get_args(mrb, "|ziii", &text, &x, &y, &fontSize);
+	mrb_value color = mrb_ary_new(mrb);
+	mrb_int temp = 200;
+	mrb_int temp2 = 255;
+	mrb_ary_push(mrb, color, temp);
+	mrb_ary_push(mrb, color, temp);
+	mrb_ary_push(mrb, color, temp);
+	mrb_ary_push(mrb, color, temp2);
+	mrb_get_args(mrb, "|ziiio", &text, &x, &y, &fontSize);
 	//mrb_value mrb_ary_ref(mrb_state *, mrb_value, mrb_int)
-	//Color result_color = {mrb_ary_ref(mrb,color,0),mrb_ary_ref(mrb,color,1),mrb_ary_ref(mrb,color,2),mrb_ary_ref(mrb,color,3),};
+	Color result_color = (Color){mrb_ary_ref(mrb,color,0),mrb_ary_ref(mrb,color,1),mrb_ary_ref(mrb,color,2),mrb_ary_ref(mrb,color,3),};
 	DrawText(text, x, y, fontSize, RED);
 	return mrb_nil_value();
 }
