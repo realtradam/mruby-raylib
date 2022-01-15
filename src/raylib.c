@@ -5,6 +5,8 @@
 #include <emscripten/emscripten.h>
 #endif
 
+void call_main_loop();
+
 	static mrb_value
 mrb_init_window(mrb_state *mrb, mrb_value self)
 {
@@ -64,12 +66,40 @@ mrb_end_drawing(mrb_state *mrb, mrb_value self)
 	return mrb_nil_value();
 }
 
-	static mrb_value
+    static mrb_value
 mrb_clear_background(mrb_state *mrb, mrb_value self)
 {
 	ClearBackground(RAYWHITE);
 	return mrb_nil_value();
 }
+
+void
+call_main_loop()
+{
+    mrb_state *mrb = mrb_open();
+    if (!mrb) {}
+    struct RClass *c = mrb_class_get(mrb, "Raylib");
+    mrb_funcall(mrb, mrb_obj_value(c), "main_loop.call", 0);
+}
+
+    static mrb_value
+mrb_execute_main_loop(mrb_state *mrb, mrb_value self)
+{
+#if defined(PLATFORM_WEB)
+    emscripten_set_main_loop(call_main_loop, 0, 1);
+#else
+    SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
+    //--------------------------------------------------------------------------------------
+
+    // Main game loop
+    while (!WindowShouldClose())    // Detect window close button or ESC key
+    {
+        call_main_loop();
+    }
+#endif 
+    return mrb_nil_value();
+}
+
 
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
@@ -80,6 +110,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_class_method(mrb, raylib, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "clear_background", mrb_clear_background, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb, raylib, "execute_main_loop", mrb_execute_main_loop, MRB_ARGS_NONE());
 }
 
 void
