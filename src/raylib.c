@@ -73,13 +73,16 @@ mrb_clear_background(mrb_state *mrb, mrb_value self)
 	return mrb_nil_value();
 }
 
-void
+    void
 call_main_loop()
 {
     mrb_state *mrb = mrb_open();
     if (!mrb) {}
+    printf("test");
     struct RClass *c = mrb_class_get(mrb, "Raylib");
-    mrb_funcall(mrb, mrb_obj_value(c), "main_loop.call", 0);
+    printf("test2");
+    mrb_value main_loop = mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
+    mrb_funcall(mrb, main_loop, "call", 0);
 }
 
     static mrb_value
@@ -99,7 +102,6 @@ mrb_execute_main_loop(mrb_state *mrb, mrb_value self)
 #endif 
     return mrb_nil_value();
 }
-
 
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
