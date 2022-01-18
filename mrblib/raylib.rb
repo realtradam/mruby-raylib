@@ -1,12 +1,20 @@
 module Raylib
-  #attr_accessor :main_loop
+  class << self
+    attr_accessor :main_loop
 
-  #def call_main_loop
-  #  self.main_loop.call
-  #end
+    def while_window_open(&block)
+      self.main_loop = block
+      if Raylib.platform == 'desktop'
+        while !Raylib.window_should_close? do
+          self.main_loop.call
+        end
+      elsif Raylib.platform == 'web'
+        Raylib.emscripten_set_main_loop
+      end
+    end
 
-  def self.window_open(&block)
-    self.main_loop = block
-    self.execute_main_loop
+    def test
+      puts 'hello'
+    end
   end
 end
