@@ -10,8 +10,7 @@ void Execute_Emscripten_Block(void*);
 #endif
 
     static mrb_value
-mrb_init_window(mrb_state *mrb, mrb_value self)
-{
+mrb_init_window(mrb_state *mrb, mrb_value self) {
     printf("1\n");
     mrb_int screenWidth = 800;
     printf("2\n");
@@ -29,8 +28,7 @@ mrb_init_window(mrb_state *mrb, mrb_value self)
 }
 
     static mrb_value
-mrb_platform(mrb_state *mrb, mrb_value self)
-{
+mrb_platform(mrb_state *mrb, mrb_value self) {
 #if defined(PLATFORM_WEB)
     return mrb_str_new_lit(mrb, "web");
 #else
@@ -40,8 +38,7 @@ mrb_platform(mrb_state *mrb, mrb_value self)
 
 //void DrawText(const char *text, int posX, int posY, int fontSize, Color color);
     static mrb_value
-mrb_draw_text(mrb_state *mrb, mrb_value self)
-{
+mrb_draw_text(mrb_state *mrb, mrb_value self) {
     char* text = "Default Text";
     mrb_int x = 0;
     mrb_int y = 0;
@@ -61,29 +58,25 @@ mrb_draw_text(mrb_state *mrb, mrb_value self)
 }
 
     static mrb_value
-mrb_begin_drawing(mrb_state *mrb, mrb_value self)
-{
+mrb_begin_drawing(mrb_state *mrb, mrb_value self) {
     BeginDrawing();
     return mrb_nil_value();
 }
 
     static mrb_value
-mrb_end_drawing(mrb_state *mrb, mrb_value self)
-{
+mrb_end_drawing(mrb_state *mrb, mrb_value self) {
     EndDrawing();
     return mrb_nil_value();
 }
 
     static mrb_value
-mrb_clear_background(mrb_state *mrb, mrb_value self)
-{
+mrb_clear_background(mrb_state *mrb, mrb_value self) {
     ClearBackground(RAYWHITE);
     return mrb_nil_value();
 }
 
     static mrb_value 
-mrb_call_main_loop(mrb_state *mrb, mrb_value self)
-{
+mrb_call_main_loop(mrb_state *mrb, mrb_value self) {
     struct RClass *c = mrb_module_get(mrb, "Raylib");
     mrb_value ml = mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
     return mrb_funcall(mrb, ml, "call", 0);
@@ -98,16 +91,39 @@ mrb_window_should_close(mrb_state *mrb, mrb_value self) {
 static mrb_value 
 mrb_emscripten_set_main_loop(mrb_state *mrb, mrb_value self) {
     emscripten_set_main_loop_arg(Execute_Emscripten_Block, mrb, 0, 1);
+    return mrb_nil_value();
 }
 
     void
-Execute_Emscripten_Block(void *mrb)
-{
+Execute_Emscripten_Block(void *mrb) {
     struct RClass *c = mrb_module_get(mrb, "Raylib");
     mrb_value ml = mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
     mrb_funcall(mrb, ml, "call", 0);
 }
 #endif
+
+static mrb_value
+mrb_target_fps(mrb_state *mrb, mrb_value self) {
+    mrb_int fps = 60;
+    mrb_get_args(mrb, "i", &fps);
+    SetTargetFPS(fps);
+    return mrb_nil_value();
+}
+
+static mrb_value
+mrb_fps(mrb_state *mrb, mrb_value self) {
+    return mrb_fixnum_value(GetFPS());
+}
+
+static mrb_value
+mrb_frame_time(mrb_state *mrb, mrb_value self) {
+    return mrb_float_value(mrb, GetFrameTime());
+}
+
+static mrb_value
+mrb_time(mrb_state *mrb, mrb_value self) {
+    return mrb_float_value(mrb, GetTime());
+}
 
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
@@ -118,9 +134,12 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
     mrb_define_class_method(mrb, raylib, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, raylib, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, raylib, "clear_background", mrb_clear_background, MRB_ARGS_NONE());
-    //mrb_define_class_method(mrb, raylib, "execute_main_loop", mrb_execute_main_loop, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, raylib, "call_main_loop", mrb_call_main_loop, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, raylib, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
+    mrb_define_class_method(mrb, raylib, "target_fps=", mrb_target_fps, MRB_ARGS_REQ(1));
+    mrb_define_class_method(mrb, raylib, "fps", mrb_fps, MRB_ARGS_NONE());
+    mrb_define_class_method(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());
+    mrb_define_class_method(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
 #if defined(PLATFORM_WEB)
     mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
 #endif
