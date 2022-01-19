@@ -1,6 +1,9 @@
 #include <raylib.h>
 #include <mruby.h>
 #include <mruby/array.h>
+#include <mruby/data.h>
+#include <mruby/class.h>
+#include <stdlib.h>
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
 #endif
@@ -8,6 +11,32 @@
 #if defined(PLATFORM_WEB)
 void Execute_Emscripten_Block(void*);
 #endif
+
+static const struct mrb_data_type Color_type = {
+  "Color", mrb_free
+};
+
+static mrb_value
+Color_initialize(mrb_state* state, mrb_value self) {
+  mrb_int r = 255;
+  mrb_int g = 0;
+  mrb_int b = 0;
+  mrb_int a = 255;
+  mrb_get_args(state, "|iiii", &r, &g, &b, &a);
+
+  struct Color *color = (struct Color *)DATA_PTR(self);
+  if(color) { mrb_free(state, color); }
+  mrb_data_init(self, NULL, &Color_type);
+  color = (struct Color *)mrb_malloc(state, sizeof(struct Color));
+
+  color->r = r;
+  color->g = g;
+  color->b = b;
+  color->a = a;
+
+  mrb_data_init(self, color, &Color_type);
+  return self;
+}
 
     static mrb_value
 mrb_init_window(mrb_state *mrb, mrb_value self) {
@@ -43,17 +72,13 @@ mrb_draw_text(mrb_state *mrb, mrb_value self) {
     mrb_int x = 0;
     mrb_int y = 0;
     mrb_int fontSize = 16;
-    //mrb_value color = mrb_ary_new(mrb);
-    //mrb_int temp = 200;
-    //mrb_int temp2 = 255;
-    //mrb_ary_push(mrb, color, temp);
-    //mrb_ary_push(mrb, color, temp);
-    //mrb_ary_push(mrb, color, temp);
-    //mrb_ary_push(mrb, color, temp2);
-    mrb_get_args(mrb, "|ziii", &text, &x, &y, &fontSize);
-    //mrb_value mrb_ary_ref(mrb_state *, mrb_value, mrb_int)
-    //Color result_color = (Color){mrb_ary_ref(mrb,color,0),mrb_ary_ref(mrb,color,1),mrb_ary_ref(mrb,color,2),mrb_ary_ref(mrb,color,3),};
-    DrawText(text, x, y, fontSize, RED);
+    mrb_value color_obj;
+
+    struct Color *color = NULL;
+
+    mrb_get_args(mrb, "|ziiio", &text, &x, &y, &fontSize, &color_obj);
+    Data_Get_Struct(mrb, color_obj, &Color_type, color);
+    DrawText(text, x, y, fontSize, *color);
     return mrb_nil_value();
 }
 
@@ -128,9 +153,12 @@ mrb_time(mrb_state *mrb, mrb_value self) {
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
     struct RClass *raylib = mrb_define_module(mrb, "Raylib");
+    //struct RClass *color_class = mrb_define_class(mrb, "Color", mrb->object_class);
+    struct RClass *color_class = mrb_define_class_under(mrb, raylib, "Color", mrb->object_class);
+    MRB_SET_INSTANCE_TT(color_class, MRB_TT_DATA);
     mrb_define_class_method(mrb, raylib, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
     mrb_define_class_method(mrb, raylib, "platform", mrb_platform, MRB_ARGS_NONE());
-    mrb_define_class_method(mrb, raylib, "draw_text", mrb_draw_text, MRB_ARGS_REQ(4));
+    mrb_define_class_method(mrb, raylib, "draw_text", mrb_draw_text, MRB_ARGS_REQ(5));
     mrb_define_class_method(mrb, raylib, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, raylib, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, raylib, "clear_background", mrb_clear_background, MRB_ARGS_NONE());
@@ -140,6 +168,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
     mrb_define_class_method(mrb, raylib, "fps", mrb_fps, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
+    mrb_define_method(mrb, color_class, "initialize", Color_initialize, MRB_ARGS_REQ(4));
 #if defined(PLATFORM_WEB)
     mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
 #endif
