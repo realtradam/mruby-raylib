@@ -17,17 +17,17 @@ static const struct mrb_data_type Color_type = {
 };
 
 static mrb_value
-mrb_Color_initialize(mrb_state* state, mrb_value self) {
+mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
 	mrb_int r = 255;
 	mrb_int g = 0;
 	mrb_int b = 0;
 	mrb_int a = 255;
-	mrb_get_args(state, "|iiii", &r, &g, &b, &a);
+	mrb_get_args(mrb, "|iiii", &r, &g, &b, &a);
 
 	struct Color *color = (struct Color *)DATA_PTR(self);
-	if(color) { mrb_free(state, color); }
+	if(color) { mrb_free(mrb, color); }
 	mrb_data_init(self, NULL, &Color_type);
-	color = (struct Color *)mrb_malloc(state, sizeof(struct Color));
+	color = (struct Color *)mrb_malloc(mrb, sizeof(struct Color));
 
 	color->r = r;
 	color->g = g;
@@ -39,14 +39,14 @@ mrb_Color_initialize(mrb_state* state, mrb_value self) {
 }
 
 static mrb_value
-mrb_Color_red(mrb_state* state, mrb_value self) {
+mrb_Color_get_red(mrb_state* state, mrb_value self) {
 	struct Color *color = NULL;
-	Data_Get_Struct(mrb, self, &Color_type, color);
+	Data_Get_Struct(state, self, &Color_type, color);
 	return mrb_fixnum_value(color->r);
 }
 
 static mrb_value
-mrb_init_window(mrb_state *mrb, mrb_value self) {
+mrb_init_window(mrb_state* mrb, mrb_value self) {
 	printf("1\n");
 	mrb_int screenWidth = 800;
 	printf("2\n");
@@ -64,7 +64,7 @@ mrb_init_window(mrb_state *mrb, mrb_value self) {
 }
 
 static mrb_value
-mrb_platform(mrb_state *mrb, mrb_value self) {
+mrb_platform(mrb_state* mrb, mrb_value self) {
 #if defined(PLATFORM_WEB)
 	return mrb_str_new_lit(mrb, "web");
 #else
@@ -74,7 +74,7 @@ mrb_platform(mrb_state *mrb, mrb_value self) {
 
 //void DrawText(const char *text, int posX, int posY, int fontSize, Color color);
 static mrb_value
-mrb_draw_text(mrb_state *mrb, mrb_value self) {
+mrb_draw_text(mrb_state* mrb, mrb_value self) {
 	char* text = "Default Text";
 	mrb_int x = 0;
 	mrb_int y = 0;
@@ -90,44 +90,44 @@ mrb_draw_text(mrb_state *mrb, mrb_value self) {
 }
 
 static mrb_value
-mrb_begin_drawing(mrb_state *mrb, mrb_value self) {
+mrb_begin_drawing(mrb_state* mrb, mrb_value self) {
 	BeginDrawing();
 	return mrb_nil_value();
 }
 
 static mrb_value
-mrb_end_drawing(mrb_state *mrb, mrb_value self) {
+mrb_end_drawing(mrb_state* mrb, mrb_value self) {
 	EndDrawing();
 	return mrb_nil_value();
 }
 
 static mrb_value
-mrb_clear_background(mrb_state *mrb, mrb_value self) {
+mrb_clear_background(mrb_state* mrb, mrb_value self) {
 	ClearBackground(RAYWHITE);
 	return mrb_nil_value();
 }
 
 static mrb_value 
-mrb_call_main_loop(mrb_state *mrb, mrb_value self) {
+mrb_call_main_loop(mrb_state* mrb, mrb_value self) {
 	struct RClass *c = mrb_module_get(mrb, "Raylib");
 	mrb_value ml = mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
 	return mrb_funcall(mrb, ml, "call", 0);
 }
 
 static mrb_value 
-mrb_window_should_close(mrb_state *mrb, mrb_value self) {
+mrb_window_should_close(mrb_state* mrb, mrb_value self) {
 	return mrb_obj_value(WindowShouldClose());
 }
 
 #if defined(PLATFORM_WEB)
 static mrb_value 
-mrb_emscripten_set_main_loop(mrb_state *mrb, mrb_value self) {
+mrb_emscripten_set_main_loop(mrb_state* mrb, mrb_value self) {
 	emscripten_set_main_loop_arg(execute_emscripten_block, mrb, 0, 1);
 	return mrb_nil_value();
 }
 
 void
-execute_emscripten_block(void *mrb) {
+execute_emscripten_block(void* mrb) {
 	struct RClass *c = mrb_module_get(mrb, "Raylib");
 	mrb_value ml = mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
 	mrb_funcall(mrb, ml, "call", 0);
@@ -135,7 +135,7 @@ execute_emscripten_block(void *mrb) {
 #endif
 
 static mrb_value
-mrb_target_fps(mrb_state *mrb, mrb_value self) {
+mrb_target_fps(mrb_state* mrb, mrb_value self) {
 	mrb_int fps = 60;
 	mrb_get_args(mrb, "i", &fps);
 	SetTargetFPS(fps);
@@ -143,17 +143,17 @@ mrb_target_fps(mrb_state *mrb, mrb_value self) {
 }
 
 static mrb_value
-mrb_fps(mrb_state *mrb, mrb_value self) {
+mrb_fps(mrb_state* mrb, mrb_value self) {
 	return mrb_fixnum_value(GetFPS());
 }
 
 static mrb_value
-mrb_frame_time(mrb_state *mrb, mrb_value self) {
+mrb_frame_time(mrb_state* mrb, mrb_value self) {
 	return mrb_float_value(mrb, GetFrameTime());
 }
 
 static mrb_value
-mrb_time(mrb_state *mrb, mrb_value self) {
+mrb_time(mrb_state* mrb, mrb_value self) {
 	return mrb_float_value(mrb, GetTime());
 }
 
@@ -176,6 +176,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_class_method(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
 	mrb_define_method(mrb, color_class, "initialize", mrb_Color_initialize, MRB_ARGS_REQ(4));
+	mrb_define_method(mrb, color_class, "r", mrb_Color_get_red, MRB_ARGS_NONE());
 #if defined(PLATFORM_WEB)
 	mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
 #endif
