@@ -1,3 +1,5 @@
+Rl = Raylib
+
 module Raylib
   class << self
     attr_accessor :main_loop
@@ -13,8 +15,9 @@ module Raylib
       end
     end
 
-    def test
-      puts 'hello'
+
+    def draw_text(text:, x:, y:, font_size:, color:)
+      self._draw_text(text, x, y, font_size, color)
     end
   end
 end
