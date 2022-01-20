@@ -150,7 +150,58 @@ mrb_Color_set_alpha(mrb_state* mrb, mrb_value self) {
 	return mrb_fixnum_value(color->a);
 }
 
+static mrb_value
+mrb_is_key_pressed(mrb_state* mrb, mrb_value self) {
+	mrb_int key;
+	mrb_get_args(mrb, "i", &key);
 
+	return mrb_obj_value(IsKeyPressed(key));
+}
+
+static mrb_value
+mrb_is_key_down(mrb_state* mrb, mrb_value self) {
+	mrb_int key;
+	mrb_get_args(mrb, "i", &key);
+
+	return mrb_obj_value(IsKeyDown(key));
+}
+
+
+static mrb_value
+mrb_is_key_released(mrb_state* mrb, mrb_value self) {
+	mrb_int key;
+	mrb_get_args(mrb, "i", &key);
+
+	return mrb_obj_value(IsKeyReleased(key));
+}
+
+static mrb_value
+mrb_is_key_up(mrb_state* mrb, mrb_value self) {
+	mrb_int key;
+	mrb_get_args(mrb, "i", &key);
+
+	return mrb_obj_value(IsKeyUp(key));
+}
+
+static mrb_value
+mrb_get_key_pressed(mrb_state* mrb, mrb_value self) {
+	return mrb_fixnum_value(GetKeyPressed());
+}
+
+static mrb_value
+mrb_get_mouse_x(mrb_state* mrb, mrb_value self) {
+	return mrb_fixnum_value(GetMouseX());
+}
+
+static mrb_value
+mrb_get_mouse_y(mrb_state* mrb, mrb_value self) {
+	return mrb_fixnum_value(GetMouseY());
+}
+
+static mrb_value
+mrb_get_mouse_wheel_move(mrb_state* mrb, mrb_value self) {
+	return mrb_float_value(mrb, GetMouseWheelMove());
+}
 
 static mrb_value
 mrb_init_window(mrb_state* mrb, mrb_value self) {
@@ -211,8 +262,7 @@ mrb_clear_background(mrb_state* mrb, mrb_value self) {
 static mrb_value 
 mrb_call_main_loop(mrb_state* mrb, mrb_value self) {
 	struct RClass *c = mrb_module_get(mrb, "Raylib");
-	mrb_value ml = mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
-	return mrb_funcall(mrb, ml, "call", 0);
+	return mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
 }
 
 static mrb_value 
@@ -230,8 +280,7 @@ mrb_emscripten_set_main_loop(mrb_state* mrb, mrb_value self) {
 void
 execute_emscripten_block(void* mrb) {
 	struct RClass *c = mrb_module_get(mrb, "Raylib");
-	mrb_value ml = mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
-	mrb_funcall(mrb, ml, "call", 0);
+	mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
 }
 #endif
 
@@ -274,6 +323,14 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_class_method(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "_draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
+	mrb_define_class_method(mrb, raylib, "is_key_pressed?", mrb_is_key_pressed, MRB_ARGS_REQ(1));
+	mrb_define_class_method(mrb, raylib, "is_key_down?", mrb_is_key_down, MRB_ARGS_REQ(1));
+	mrb_define_class_method(mrb, raylib, "is_key_released?", mrb_is_key_released, MRB_ARGS_REQ(1));
+	mrb_define_class_method(mrb, raylib, "is_key_up?", mrb_is_key_up, MRB_ARGS_REQ(1));
+	mrb_define_class_method(mrb, raylib, "_key_pressed", mrb_get_key_pressed, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb, raylib, "mouse_x", mrb_get_mouse_x, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb, raylib, "mouse_y", mrb_get_mouse_y, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb,raylib, "mouse_wheel", mrb_get_mouse_wheel_move, MRB_ARGS_NONE());
 
 	struct RClass *color_class = mrb_define_class_under(mrb, raylib, "Color", mrb->object_class);
 	MRB_SET_INSTANCE_TT(color_class, MRB_TT_DATA);
