@@ -9,7 +9,7 @@
 #endif
 
 #if defined(PLATFORM_WEB)
-void Execute_Emscripten_Block(void*);
+void execute_emscripten_block(void*);
 #endif
 
 static const struct mrb_data_type Color_type = {
@@ -17,7 +17,7 @@ static const struct mrb_data_type Color_type = {
 };
 
 static mrb_value
-Color_initialize(mrb_state* state, mrb_value self) {
+mrb_Color_initialize(mrb_state* state, mrb_value self) {
 	mrb_int r = 255;
 	mrb_int g = 0;
 	mrb_int b = 0;
@@ -36,6 +36,13 @@ Color_initialize(mrb_state* state, mrb_value self) {
 
 	mrb_data_init(self, color, &Color_type);
 	return self;
+}
+
+static mrb_value
+mrb_Color_red(mrb_state* state, mrb_value self) {
+	struct Color *color = NULL;
+	Data_Get_Struct(mrb, self, &Color_type, color);
+	return mrb_fixnum_value(color->r);
 }
 
 static mrb_value
@@ -115,12 +122,12 @@ mrb_window_should_close(mrb_state *mrb, mrb_value self) {
 #if defined(PLATFORM_WEB)
 static mrb_value 
 mrb_emscripten_set_main_loop(mrb_state *mrb, mrb_value self) {
-	emscripten_set_main_loop_arg(Execute_Emscripten_Block, mrb, 0, 1);
+	emscripten_set_main_loop_arg(execute_emscripten_block, mrb, 0, 1);
 	return mrb_nil_value();
 }
 
 void
-Execute_Emscripten_Block(void *mrb) {
+execute_emscripten_block(void *mrb) {
 	struct RClass *c = mrb_module_get(mrb, "Raylib");
 	mrb_value ml = mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
 	mrb_funcall(mrb, ml, "call", 0);
@@ -168,7 +175,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_class_method(mrb, raylib, "fps", mrb_fps, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
-	mrb_define_method(mrb, color_class, "initialize", Color_initialize, MRB_ARGS_REQ(4));
+	mrb_define_method(mrb, color_class, "initialize", mrb_Color_initialize, MRB_ARGS_REQ(4));
 #if defined(PLATFORM_WEB)
 	mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
 #endif
