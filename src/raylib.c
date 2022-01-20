@@ -155,7 +155,7 @@ mrb_is_key_pressed(mrb_state* mrb, mrb_value self) {
 	mrb_int key;
 	mrb_get_args(mrb, "i", &key);
 
-	return mrb_obj_value(IsKeyPressed(key));
+	return mrb_bool_value(IsKeyPressed(key));
 }
 
 static mrb_value
@@ -163,7 +163,7 @@ mrb_is_key_down(mrb_state* mrb, mrb_value self) {
 	mrb_int key;
 	mrb_get_args(mrb, "i", &key);
 
-	return mrb_obj_value(IsKeyDown(key));
+	return mrb_bool_value(IsKeyDown(key));
 }
 
 
@@ -172,7 +172,7 @@ mrb_is_key_released(mrb_state* mrb, mrb_value self) {
 	mrb_int key;
 	mrb_get_args(mrb, "i", &key);
 
-	return mrb_obj_value(IsKeyReleased(key));
+	return mrb_bool_value(IsKeyReleased(key));
 }
 
 static mrb_value
@@ -180,7 +180,7 @@ mrb_is_key_up(mrb_state* mrb, mrb_value self) {
 	mrb_int key;
 	mrb_get_args(mrb, "i", &key);
 
-	return mrb_obj_value(IsKeyUp(key));
+	return mrb_bool_value(IsKeyUp(key));
 }
 
 static mrb_value
@@ -267,7 +267,7 @@ mrb_call_main_loop(mrb_state* mrb, mrb_value self) {
 
 static mrb_value 
 mrb_window_should_close(mrb_state* mrb, mrb_value self) {
-	return mrb_obj_value(WindowShouldClose());
+	return mrb_bool_value(WindowShouldClose());
 }
 
 #if defined(PLATFORM_WEB)
