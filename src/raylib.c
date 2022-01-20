@@ -39,26 +39,88 @@ mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
 }
 
 static mrb_value
-mrb_Color_get_red(mrb_state* state, mrb_value self) {
+mrb_Color_get_red(mrb_state* mrb, mrb_value self) {
 	struct Color *color = NULL;
-	Data_Get_Struct(state, self, &Color_type, color);
+	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
 	return mrb_fixnum_value(color->r);
 }
 
 static mrb_value
+mrb_Color_set_red(mrb_state* mrb, mrb_value self) {
+	struct Color *color = NULL;
+	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	mrb_int r;
+	mrb_get_args(mrb, "i", &r);
+	color->r = r;
+
+	return mrb_fixnum_value(color->r);
+}
+
+static mrb_value
+mrb_Color_get_green(mrb_state* mrb, mrb_value self) {
+	struct Color *color = NULL;
+	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	return mrb_fixnum_value(color->g);
+}
+
+static mrb_value
+mrb_Color_set_green(mrb_state* mrb, mrb_value self) {
+	struct Color *color = NULL;
+	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	mrb_int g;
+	mrb_get_args(mrb, "i", &g);
+	color->g = g;
+
+	return mrb_fixnum_value(color->g);
+}
+
+static mrb_value
+mrb_Color_get_blue(mrb_state* mrb, mrb_value self) {
+	struct Color *color = NULL;
+	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+
+	return mrb_fixnum_value(color->b);
+}
+
+static mrb_value
+mrb_Color_set_blue(mrb_state* mrb, mrb_value self) {
+	struct Color *color = NULL;
+	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	mrb_int b;
+	mrb_get_args(mrb, "i", &b);
+	color->b = b;
+
+	return mrb_fixnum_value(color->b);
+}
+
+static mrb_value
+mrb_Color_get_alpha(mrb_state* mrb, mrb_value self) {
+	struct Color *color = NULL;
+	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	return mrb_fixnum_value(color->a);
+}
+
+static mrb_value
+mrb_Color_set_alpha(mrb_state* mrb, mrb_value self) {
+	struct Color *color = NULL;
+	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	mrb_int a;
+	mrb_get_args(mrb, "i", &a);
+	color->a = a;
+
+	return mrb_fixnum_value(color->a);
+}
+
+
+
+static mrb_value
 mrb_init_window(mrb_state* mrb, mrb_value self) {
-	printf("1\n");
 	mrb_int screenWidth = 800;
-	printf("2\n");
 	mrb_int screenHeight = 600;
-	printf("3\n");
 	char* title = "Hello World from FelFlame!";
-	printf("4\n");
 	mrb_get_args(mrb, "|iiz", &screenWidth, &screenHeight, &title);
-	printf("5\n");
 
 	InitWindow(screenWidth, screenHeight, title);
-	printf("6\n");
 
 	return mrb_nil_value();
 }
@@ -84,7 +146,7 @@ mrb_draw_text(mrb_state* mrb, mrb_value self) {
 	struct Color *color = NULL;
 
 	mrb_get_args(mrb, "|ziiio", &text, &x, &y, &fontSize, &color_obj);
-	Data_Get_Struct(mrb, color_obj, &Color_type, color);
+	color = DATA_GET_PTR(mrb, color_obj, &Color_type, Color);
 	DrawText(text, x, y, fontSize, *color);
 	return mrb_nil_value();
 }
@@ -177,6 +239,13 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_class_method(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
 	mrb_define_method(mrb, color_class, "initialize", mrb_Color_initialize, MRB_ARGS_REQ(4));
 	mrb_define_method(mrb, color_class, "r", mrb_Color_get_red, MRB_ARGS_NONE());
+	mrb_define_method(mrb, color_class, "r=", mrb_Color_set_red, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, color_class, "g", mrb_Color_get_green, MRB_ARGS_NONE());
+	mrb_define_method(mrb, color_class, "g=", mrb_Color_set_green, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, color_class, "b", mrb_Color_get_blue, MRB_ARGS_NONE());
+	mrb_define_method(mrb, color_class, "b=", mrb_Color_set_blue, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, color_class, "a", mrb_Color_get_alpha, MRB_ARGS_NONE());
+	mrb_define_method(mrb, color_class, "a=", mrb_Color_set_alpha, MRB_ARGS_REQ(1));
 #if defined(PLATFORM_WEB)
 	mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
 #endif
