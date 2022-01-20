@@ -19,5 +19,9 @@ module Raylib
     def draw_text(text:, x:, y:, font_size:, color:)
       self._draw_text(text, x, y, font_size, color)
     end
+
+    def draw_texture(texture:, x:, y:, tint: Rl::Color.new(255,255,255,255))
+      self._draw_texture(texture, x, y, tint)
+    end
   end
 end

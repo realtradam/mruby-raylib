@@ -16,6 +16,45 @@ static const struct mrb_data_type Color_type = {
 	"Color", mrb_free
 };
 
+static const struct mrb_data_type Texture_type = {
+	"Texture", mrb_free
+};
+
+static mrb_value
+mrb_Texture_initialize(mrb_state* mrb, mrb_value self) {
+	char* path = NULL;
+	mrb_get_args(mrb, "z", &path);
+
+	struct Texture *texture = (struct Texture *)DATA_PTR(self);
+	if(texture) { mrb_free(mrb, texture); }
+	mrb_data_init(self, NULL, &Texture_type);
+	texture = (struct Texture *)mrb_malloc(mrb, sizeof(struct Texture));
+
+	*texture = LoadTexture(path);
+
+	mrb_data_init(self, texture, &Texture_type);
+	return self;
+}
+
+static mrb_value
+mrb_draw_texture(mrb_state* mrb, mrb_value self) {
+	mrb_value texture;
+	mrb_int x;
+	mrb_int y;
+	mrb_value color;
+	mrb_get_args(mrb, "oiio", &texture, &x, &y, &color);
+
+	Texture *texture_data = DATA_GET_PTR(mrb, texture, &Texture_type, Texture);
+	struct Color *color_data;
+	color_data = DATA_GET_PTR(mrb, color, &Color_type, Color);
+
+	DrawTexture(*texture_data, x, y, *color_data);
+
+	return mrb_nil_value();
+}
+
+
+
 static mrb_value
 mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
 	mrb_int r = 255;
@@ -222,9 +261,6 @@ mrb_time(mrb_state* mrb, mrb_value self) {
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	struct RClass *raylib = mrb_define_module(mrb, "Raylib");
-	//struct RClass *color_class = mrb_define_class(mrb, "Color", mrb->object_class);
-	struct RClass *color_class = mrb_define_class_under(mrb, raylib, "Color", mrb->object_class);
-	MRB_SET_INSTANCE_TT(color_class, MRB_TT_DATA);
 	mrb_define_class_method(mrb, raylib, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
 	mrb_define_class_method(mrb, raylib, "platform", mrb_platform, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "_draw_text", mrb_draw_text, MRB_ARGS_REQ(5));
@@ -237,6 +273,10 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_class_method(mrb, raylib, "fps", mrb_fps, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb, raylib, "_draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
+
+	struct RClass *color_class = mrb_define_class_under(mrb, raylib, "Color", mrb->object_class);
+	MRB_SET_INSTANCE_TT(color_class, MRB_TT_DATA);
 	mrb_define_method(mrb, color_class, "initialize", mrb_Color_initialize, MRB_ARGS_REQ(4));
 	mrb_define_method(mrb, color_class, "r", mrb_Color_get_red, MRB_ARGS_NONE());
 	mrb_define_method(mrb, color_class, "r=", mrb_Color_set_red, MRB_ARGS_REQ(1));
@@ -246,6 +286,12 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, color_class, "b=", mrb_Color_set_blue, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, color_class, "a", mrb_Color_get_alpha, MRB_ARGS_NONE());
 	mrb_define_method(mrb, color_class, "a=", mrb_Color_set_alpha, MRB_ARGS_REQ(1));
+
+
+	struct RClass *texture_class = mrb_define_class_under(mrb, raylib, "Texture", mrb->object_class);
+	MRB_SET_INSTANCE_TT(texture_class, MRB_TT_DATA);
+	mrb_define_method(mrb, texture_class, "initialize", mrb_Texture_initialize, MRB_ARGS_REQ(1));
+
 #if defined(PLATFORM_WEB)
 	mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
 #endif
