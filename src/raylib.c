@@ -37,6 +37,61 @@ mrb_Texture_initialize(mrb_state* mrb, mrb_value self) {
 }
 
 static mrb_value
+mrb_Texture_get_width(mrb_state* mrb, mrb_value self) {
+	Texture *texture = NULL;
+	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	return mrb_fixnum_value(texture->width);
+}
+
+static mrb_value
+mrb_Texture_set_width(mrb_state* mrb, mrb_value self) {
+	Texture *texture = NULL;
+	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	mrb_int width;
+	mrb_get_args(mrb, "i", &width);
+    texture->width = width;
+	return mrb_fixnum_value(texture->width);
+}
+
+static mrb_value
+mrb_Texture_get_height(mrb_state* mrb, mrb_value self) {
+	Texture *texture = NULL;
+	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	return mrb_fixnum_value(texture->height);
+}
+
+static mrb_value
+mrb_Texture_set_height(mrb_state* mrb, mrb_value self) {
+	Texture *texture = NULL;
+	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	mrb_int height;
+	mrb_get_args(mrb, "i", &height);
+    texture->height = height;
+	return mrb_fixnum_value(texture->height);
+}
+
+static mrb_value
+mrb_Texture_get_id(mrb_state* mrb, mrb_value self) {
+	Texture *texture = NULL;
+	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	return mrb_fixnum_value(texture->id);
+}
+
+static mrb_value
+mrb_Texture_get_mipmaps(mrb_state* mrb, mrb_value self) {
+	Texture *texture = NULL;
+	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	return mrb_fixnum_value(texture->mipmaps);
+}
+
+static mrb_value
+mrb_Texture_get_format(mrb_state* mrb, mrb_value self) {
+	Texture *texture = NULL;
+	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	return mrb_fixnum_value(texture->format);
+}
+
+static mrb_value
 mrb_draw_texture(mrb_state* mrb, mrb_value self) {
 	mrb_value texture;
 	mrb_int x;
@@ -52,8 +107,6 @@ mrb_draw_texture(mrb_state* mrb, mrb_value self) {
 
 	return mrb_nil_value();
 }
-
-
 
 static mrb_value
 mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
@@ -348,6 +401,17 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	struct RClass *texture_class = mrb_define_class_under(mrb, raylib, "Texture", mrb->object_class);
 	MRB_SET_INSTANCE_TT(texture_class, MRB_TT_DATA);
 	mrb_define_method(mrb, texture_class, "initialize", mrb_Texture_initialize, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, texture_class, "width", mrb_Texture_get_width, MRB_ARGS_NONE());
+	mrb_define_method(mrb, texture_class, "width=", mrb_Texture_set_width, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, texture_class, "w", mrb_Texture_get_width, MRB_ARGS_NONE());
+	mrb_define_method(mrb, texture_class, "w=", mrb_Texture_set_width, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, texture_class, "height", mrb_Texture_get_height, MRB_ARGS_NONE());
+	mrb_define_method(mrb, texture_class, "height=", mrb_Texture_set_height, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, texture_class, "h", mrb_Texture_get_height, MRB_ARGS_NONE());
+	mrb_define_method(mrb, texture_class, "h=", mrb_Texture_set_height, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, texture_class, "id", mrb_Texture_get_id, MRB_ARGS_NONE());
+	mrb_define_method(mrb, texture_class, "mipmaps", mrb_Texture_get_mipmaps, MRB_ARGS_NONE());
+	mrb_define_method(mrb, texture_class, "format", mrb_Texture_get_format, MRB_ARGS_NONE());
 
 #if defined(PLATFORM_WEB)
 	mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
