@@ -23,6 +23,10 @@ static const struct mrb_data_type Texture_type = {
 	"Texture", mrb_free
 };
 
+static const struct mrb_data_type Sound_type = {
+	"Sound", mrb_free
+};
+
 static const struct mrb_data_type Vector2_type = {
 	"Vector2", mrb_free
 };
@@ -159,6 +163,22 @@ mrb_Vector2_set_y(mrb_state* mrb, mrb_value self) {
 	mrb_get_args(mrb, "f", &y);
 	vec2->y = y;
 	return mrb_fixnum_value(vec2->y);
+}
+
+static mrb_value
+mrb_Sound_initialize(mrb_state* mrb, mrb_value self) {
+	char* path = NULL;
+	mrb_get_args(mrb, "z", &path);
+
+	Sound *sound = (Sound *)DATA_PTR(self);
+	if(sound) { mrb_free(mrb, sound); }
+	mrb_data_init(self, NULL, &Sound_type);
+	sound = (Sound *)mrb_malloc(mrb, sizeof(Sound));
+
+	*sound = LoadSound(path);
+
+	mrb_data_init(self, sound, &Sound_type);
+	return self;
 }
 
 static mrb_value
@@ -607,7 +627,7 @@ bool
 check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rect_obj) {
 	mrb_value vector_obj = mrb_funcall(mrb, circle_obj, "vector", 0);
 	mrb_float radius = mrb_as_float(mrb, mrb_funcall(mrb, circle_obj, "radius", 0));
-    Vector2 *center = DATA_GET_PTR(mrb, vector_obj, &Vector2_type, Vector2);
+	Vector2 *center = DATA_GET_PTR(mrb, vector_obj, &Vector2_type, Vector2);
 	Rectangle *rec = DATA_GET_PTR(mrb, rect_obj, &Rectangle_type, Rectangle);
 
 	return CheckCollisionCircleRec(*center, radius, *rec);
@@ -673,6 +693,10 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, color_class, "b=", mrb_Color_set_blue, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, color_class, "a", mrb_Color_get_alpha, MRB_ARGS_NONE());
 	mrb_define_method(mrb, color_class, "a=", mrb_Color_set_alpha, MRB_ARGS_REQ(1));
+
+	struct RClass *sound_class = mrb_define_class_under(mrb, raylib, "Sound", mrb->object_class);
+	MRB_SET_INSTANCE_TT(sound_class, MRB_TT_DATA);
+	mrb_define_method(mrb, sound_class, "initialize", mrb_Sound_initialize, MRB_ARGS_REQ(1));
 
 	struct RClass *texture_class = mrb_define_class_under(mrb, raylib, "Texture", mrb->object_class);
 	MRB_SET_INSTANCE_TT(texture_class, MRB_TT_DATA);
