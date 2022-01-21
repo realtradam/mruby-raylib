@@ -13,6 +13,8 @@
 void execute_emscripten_block(void*);
 #endif
 
+bool check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rect_obj);
+
 static const struct mrb_data_type Color_type = {
 	"Color", mrb_free
 };
@@ -601,17 +603,22 @@ mrb_Rectangle_collide_with_rec(mrb_state* mrb, mrb_value self) {
 	return mrb_bool_value(CheckCollisionRecs(*rec1, *rec2));
 }
 
+bool
+check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rect_obj) {
+	mrb_value vector_obj = mrb_funcall(mrb, circle_obj, "vector", 0);
+	mrb_float radius = mrb_as_float(mrb, mrb_funcall(mrb, circle_obj, "radius", 0));
+    Vector2 *center = DATA_GET_PTR(mrb, vector_obj, &Vector2_type, Vector2);
+	Rectangle *rec = DATA_GET_PTR(mrb, rect_obj, &Rectangle_type, Rectangle);
+
+	return CheckCollisionCircleRec(*center, radius, *rec);
+}
+
 static mrb_value
 mrb_Rectangle_collide_with_circ(mrb_state* mrb, mrb_value self) {
 	mrb_value circle_obj;
 	mrb_get_args(mrb, "o", &circle_obj);
 
-	mrb_value vector_obj = mrb_funcall(mrb, circle_obj, "vector", 0);
-	mrb_float radius = mrb_as_float(mrb, mrb_funcall(mrb, circle_obj, "radius", 0));
-	Rectangle *rec = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
-	Vector2 *center = DATA_GET_PTR(mrb, vector_obj, &Vector2_type, Vector2);
-
-	return mrb_bool_value(CheckCollisionCircleRec(*center, radius, *rec));
+	return mrb_bool_value(check_collision_circle_rec(mrb, circle_obj, self));
 }
 
 static mrb_value
@@ -619,12 +626,7 @@ mrb_Circle_collide_with_rec(mrb_state* mrb, mrb_value self) {
 	mrb_value rect_obj;
 	mrb_get_args(mrb, "o", &rect_obj);
 
-	mrb_value vector_obj = mrb_funcall(mrb, self, "vector", 0);
-	mrb_float radius = mrb_as_float(mrb, mrb_funcall(mrb, self, "radius", 0));
-	Rectangle *rec = DATA_GET_PTR(mrb, rect_obj, &Rectangle_type, Rectangle);
-	Vector2 *center = DATA_GET_PTR(mrb, vector_obj, &Vector2_type, Vector2);
-
-	return mrb_bool_value(CheckCollisionCircleRec(*center, radius, *rec));
+	return mrb_bool_value(check_collision_circle_rec(mrb, self, rect_obj));
 }
 
 void
