@@ -26,6 +26,7 @@ module Raylib
       self.vector.y = y
     end
   end
+
   class << self
     attr_accessor :defined_loop
     attr_accessor :data_keys_pressed
@@ -68,12 +69,25 @@ module Raylib
         return self.data_keys_pressed
       end
       self.data_keys_pressed = []
-      key = self._key_pressed
+      key = self._next_key_pressed
       while key != 0
         self.data_keys_pressed.push key
-        key = self._key_pressed
+        key = self._next_key_pressed
       end
       self.data_keys_pressed
+    end
+
+    def scissor_mode(x: x, y: y, width: width, height: height, &block)
+      self.begin_scissor_mode(x, y, width, height)
+      yield
+      self.end_scissor_mode
+    end
+
+    def draw(clear_color: nil, &block)
+      self.clear_background(clear_color) if clear_color
+      self.begin_drawing
+      yield
+      self.end_drawing
     end
   end
 end
