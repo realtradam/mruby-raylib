@@ -1,6 +1,31 @@
 Rl = Raylib
 
 module Raylib
+  class Circle
+    attr_accessor :vector
+    attr_accessor :radius
+
+    def initialize(x, y, radius)
+      self.vector = Vector2.new(x, y)
+      self.radius = radius
+    end
+
+    def x
+      self.vector.x
+    end
+
+    def y
+      self.vector.y
+    end
+
+    def x=(x)
+      self.vector.x = x
+    end
+
+    def y=(y)
+      self.vector.y = y
+    end
+  end
   class << self
     attr_accessor :defined_loop
     attr_accessor :data_keys_pressed

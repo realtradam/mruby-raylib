@@ -3,6 +3,7 @@
 #include <mruby/array.h>
 #include <mruby/data.h>
 #include <mruby/class.h>
+#include <mruby/numeric.h>
 #include <stdlib.h>
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
@@ -520,6 +521,59 @@ mrb_time(mrb_state* mrb, mrb_value self) {
 	return mrb_float_value(mrb, GetTime());
 }
 
+static mrb_value
+mrb_Circle_collide_with_circ(mrb_state* mrb, mrb_value self) {
+	mrb_value circle_obj;
+	mrb_get_args(mrb, "o", &circle_obj);
+    
+    mrb_value vector_obj1 = mrb_funcall(mrb, self, "vector", 0);
+    Vector2 *center1 = DATA_GET_PTR(mrb, vector_obj1, &Vector2_type, Vector2);
+    mrb_float radius1 = mrb_as_float(mrb, mrb_funcall(mrb, self, "radius", 0));
+
+    mrb_value vector_obj2 = mrb_funcall(mrb, circle_obj, "vector", 0);
+    Vector2 *center2 = DATA_GET_PTR(mrb, vector_obj2, &Vector2_type, Vector2);
+    mrb_float radius2 = mrb_as_float(mrb, mrb_funcall(mrb, circle_obj, "radius", 0));
+
+    return mrb_bool_value(CheckCollisionCircles(*center1, radius1, *center2, radius2));
+}
+
+static mrb_value
+mrb_Rectangle_collide_with_rec(mrb_state* mrb, mrb_value self) {
+	mrb_value rec1_obj;
+	mrb_get_args(mrb, "o", &rec1_obj);
+
+    Rectangle *rec1 = DATA_GET_PTR(mrb, rec1_obj, &Rectangle_type, Rectangle);
+    Rectangle *rec2 = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+
+    return mrb_bool_value(CheckCollisionRecs(*rec1, *rec2));
+}
+
+static mrb_value
+mrb_Rectangle_collide_with_circ(mrb_state* mrb, mrb_value self) {
+	mrb_value circle_obj;
+	mrb_get_args(mrb, "o", &circle_obj);
+    
+    mrb_value vector_obj = mrb_funcall(mrb, circle_obj, "vector", 0);
+    mrb_float radius = mrb_as_float(mrb, mrb_funcall(mrb, circle_obj, "radius", 0));
+    Rectangle *rec = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+    Vector2 *center = DATA_GET_PTR(mrb, vector_obj, &Vector2_type, Vector2);
+
+    return mrb_bool_value(CheckCollisionCircleRec(*center, radius, *rec));
+}
+
+static mrb_value
+mrb_Circle_collide_with_rec(mrb_state* mrb, mrb_value self) {
+	mrb_value rect_obj;
+	mrb_get_args(mrb, "o", &rect_obj);
+    
+    mrb_value vector_obj = mrb_funcall(mrb, self, "vector", 0);
+    mrb_float radius = mrb_as_float(mrb, mrb_funcall(mrb, self, "radius", 0));
+    Rectangle *rec = DATA_GET_PTR(mrb, rect_obj, &Rectangle_type, Rectangle);
+    Vector2 *center = DATA_GET_PTR(mrb, vector_obj, &Vector2_type, Vector2);
+
+    return mrb_bool_value(CheckCollisionCircleRec(*center, radius, *rec));
+}
+
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	struct RClass *raylib = mrb_define_module(mrb, "Raylib");
@@ -597,6 +651,13 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, rectangle_class, "height=", mrb_Rectangle_set_height, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, rectangle_class, "h", mrb_Rectangle_get_height, MRB_ARGS_NONE());
 	mrb_define_method(mrb, rectangle_class, "h=", mrb_Rectangle_set_height, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, rectangle_class, "collide_with_rect?", mrb_Rectangle_collide_with_rec, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, rectangle_class, "collide_with_circle?", mrb_Rectangle_collide_with_circ, MRB_ARGS_REQ(1));
+
+	struct RClass *circle_class = mrb_define_class_under(mrb, raylib, "Circle", mrb->object_class);
+    //struct RClass *circle_class = mrb_class_get_under(mrb, raylib, "Circle");
+    mrb_define_method(mrb, circle_class, "collide_with_rect?", mrb_Circle_collide_with_rec, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, circle_class, "collide_with_circle?", mrb_Circle_collide_with_circ, MRB_ARGS_REQ(1));
 
 #if defined(PLATFORM_WEB)
 	mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
