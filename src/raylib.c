@@ -20,15 +20,153 @@ static const struct mrb_data_type Texture_type = {
 	"Texture", mrb_free
 };
 
+static const struct mrb_data_type Vector2_type = {
+	"Vector2", mrb_free
+};
+
+static const struct mrb_data_type Rectangle_type = {
+	"Rectangle", mrb_free
+};
+
+static mrb_value
+mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self) {
+    mrb_float x = 0.0;
+    mrb_float y = 0.0;
+    mrb_float w = 10.0;
+    mrb_float h = 10.0;
+	mrb_get_args(mrb, "|ffff", &x, &y, &w, &h);
+
+	Rectangle *rectangle = (Rectangle *)DATA_PTR(self);
+	if(rectangle) { mrb_free(mrb, rectangle); }
+	mrb_data_init(self, NULL, &Rectangle_type);
+	rectangle = (Rectangle *)mrb_malloc(mrb, sizeof(Rectangle));
+
+	rectangle->x = x;
+	rectangle->y = y;
+	rectangle->width = w;
+	rectangle->height= h;
+
+	mrb_data_init(self, rectangle, &Rectangle_type);
+	return self;
+}
+
+static mrb_value
+mrb_Rectangle_get_x(mrb_state* mrb, mrb_value self) {
+	Rectangle *rect = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	return mrb_fixnum_value(rect->x);
+}
+
+static mrb_value
+mrb_Rectangle_set_x(mrb_state* mrb, mrb_value self) {
+	Rectangle *rect = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	mrb_float x;
+	mrb_get_args(mrb, "f", &x);
+    rect->x = x;
+	return mrb_fixnum_value(rect->x);
+}
+
+static mrb_value
+mrb_Rectangle_get_y(mrb_state* mrb, mrb_value self) {
+	Rectangle *rect = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	return mrb_fixnum_value(rect->y);
+}
+
+static mrb_value
+mrb_Rectangle_set_y(mrb_state* mrb, mrb_value self) {
+	Rectangle *rect = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	mrb_float y;
+	mrb_get_args(mrb, "f", &y);
+    rect->x = y;
+	return mrb_fixnum_value(rect->y);
+}
+
+static mrb_value
+mrb_Rectangle_get_width(mrb_state* mrb, mrb_value self) {
+	Rectangle *rect = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	return mrb_fixnum_value(rect->width);
+}
+
+static mrb_value
+mrb_Rectangle_set_width(mrb_state* mrb, mrb_value self) {
+	Rectangle *rect = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	mrb_float width;
+	mrb_get_args(mrb, "f", &width);
+    rect->x = width;
+	return mrb_fixnum_value(rect->width);
+}
+
+static mrb_value
+mrb_Rectangle_set_height(mrb_state* mrb, mrb_value self) {
+	Rectangle *rect = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	mrb_float height;
+	mrb_get_args(mrb, "f", &height);
+    rect->x = height;
+	return mrb_fixnum_value(rect->height);
+}
+
+static mrb_value
+mrb_Rectangle_get_height(mrb_state* mrb, mrb_value self) {
+	Rectangle *rect = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	return mrb_fixnum_value(rect->height);
+}
+
+static mrb_value
+mrb_Vector2_initialize(mrb_state* mrb, mrb_value self) {
+    mrb_float x = 1.0;
+    mrb_float y = 1.0;
+	mrb_get_args(mrb, "|ff", &x, &y);
+
+	Vector2 *vector2 = (Vector2 *)DATA_PTR(self);
+	if(vector2) { mrb_free(mrb, vector2); }
+	mrb_data_init(self, NULL, &Vector2_type);
+	vector2 = (Vector2 *)mrb_malloc(mrb, sizeof(Vector2));
+
+	vector2->x = x;
+	vector2->y = y;
+
+	mrb_data_init(self, vector2, &Vector2_type);
+	return self;
+}
+
+static mrb_value
+mrb_Vector2_get_x(mrb_state* mrb, mrb_value self) {
+	Vector2 *vec2 = DATA_GET_PTR(mrb, self, &Vector2_type, Vector2);
+	return mrb_fixnum_value(vec2->x);
+}
+
+static mrb_value
+mrb_Vector2_set_x(mrb_state* mrb, mrb_value self) {
+	Vector2 *vec2 = DATA_GET_PTR(mrb, self, &Vector2_type, Vector2);
+	mrb_float x;
+	mrb_get_args(mrb, "f", &x);
+    vec2->x = x;
+	return mrb_fixnum_value(vec2->x);
+}
+
+static mrb_value
+mrb_Vector2_get_y(mrb_state* mrb, mrb_value self) {
+	Vector2 *vec2 = DATA_GET_PTR(mrb, self, &Vector2_type, Vector2);
+	return mrb_fixnum_value(vec2->x);
+}
+
+static mrb_value
+mrb_Vector2_set_y(mrb_state* mrb, mrb_value self) {
+	Vector2 *vec2 = DATA_GET_PTR(mrb, self, &Vector2_type, Vector2);
+	mrb_float y;
+	mrb_get_args(mrb, "f", &y);
+    vec2->y = y;
+	return mrb_fixnum_value(vec2->y);
+}
+
 static mrb_value
 mrb_Texture_initialize(mrb_state* mrb, mrb_value self) {
 	char* path = NULL;
 	mrb_get_args(mrb, "z", &path);
 
-	struct Texture *texture = (struct Texture *)DATA_PTR(self);
+	Texture *texture = (Texture *)DATA_PTR(self);
 	if(texture) { mrb_free(mrb, texture); }
 	mrb_data_init(self, NULL, &Texture_type);
-	texture = (struct Texture *)mrb_malloc(mrb, sizeof(struct Texture));
+	texture = (Texture *)mrb_malloc(mrb, sizeof(Texture));
 
 	*texture = LoadTexture(path);
 
@@ -38,15 +176,13 @@ mrb_Texture_initialize(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Texture_get_width(mrb_state* mrb, mrb_value self) {
-	Texture *texture = NULL;
-	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
 	return mrb_fixnum_value(texture->width);
 }
 
 static mrb_value
 mrb_Texture_set_width(mrb_state* mrb, mrb_value self) {
-	Texture *texture = NULL;
-	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
 	mrb_int width;
 	mrb_get_args(mrb, "i", &width);
     texture->width = width;
@@ -55,15 +191,13 @@ mrb_Texture_set_width(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Texture_get_height(mrb_state* mrb, mrb_value self) {
-	Texture *texture = NULL;
-	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
 	return mrb_fixnum_value(texture->height);
 }
 
 static mrb_value
 mrb_Texture_set_height(mrb_state* mrb, mrb_value self) {
-	Texture *texture = NULL;
-	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
 	mrb_int height;
 	mrb_get_args(mrb, "i", &height);
     texture->height = height;
@@ -72,38 +206,73 @@ mrb_Texture_set_height(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Texture_get_id(mrb_state* mrb, mrb_value self) {
-	Texture *texture = NULL;
-	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
 	return mrb_fixnum_value(texture->id);
 }
 
 static mrb_value
 mrb_Texture_get_mipmaps(mrb_state* mrb, mrb_value self) {
-	Texture *texture = NULL;
-	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
 	return mrb_fixnum_value(texture->mipmaps);
 }
 
 static mrb_value
 mrb_Texture_get_format(mrb_state* mrb, mrb_value self) {
-	Texture *texture = NULL;
-	texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
+	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
 	return mrb_fixnum_value(texture->format);
 }
 
 static mrb_value
 mrb_draw_texture(mrb_state* mrb, mrb_value self) {
-	mrb_value texture;
+	mrb_value texture_obj;
 	mrb_int x;
 	mrb_int y;
-	mrb_value color;
-	mrb_get_args(mrb, "oiio", &texture, &x, &y, &color);
+	mrb_value tint_obj;
+	mrb_get_args(mrb, "oiio", &texture_obj, &x, &y, &tint_obj);
 
-	Texture *texture_data = DATA_GET_PTR(mrb, texture, &Texture_type, Texture);
-	struct Color *color_data;
-	color_data = DATA_GET_PTR(mrb, color, &Color_type, Color);
+	Texture *texture_data = DATA_GET_PTR(mrb, texture_obj, &Texture_type, Texture);
+	Color *tint_data = DATA_GET_PTR(mrb, tint_obj, &Color_type, Color);
 
-	DrawTexture(*texture_data, x, y, *color_data);
+	DrawTexture(*texture_data, x, y, *tint_data);
+
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_draw_texture_ex(mrb_state* mrb, mrb_value self) {
+	mrb_value texture_obj;
+	mrb_value pos_obj;
+    mrb_float rotation;
+    mrb_float scale;
+    mrb_value tint_obj;
+	mrb_get_args(mrb, "ooffo", &texture_obj, &pos_obj, &rotation, &scale, &tint_obj);
+
+	Texture *texture_data = DATA_GET_PTR(mrb, texture_obj, &Texture_type, Texture);
+    Vector2 *pos_data = DATA_GET_PTR(mrb, pos_obj, &Vector2_type, Vector2);
+	Color *tint_data = DATA_GET_PTR(mrb, tint_obj, &Color_type, Color);
+
+	DrawTextureEx(*texture_data, *pos_data, rotation, scale, *tint_data);
+
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_draw_texture_pro(mrb_state* mrb, mrb_value self) {
+	mrb_value texture_obj;
+	mrb_value pos_obj;
+	mrb_value source_rect_obj;
+	mrb_value dest_rect_obj;
+    mrb_float rotation;
+    mrb_value tint_obj;
+	mrb_get_args(mrb, "oooofo", &texture_obj, &pos_obj, &source_rect_obj, &dest_rect_obj, &rotation, &tint_obj);
+
+	Texture *texture_data = DATA_GET_PTR(mrb, texture_obj, &Texture_type, Texture);
+    Vector2 *pos_data = DATA_GET_PTR(mrb, pos_obj, &Vector2_type, Vector2);
+    Rectangle *source_rect_data = DATA_GET_PTR(mrb, source_rect_obj, &Rectangle_type, Rectangle);
+    Rectangle *dest_rect_data = DATA_GET_PTR(mrb, dest_rect_obj, &Rectangle_type, Rectangle);
+	Color *tint_data = DATA_GET_PTR(mrb, tint_obj, &Color_type, Color);
+
+	DrawTexturePro(*texture_data, *source_rect_data, *dest_rect_data, *pos_data, rotation, *tint_data);
 
 	return mrb_nil_value();
 }
@@ -116,10 +285,10 @@ mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
 	mrb_int a = 255;
 	mrb_get_args(mrb, "|iiii", &r, &g, &b, &a);
 
-	struct Color *color = (struct Color *)DATA_PTR(self);
+	Color *color = (Color *)DATA_PTR(self);
 	if(color) { mrb_free(mrb, color); }
 	mrb_data_init(self, NULL, &Color_type);
-	color = (struct Color *)mrb_malloc(mrb, sizeof(struct Color));
+	color = (Color *)mrb_malloc(mrb, sizeof(Color));
 
 	color->r = r;
 	color->g = g;
@@ -132,15 +301,13 @@ mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_red(mrb_state* mrb, mrb_value self) {
-	struct Color *color = NULL;
-	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
 	return mrb_fixnum_value(color->r);
 }
 
 static mrb_value
 mrb_Color_set_red(mrb_state* mrb, mrb_value self) {
-	struct Color *color = NULL;
-	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
 	mrb_int r;
 	mrb_get_args(mrb, "i", &r);
 	color->r = r;
@@ -150,15 +317,13 @@ mrb_Color_set_red(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_green(mrb_state* mrb, mrb_value self) {
-	struct Color *color = NULL;
-	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
 	return mrb_fixnum_value(color->g);
 }
 
 static mrb_value
 mrb_Color_set_green(mrb_state* mrb, mrb_value self) {
-	struct Color *color = NULL;
-	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
 	mrb_int g;
 	mrb_get_args(mrb, "i", &g);
 	color->g = g;
@@ -168,16 +333,14 @@ mrb_Color_set_green(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_blue(mrb_state* mrb, mrb_value self) {
-	struct Color *color = NULL;
-	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
 
 	return mrb_fixnum_value(color->b);
 }
 
 static mrb_value
 mrb_Color_set_blue(mrb_state* mrb, mrb_value self) {
-	struct Color *color = NULL;
-	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
 	mrb_int b;
 	mrb_get_args(mrb, "i", &b);
 	color->b = b;
@@ -187,15 +350,13 @@ mrb_Color_set_blue(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_alpha(mrb_state* mrb, mrb_value self) {
-	struct Color *color = NULL;
-	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
 	return mrb_fixnum_value(color->a);
 }
 
 static mrb_value
 mrb_Color_set_alpha(mrb_state* mrb, mrb_value self) {
-	struct Color *color = NULL;
-	color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
 	mrb_int a;
 	mrb_get_args(mrb, "i", &a);
 	color->a = a;
@@ -286,10 +447,9 @@ mrb_draw_text(mrb_state* mrb, mrb_value self) {
 	mrb_int fontSize = 16;
 	mrb_value color_obj;
 
-	struct Color *color = NULL;
 
 	mrb_get_args(mrb, "|ziiio", &text, &x, &y, &fontSize, &color_obj);
-	color = DATA_GET_PTR(mrb, color_obj, &Color_type, Color);
+    Color *color = DATA_GET_PTR(mrb, color_obj, &Color_type, Color);
 	DrawText(text, x, y, fontSize, *color);
 	return mrb_nil_value();
 }
@@ -376,6 +536,8 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_class_method(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "_draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
+	mrb_define_class_method(mrb, raylib, "_draw_texture_ex", mrb_draw_texture_ex, MRB_ARGS_REQ(5));
+	mrb_define_class_method(mrb, raylib, "_draw_texture_pro", mrb_draw_texture_pro, MRB_ARGS_REQ(6));
 	mrb_define_class_method(mrb, raylib, "is_key_pressed?", mrb_is_key_pressed, MRB_ARGS_REQ(1));
 	mrb_define_class_method(mrb, raylib, "is_key_down?", mrb_is_key_down, MRB_ARGS_REQ(1));
 	mrb_define_class_method(mrb, raylib, "is_key_released?", mrb_is_key_released, MRB_ARGS_REQ(1));
@@ -383,7 +545,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_class_method(mrb, raylib, "_key_pressed", mrb_get_key_pressed, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "mouse_x", mrb_get_mouse_x, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "mouse_y", mrb_get_mouse_y, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb,raylib, "mouse_wheel", mrb_get_mouse_wheel_move, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb, raylib, "mouse_wheel", mrb_get_mouse_wheel_move, MRB_ARGS_NONE());
 
 	struct RClass *color_class = mrb_define_class_under(mrb, raylib, "Color", mrb->object_class);
 	MRB_SET_INSTANCE_TT(color_class, MRB_TT_DATA);
@@ -396,7 +558,6 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, color_class, "b=", mrb_Color_set_blue, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, color_class, "a", mrb_Color_get_alpha, MRB_ARGS_NONE());
 	mrb_define_method(mrb, color_class, "a=", mrb_Color_set_alpha, MRB_ARGS_REQ(1));
-
 
 	struct RClass *texture_class = mrb_define_class_under(mrb, raylib, "Texture", mrb->object_class);
 	MRB_SET_INSTANCE_TT(texture_class, MRB_TT_DATA);
@@ -412,6 +573,30 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, texture_class, "id", mrb_Texture_get_id, MRB_ARGS_NONE());
 	mrb_define_method(mrb, texture_class, "mipmaps", mrb_Texture_get_mipmaps, MRB_ARGS_NONE());
 	mrb_define_method(mrb, texture_class, "format", mrb_Texture_get_format, MRB_ARGS_NONE());
+
+	struct RClass *vector2_class = mrb_define_class_under(mrb, raylib, "Vector2", mrb->object_class);
+	MRB_SET_INSTANCE_TT(vector2_class, MRB_TT_DATA);
+	mrb_define_method(mrb, vector2_class, "initialize", mrb_Vector2_initialize, MRB_ARGS_REQ(2));
+	mrb_define_method(mrb, vector2_class, "x", mrb_Vector2_get_x, MRB_ARGS_NONE());
+	mrb_define_method(mrb, vector2_class, "x=", mrb_Vector2_set_x, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, vector2_class, "y", mrb_Vector2_get_y, MRB_ARGS_NONE());
+	mrb_define_method(mrb, vector2_class, "y=", mrb_Vector2_set_y, MRB_ARGS_REQ(1));
+
+	struct RClass *rectangle_class = mrb_define_class_under(mrb, raylib, "Rectangle", mrb->object_class);
+	MRB_SET_INSTANCE_TT(rectangle_class, MRB_TT_DATA);
+	mrb_define_method(mrb, rectangle_class, "initialize", mrb_Rectangle_initialize, MRB_ARGS_REQ(4));
+	mrb_define_method(mrb, rectangle_class, "x", mrb_Rectangle_get_x, MRB_ARGS_NONE());
+	mrb_define_method(mrb, rectangle_class, "x=", mrb_Rectangle_set_x, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, rectangle_class, "y", mrb_Rectangle_get_y, MRB_ARGS_NONE());
+	mrb_define_method(mrb, rectangle_class, "y=", mrb_Rectangle_set_y, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, rectangle_class, "width", mrb_Rectangle_get_width, MRB_ARGS_NONE());
+	mrb_define_method(mrb, rectangle_class, "width=", mrb_Rectangle_set_width, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, rectangle_class, "w", mrb_Rectangle_get_width, MRB_ARGS_NONE());
+	mrb_define_method(mrb, rectangle_class, "w=", mrb_Rectangle_set_width, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, rectangle_class, "height", mrb_Rectangle_get_height, MRB_ARGS_NONE());
+	mrb_define_method(mrb, rectangle_class, "height=", mrb_Rectangle_set_height, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, rectangle_class, "h", mrb_Rectangle_get_height, MRB_ARGS_NONE());
+	mrb_define_method(mrb, rectangle_class, "h=", mrb_Rectangle_set_height, MRB_ARGS_REQ(1));
 
 #if defined(PLATFORM_WEB)
 	mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());

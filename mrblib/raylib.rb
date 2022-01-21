@@ -30,6 +30,14 @@ module Raylib
       self._draw_texture(texture, x, y, tint)
     end
 
+    def draw_texture_ex(texture:, pos:, rotation:, scale:, tint: Rl::Color.new(255,255,255,255))
+      self._draw_texture_ex(texture, pos, rotation, scale, tint)
+    end
+
+    def draw_texture_pro(texture:, source:, dest:, origin:, rotation:, tint: Rl::Color.new(255,255,255,255))
+      self._draw_texture_pro(texture, source, dest, origin, rotation, tint)
+    end
+
     def keys_pressed
       if self.data_keys_pressed
         return self.data_keys_pressed
