@@ -499,6 +499,14 @@ mrb_get_mouse_wheel_move(mrb_state* mrb, mrb_value self) {
 }
 
 static mrb_value
+mrb_init_audio_device(mrb_state* mrb, mrb_value self) {
+	InitAudioDevice();
+
+	return mrb_nil_value();
+}
+
+
+static mrb_value
 mrb_init_window(mrb_state* mrb, mrb_value self) {
 	mrb_int screenWidth = 800;
 	mrb_int screenHeight = 600;
@@ -705,6 +713,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	struct RClass *sound_class = mrb_define_class_under(mrb, raylib, "Sound", mrb->object_class);
 	MRB_SET_INSTANCE_TT(sound_class, MRB_TT_DATA);
 	mrb_define_method(mrb, sound_class, "initialize", mrb_Sound_initialize, MRB_ARGS_REQ(1));
+	mrb_define_class_method(mrb, raylib, "init_audio_device", mrb_init_audio_device, MRB_ARGS_NONE());
 
 	struct RClass *texture_class = mrb_define_class_under(mrb, raylib, "Texture", mrb->object_class);
 	MRB_SET_INSTANCE_TT(texture_class, MRB_TT_DATA);
