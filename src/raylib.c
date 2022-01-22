@@ -295,7 +295,7 @@ mrb_draw_texture_pro(mrb_state* mrb, mrb_value self) {
 	mrb_value dest_rect_obj;
 	mrb_float rotation;
 	mrb_value tint_obj;
-	mrb_get_args(mrb, "oooofo", &texture_obj, &pos_obj, &source_rect_obj, &dest_rect_obj, &rotation, &tint_obj);
+	mrb_get_args(mrb, "oooofo", &texture_obj, &source_rect_obj, &dest_rect_obj, &pos_obj, &rotation, &tint_obj);
 
 	Texture *texture_data = DATA_GET_PTR(mrb, texture_obj, &Texture_type, Texture);
 	Vector2 *pos_data = DATA_GET_PTR(mrb, pos_obj, &Vector2_type, Vector2);

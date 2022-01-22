@@ -48,7 +48,7 @@ module Raylib
     end
 
 
-    def draw_text(text:, x:, y:, font_size:, color:)
+    def draw_text(text:, x:, y:, font_size:, color: Rl::Color.new(255,255,255,255))
       self._draw_text(text, x, y, font_size, color)
     end
 
@@ -56,12 +56,12 @@ module Raylib
       self._draw_texture(texture, x, y, tint)
     end
 
-    def draw_texture_ex(texture:, pos:, rotation:, scale:, tint: Rl::Color.new(255,255,255,255))
+    def draw_texture_ex(texture:, pos:, rotation: 0, scale: 1, tint: Rl::Color.new(255,255,255,255))
       self._draw_texture_ex(texture, pos, rotation, scale, tint)
     end
 
-    def draw_texture_pro(texture:, source:, dest:, origin:, rotation:, tint: Rl::Color.new(255,255,255,255))
-      self._draw_texture_pro(texture, source, dest, origin, rotation, tint)
+    def draw_texture_pro(texture:, source_rect:, dest_rect:, origin: Rl::Vector.new(0,0), rotation: 0, tint: Rl::Color.new(255,255,255,255))
+      self._draw_texture_pro(texture, source_rect, dest_rect, origin, rotation, tint)
     end
 
     def keys_pressed
