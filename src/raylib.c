@@ -12,6 +12,7 @@
 #if defined(PLATFORM_WEB)
 void execute_emscripten_block(void*);
 #endif
+void helper_texture_free(mrb_state*, void*);
 
 bool check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rect_obj);
 
@@ -20,8 +21,15 @@ static const struct mrb_data_type Color_type = {
 };
 
 static const struct mrb_data_type Texture_type = {
-	"Texture", mrb_free
+	"Texture", helper_texture_free
 };
+
+void
+helper_texture_free(mrb_state* mrb, void*ptr) {
+	Texture *texture = (Texture*)ptr;
+	UnloadTexture(*texture);
+	mrb_free(mrb, ptr);
+}
 
 static const struct mrb_data_type Sound_type = {
 	"Sound", mrb_free
