@@ -327,6 +327,22 @@ mrb_end_scissor_mode(mrb_state* mrb, mrb_value self) {
 }
 
 static mrb_value
+mrb_begin_blend_mode(mrb_state* mrb, mrb_value self) {
+	mrb_int mode;
+	mrb_get_args(mrb, "i", &mode);
+
+	BeginBlendMode(mode);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_end_blend_mode(mrb_state* mrb, mrb_value self) {
+	EndBlendMode();
+	return mrb_nil_value();
+}
+
+
+static mrb_value
 mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
 	mrb_int r = 255;
 	mrb_int g = 0;
@@ -697,6 +713,8 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_class_method(mrb, raylib, "mouse_wheel", mrb_get_mouse_wheel_move, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "begin_scissor_mode", mrb_begin_scissor_mode, MRB_ARGS_REQ(4));
 	mrb_define_class_method(mrb, raylib, "end_scissor_mode", mrb_end_scissor_mode, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb, raylib, "begin_blend_mode", mrb_begin_blend_mode, MRB_ARGS_REQ(1));
+	mrb_define_class_method(mrb, raylib, "end_blend_mode", mrb_end_blend_mode, MRB_ARGS_NONE());
 
 	struct RClass *color_class = mrb_define_class_under(mrb, raylib, "Color", mrb->object_class);
 	MRB_SET_INSTANCE_TT(color_class, MRB_TT_DATA);
