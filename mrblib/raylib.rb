@@ -1,6 +1,16 @@
 Rl = Raylib
 
 module Raylib
+  class Rectangle
+    def draw(color: Rl::Color.new(255,255,255,255))
+      self._draw(color)
+    end
+
+    def draw_lines(line_thick: 1, color: Rl::Color.new(255,255,255,255))
+      self._draw_lines(line_thick, color)
+    end
+  end
+
   class Circle
     attr_accessor :vector
     attr_accessor :radius
@@ -60,8 +70,8 @@ module Raylib
       self._draw_texture_ex(texture, pos, rotation, scale, tint)
     end
 
-    def draw_texture_pro(texture:, source_rect:, dest_rect:, origin: Rl::Vector.new(0,0), rotation: 0, tint: Rl::Color.new(255,255,255,255))
-      self._draw_texture_pro(texture, source_rect, dest_rect, origin, rotation, tint)
+    def draw_texture_pro(texture:, source_rec:, dest_rec:, origin: Rl::Vector.new(0,0), rotation: 0, tint: Rl::Color.new(255,255,255,255))
+      self._draw_texture_pro(texture, source_rec, dest_rec, origin, rotation, tint)
     end
 
     def keys_pressed

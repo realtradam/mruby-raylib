@@ -14,7 +14,7 @@ void execute_emscripten_block(void*);
 #endif
 void helper_texture_free(mrb_state*, void*);
 
-bool check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rect_obj);
+bool check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rec_obj);
 
 static const struct mrb_data_type Color_type = {
 	"Color", mrb_free
@@ -291,19 +291,19 @@ static mrb_value
 mrb_draw_texture_pro(mrb_state* mrb, mrb_value self) {
 	mrb_value texture_obj;
 	mrb_value pos_obj;
-	mrb_value source_rect_obj;
-	mrb_value dest_rect_obj;
+	mrb_value source_rec_obj;
+	mrb_value dest_rec_obj;
 	mrb_float rotation;
 	mrb_value tint_obj;
-	mrb_get_args(mrb, "oooofo", &texture_obj, &source_rect_obj, &dest_rect_obj, &pos_obj, &rotation, &tint_obj);
+	mrb_get_args(mrb, "oooofo", &texture_obj, &source_rec_obj, &dest_rec_obj, &pos_obj, &rotation, &tint_obj);
 
 	Texture *texture_data = DATA_GET_PTR(mrb, texture_obj, &Texture_type, Texture);
 	Vector2 *pos_data = DATA_GET_PTR(mrb, pos_obj, &Vector2_type, Vector2);
-	Rectangle *source_rect_data = DATA_GET_PTR(mrb, source_rect_obj, &Rectangle_type, Rectangle);
-	Rectangle *dest_rect_data = DATA_GET_PTR(mrb, dest_rect_obj, &Rectangle_type, Rectangle);
+	Rectangle *source_rec_data = DATA_GET_PTR(mrb, source_rec_obj, &Rectangle_type, Rectangle);
+	Rectangle *dest_rec_data = DATA_GET_PTR(mrb, dest_rec_obj, &Rectangle_type, Rectangle);
 	Color *tint_data = DATA_GET_PTR(mrb, tint_obj, &Color_type, Color);
 
-	DrawTexturePro(*texture_data, *source_rect_data, *dest_rect_data, *pos_data, rotation, *tint_data);
+	DrawTexturePro(*texture_data, *source_rec_data, *dest_rec_data, *pos_data, rotation, *tint_data);
 
 	return mrb_nil_value();
 }
@@ -656,11 +656,11 @@ mrb_Rectangle_collide_with_rec(mrb_state* mrb, mrb_value self) {
 }
 
 bool
-check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rect_obj) {
+check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rec_obj) {
 	mrb_value vector_obj = mrb_funcall(mrb, circle_obj, "vector", 0);
 	mrb_float radius = mrb_as_float(mrb, mrb_funcall(mrb, circle_obj, "radius", 0));
 	Vector2 *center = DATA_GET_PTR(mrb, vector_obj, &Vector2_type, Vector2);
-	Rectangle *rec = DATA_GET_PTR(mrb, rect_obj, &Rectangle_type, Rectangle);
+	Rectangle *rec = DATA_GET_PTR(mrb, rec_obj, &Rectangle_type, Rectangle);
 
 	return CheckCollisionCircleRec(*center, radius, *rec);
 }
@@ -675,10 +675,49 @@ mrb_Rectangle_collide_with_circ(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Circle_collide_with_rec(mrb_state* mrb, mrb_value self) {
-	mrb_value rect_obj;
-	mrb_get_args(mrb, "o", &rect_obj);
+	mrb_value rec_obj;
+	mrb_get_args(mrb, "o", &rec_obj);
 
-	return mrb_bool_value(check_collision_circle_rec(mrb, self, rect_obj));
+	return mrb_bool_value(check_collision_circle_rec(mrb, self, rec_obj));
+}
+
+static mrb_value
+mrb_Rectangle_get_collision_rec(mrb_state* mrb, mrb_value self) {
+	mrb_value rec_obj;
+	mrb_value collision_rec_obj;
+	mrb_get_args(mrb, "o", &rec_obj);
+
+	Rectangle *rec_self = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	Rectangle *rec_other = DATA_GET_PTR(mrb, rec_obj, &Rectangle_type, Rectangle);
+	Rectangle collision_rec = GetCollisionRec(*rec_self, *rec_other);
+
+	mrb_data_init(collision_rec_obj, &collision_rec, &Rectangle_type);
+	return collision_rec_obj;
+}
+
+static mrb_value
+mrb_Rectangle_draw_rectangle_rec(mrb_state* mrb, mrb_value self) {
+	mrb_value color_obj;
+	mrb_get_args(mrb, "o", &color_obj);
+
+	Color *color = DATA_GET_PTR(mrb, color_obj, &Color_type, Color);
+	Rectangle *rec_self = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	DrawRectangleRec(*rec_self, *color);
+
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_Rectangle_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value self) {
+	mrb_value color_obj;
+	mrb_float line_thick;
+	mrb_get_args(mrb, "fo", &line_thick, &color_obj);
+
+	Color *color = DATA_GET_PTR(mrb, color_obj, &Color_type, Color);
+	Rectangle *rec_self = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+	DrawRectangleLinesEx(*rec_self, line_thick, *color);
+
+	return mrb_nil_value();
 }
 
 void
@@ -771,11 +810,15 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, rectangle_class, "height=", mrb_Rectangle_set_height, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, rectangle_class, "h", mrb_Rectangle_get_height, MRB_ARGS_NONE());
 	mrb_define_method(mrb, rectangle_class, "h=", mrb_Rectangle_set_height, MRB_ARGS_REQ(1));
-	mrb_define_method(mrb, rectangle_class, "collide_with_rect?", mrb_Rectangle_collide_with_rec, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, rectangle_class, "collision_rec", mrb_Rectangle_collide_with_rec, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, rectangle_class, "collide_with_rec?", mrb_Rectangle_collide_with_rec, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, rectangle_class, "collide_with_circle?", mrb_Rectangle_collide_with_circ, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, rectangle_class, "_draw", mrb_Rectangle_draw_rectangle_rec, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, rectangle_class, "_draw_lines", mrb_Rectangle_draw_rectangle_lines_ex, MRB_ARGS_REQ(2));
+
 	struct RClass *circle_class = mrb_define_class_under(mrb, raylib, "Circle", mrb->object_class);
 	//struct RClass *circle_class = mrb_class_get_under(mrb, raylib, "Circle");
-	mrb_define_method(mrb, circle_class, "collide_with_rect?", mrb_Circle_collide_with_rec, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, circle_class, "collide_with_rec?", mrb_Circle_collide_with_rec, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, circle_class, "collide_with_circle?", mrb_Circle_collide_with_circ, MRB_ARGS_REQ(1));
 
 #if defined(PLATFORM_WEB)
