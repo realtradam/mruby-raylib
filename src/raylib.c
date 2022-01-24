@@ -43,6 +43,77 @@ static const struct mrb_data_type Rectangle_type = {
     "Rectangle", mrb_free
 };
 
+static const struct mrb_data_type NPatchInfo_type = {
+	"NPatchInfo", mrb_free
+};
+
+static mrb_value
+mrb_NPatchInfo_initialize(mrb_state* mrb, mrb_value self) {
+	mrb_value rect_source_obj;
+    mrb_int left = 10;
+    mrb_int top = 10;
+    mrb_int right = 10;
+    mrb_int bottom = 10;
+    mrb_int layout = NPATCH_NINE_PATCH;
+    mrb_get_args(mrb, "o|iiiii", &rect_source_obj, &left, &top, &right, &bottom, &layout);
+
+    NPatchInfo *npatch_info = (NPatchInfo *)DATA_PTR(self);
+    if(npatch_info) { mrb_free(mrb, npatch_info ); }
+    mrb_data_init(self, NULL, &NPatchInfo_type);
+    npatch_info = (NPatchInfo *)mrb_malloc(mrb, sizeof(NPatchInfo));
+
+    Rectangle *rect_source = DATA_GET_PTR(mrb, rect_source_obj, &Rectangle_type, Rectangle);
+
+	npatch_info->source = *rect_source;
+	npatch_info->left = left;
+	npatch_info->top = top;
+	npatch_info->right = right;
+	npatch_info->bottom = bottom;
+	npatch_info->layout = layout;
+
+    mrb_data_init(self, npatch_info, &NPatchInfo_type);
+	return self;
+}
+
+/* accessors probably not needed
+static mrb_value
+mrb_NPatchInfo_get_source_rec(mrb_state* mrb, mrb_value self) {
+    NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+    struct RClass *c = mrb_module_get(mrb, "Raylib");
+	struct RClass *rec_class = mrb_class_get_under(mrb, c, Rectangle_type.struct_name);
+	return mrb_obj_value(Data_Wrap_Struct(mrb, rec_class, &Rectangle_type, &npi->source));
+}
+
+static mrb_value
+mrb_NPatchInfo_get_left(mrb_state* mrb, mrb_value self) {
+    NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+    return mrb_fixnum_value(npi->left);
+}
+
+static mrb_value
+mrb_NPatchInfo_get_top(mrb_state* mrb, mrb_value self) {
+    NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+    return mrb_fixnum_value(npi->top);
+}
+
+static mrb_value
+mrb_NPatchInfo_get_right(mrb_state* mrb, mrb_value self) {
+    NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+    return mrb_fixnum_value(npi->right);
+}
+
+static mrb_value
+mrb_NPatchInfo_get_bottom(mrb_state* mrb, mrb_value self) {
+    NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+    return mrb_fixnum_value(npi->bottom);
+}
+
+static mrb_value
+mrb_NPatchInfo_get_layout(mrb_state* mrb, mrb_value self) {
+    NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+    return mrb_fixnum_value(npi->layout);
+}*/
+
 static mrb_value
 mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self) {
     mrb_float x = 0.0;
@@ -304,6 +375,27 @@ mrb_draw_texture_pro(mrb_state* mrb, mrb_value self) {
     Color *tint_data = DATA_GET_PTR(mrb, tint_obj, &Color_type, Color);
 
     DrawTexturePro(*texture_data, *source_rec_data, *dest_rec_data, *pos_data, rotation, *tint_data);
+
+    return mrb_nil_value();
+}
+
+static mrb_value
+mrb_draw_texture_npatch(mrb_state* mrb, mrb_value self) {
+	mrb_value texture_obj;
+    mrb_value npi_obj;
+    mrb_value dest_rec_obj;
+    mrb_value pos_obj;
+    mrb_float rotation;
+    mrb_value tint_obj;
+    mrb_get_args(mrb, "oooofo", &texture_obj, &npi_obj, &dest_rec_obj, &pos_obj, &rotation, &tint_obj);
+
+    Texture *texture_data = DATA_GET_PTR(mrb, texture_obj, &Texture_type, Texture);
+    NPatchInfo *npi_data = DATA_GET_PTR(mrb, npi_obj, &NPatchInfo_type, NPatchInfo);
+    Rectangle *dest_rec_data = DATA_GET_PTR(mrb, dest_rec_obj, &Rectangle_type, Rectangle);
+	Vector2 *pos_data = DATA_GET_PTR(mrb, pos_obj, &Vector2_type, Vector2);
+    Color *tint_data = DATA_GET_PTR(mrb, tint_obj, &Color_type, Color);
+
+    DrawTextureNPatch(*texture_data, *npi_data, *dest_rec_data, *pos_data, rotation, *tint_data);
 
     return mrb_nil_value();
 }
@@ -818,9 +910,18 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
     mrb_define_method(mrb, rectangle_class, "_draw_lines", mrb_Rectangle_draw_rectangle_lines_ex, MRB_ARGS_REQ(2));
 
     struct RClass *circle_class = mrb_define_class_under(mrb, raylib, "Circle", mrb->object_class);
-    //struct RClass *circle_class = mrb_class_get_under(mrb, raylib, "Circle");
     mrb_define_method(mrb, circle_class, "collide_with_rec?", mrb_Circle_collide_with_rec, MRB_ARGS_REQ(1));
     mrb_define_method(mrb, circle_class, "collide_with_circle?", mrb_Circle_collide_with_circ, MRB_ARGS_REQ(1));
+
+    struct RClass *npatch_info_class = mrb_define_class_under(mrb, raylib, "NPatchInfo", mrb->object_class);
+    mrb_define_method(mrb, npatch_info_class, "initialize", mrb_NPatchInfo_initialize, MRB_ARGS_REQ(1) | MRB_ARGS_OPT(5));
+	/* accessors probably not needed
+    mrb_define_method(mrb, npatch_info_class, "source_rec", mrb_NPatchInfo_get_source_rec, MRB_ARGS_NONE());
+	mrb_define_method(mrb, npatch_info_class, "left", mrb_NPatchInfo_get_left, MRB_ARGS_NONE());
+    mrb_define_method(mrb, npatch_info_class, "top", mrb_NPatchInfo_get_top, MRB_ARGS_NONE());
+    mrb_define_method(mrb, npatch_info_class, "right", mrb_NPatchInfo_get_right, MRB_ARGS_NONE());
+    mrb_define_method(mrb, npatch_info_class, "bottom", mrb_NPatchInfo_get_bottom, MRB_ARGS_NONE());
+    mrb_define_method(mrb, npatch_info_class, "layout", mrb_NPatchInfo_get_layout, MRB_ARGS_NONE());*/
 
 #if defined(PLATFORM_WEB)
     mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
