@@ -684,15 +684,16 @@ mrb_Circle_collide_with_rec(mrb_state* mrb, mrb_value self) {
 static mrb_value
 mrb_Rectangle_get_collision_rec(mrb_state* mrb, mrb_value self) {
     mrb_value rec_obj;
-    mrb_value collision_rec_obj;
     mrb_get_args(mrb, "o", &rec_obj);
 
     Rectangle *rec_self = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
     Rectangle *rec_other = DATA_GET_PTR(mrb, rec_obj, &Rectangle_type, Rectangle);
-    Rectangle collision_rec = GetCollisionRec(*rec_self, *rec_other);
+    Rectangle *collision_rec = (Rectangle *)mrb_malloc(mrb, sizeof(Rectangle));
+	*collision_rec = GetCollisionRec(*rec_self, *rec_other);
 
-    mrb_data_init(collision_rec_obj, &collision_rec, &Rectangle_type);
-    return collision_rec_obj;
+    struct RClass *c = mrb_module_get(mrb, "Raylib");
+	struct RClass *rec_class = mrb_class_get_under(mrb, c, Rectangle_type.struct_name);
+	return mrb_obj_value(Data_Wrap_Struct(mrb, rec_class, &Rectangle_type, collision_rec));
 }
 
 static mrb_value
