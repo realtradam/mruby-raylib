@@ -816,9 +816,9 @@ mrb_Rectangle_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value self) {
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
     struct RClass *raylib = mrb_define_module(mrb, "Raylib");
-    mrb_define_class_method(mrb, raylib, "init_window", mrb_init_window, MRB_ARGS_REQ(3));
+    mrb_define_class_method(mrb, raylib, "init_window", mrb_init_window, MRB_ARGS_OPT(3));
     mrb_define_class_method(mrb, raylib, "platform", mrb_platform, MRB_ARGS_NONE());
-    mrb_define_class_method(mrb, raylib, "_draw_text", mrb_draw_text, MRB_ARGS_REQ(5));
+    mrb_define_class_method(mrb, raylib, "_draw_text", mrb_draw_text, MRB_ARGS_OPT(5));
     mrb_define_class_method(mrb, raylib, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, raylib, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, raylib, "clear_background", mrb_clear_background, MRB_ARGS_REQ(1));
@@ -850,7 +850,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 
     struct RClass *color_class = mrb_define_class_under(mrb, raylib, "Color", mrb->object_class);
     MRB_SET_INSTANCE_TT(color_class, MRB_TT_DATA);
-    mrb_define_method(mrb, color_class, "initialize", mrb_Color_initialize, MRB_ARGS_REQ(4));
+    mrb_define_method(mrb, color_class, "initialize", mrb_Color_initialize, MRB_ARGS_OPT(4));
     mrb_define_method(mrb, color_class, "r", mrb_Color_get_red, MRB_ARGS_NONE());
     mrb_define_method(mrb, color_class, "r=", mrb_Color_set_red, MRB_ARGS_REQ(1));
     mrb_define_method(mrb, color_class, "g", mrb_Color_get_green, MRB_ARGS_NONE());
@@ -882,7 +882,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 
     struct RClass *vector2_class = mrb_define_class_under(mrb, raylib, "Vector2", mrb->object_class);
     MRB_SET_INSTANCE_TT(vector2_class, MRB_TT_DATA);
-    mrb_define_method(mrb, vector2_class, "initialize", mrb_Vector2_initialize, MRB_ARGS_REQ(2));
+    mrb_define_method(mrb, vector2_class, "initialize", mrb_Vector2_initialize, MRB_ARGS_OPT(2));
     mrb_define_method(mrb, vector2_class, "x", mrb_Vector2_get_x, MRB_ARGS_NONE());
     mrb_define_method(mrb, vector2_class, "x=", mrb_Vector2_set_x, MRB_ARGS_REQ(1));
     mrb_define_method(mrb, vector2_class, "y", mrb_Vector2_get_y, MRB_ARGS_NONE());
@@ -890,7 +890,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 
     struct RClass *rectangle_class = mrb_define_class_under(mrb, raylib, "Rectangle", mrb->object_class);
     MRB_SET_INSTANCE_TT(rectangle_class, MRB_TT_DATA);
-    mrb_define_method(mrb, rectangle_class, "initialize", mrb_Rectangle_initialize, MRB_ARGS_REQ(4));
+    mrb_define_method(mrb, rectangle_class, "initialize", mrb_Rectangle_initialize, MRB_ARGS_OPT(4));
     mrb_define_method(mrb, rectangle_class, "x", mrb_Rectangle_get_x, MRB_ARGS_NONE());
     mrb_define_method(mrb, rectangle_class, "x=", mrb_Rectangle_set_x, MRB_ARGS_REQ(1));
     mrb_define_method(mrb, rectangle_class, "y", mrb_Rectangle_get_y, MRB_ARGS_NONE());
