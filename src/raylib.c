@@ -232,7 +232,7 @@ mrb_Vector2_set_x(mrb_state* mrb, mrb_value self) {
 static mrb_value
 mrb_Vector2_get_y(mrb_state* mrb, mrb_value self) {
     Vector2 *vec2 = DATA_GET_PTR(mrb, self, &Vector2_type, Vector2);
-    return mrb_fixnum_value(vec2->x);
+    return mrb_fixnum_value(vec2->y);
 }
 
 static mrb_value
