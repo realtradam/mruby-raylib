@@ -13,6 +13,8 @@
 void execute_emscripten_block(void*);
 #endif
 void helper_texture_free(mrb_state*, void*);
+void helper_sound_free(mrb_state*, void*);
+void helper_music_free(mrb_state*, void*);
 
 bool check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rec_obj);
 
@@ -32,8 +34,15 @@ helper_texture_free(mrb_state* mrb, void*ptr) {
 }
 
 static const struct mrb_data_type Sound_type = {
-    "Sound", mrb_free
+    "Sound", helper_sound_free
 };
+
+void
+helper_sound_free(mrb_state* mrb, void*ptr) {
+    Sound *sound = (Sound*)ptr;
+    UnloadSound(*sound);
+    mrb_free(mrb, ptr);
+}
 
 static const struct mrb_data_type Vector2_type = {
     "Vector2", mrb_free
@@ -46,6 +55,17 @@ static const struct mrb_data_type Rectangle_type = {
 static const struct mrb_data_type NPatchInfo_type = {
 	"NPatchInfo", mrb_free
 };
+
+static const struct mrb_data_type Music_type = {
+	"Music", helper_music_free
+};
+
+void
+helper_music_free(mrb_state* mrb, void*ptr) {
+    Music *music = (Music*)ptr;
+    UnloadMusicStream(*music);
+    mrb_free(mrb, ptr);
+}
 
 static mrb_value
 mrb_NPatchInfo_initialize(mrb_state* mrb, mrb_value self) {
@@ -258,6 +278,147 @@ mrb_Sound_initialize(mrb_state* mrb, mrb_value self) {
 
     mrb_data_init(self, sound, &Sound_type);
     return self;
+}
+
+static mrb_value
+mrb_Sound_play(mrb_state* mrb, mrb_value self) {
+	Sound *sound = DATA_GET_PTR(mrb, self, &Sound_type, Sound);
+	PlaySound(*sound);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_Sound_stop(mrb_state* mrb, mrb_value self) {
+	Sound *sound = DATA_GET_PTR(mrb, self, &Sound_type, Sound);
+	StopSound(*sound);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_Sound_pause(mrb_state* mrb, mrb_value self) {
+	Sound *sound = DATA_GET_PTR(mrb, self, &Sound_type, Sound);
+	PauseSound(*sound);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_Sound_resume(mrb_state* mrb, mrb_value self) {
+	Sound *sound = DATA_GET_PTR(mrb, self, &Sound_type, Sound);
+	ResumeSound(*sound);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_Sound_set_volume(mrb_state* mrb, mrb_value self) {
+	mrb_float vol;
+    mrb_get_args(mrb, "f", &vol);
+	Sound *sound = DATA_GET_PTR(mrb, self, &Sound_type, Sound);
+	SetSoundVolume(*sound, vol);
+	return mrb_fixnum_value(vol);
+}
+
+static mrb_value
+mrb_Sound_set_pitch(mrb_state* mrb, mrb_value self) {
+	mrb_float pitch;
+    mrb_get_args(mrb, "f", &pitch);
+	Sound *sound = DATA_GET_PTR(mrb, self, &Sound_type, Sound);
+	SetSoundPitch(*sound, pitch);
+	return mrb_fixnum_value(pitch);
+}
+
+static mrb_value
+mrb_Sound_is_playing(mrb_state* mrb, mrb_value self) {
+	Sound *sound = DATA_GET_PTR(mrb, self, &Sound_type, Sound);
+	return mrb_bool_value(IsSoundPlaying(*sound));
+}
+
+static mrb_value
+mrb_Music_initialize(mrb_state* mrb, mrb_value self) {
+    char* path = NULL;
+    mrb_get_args(mrb, "z", &path);
+
+    Music *music = (Music *)DATA_PTR(self);
+    if(music) { mrb_free(mrb, music); }
+    mrb_data_init(self, NULL, &Music_type);
+    music = (Music *)mrb_malloc(mrb, sizeof(Music));
+
+    *music = LoadMusicStream(path);
+
+    mrb_data_init(self, music, &Music_type);
+    return self;
+}
+
+static mrb_value
+mrb_Music_play(mrb_state* mrb, mrb_value self) {
+	Music *music = DATA_GET_PTR(mrb, self, &Music_type, Music);
+	PlayMusicStream(*music);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_Music_stop(mrb_state* mrb, mrb_value self) {
+	Music *music = DATA_GET_PTR(mrb, self, &Music_type, Music);
+	StopMusicStream(*music);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_Music_pause(mrb_state* mrb, mrb_value self) {
+	Music *music = DATA_GET_PTR(mrb, self, &Music_type, Music);
+	PauseMusicStream(*music);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_Music_resume(mrb_state* mrb, mrb_value self) {
+	Music *music = DATA_GET_PTR(mrb, self, &Music_type, Music);
+	ResumeMusicStream(*music);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_Music_is_playing(mrb_state* mrb, mrb_value self) {
+	Music *music = DATA_GET_PTR(mrb, self, &Music_type, Music);
+	return mrb_bool_value(IsMusicStreamPlaying(*music));
+}
+
+static mrb_value
+mrb_Music_set_volume(mrb_state* mrb, mrb_value self) {
+	mrb_float vol;
+	mrb_get_args(mrb, "f", &vol);
+	Music *music = DATA_GET_PTR(mrb, self, &Music_type, Music);
+	SetMusicVolume(*music, vol);
+	return mrb_fixnum_value(vol);
+}
+
+static mrb_value
+mrb_Music_set_pitch(mrb_state* mrb, mrb_value self) {
+	mrb_float pitch;
+    mrb_get_args(mrb, "f", &pitch);
+	Music *music = DATA_GET_PTR(mrb, self, &Music_type, Music);
+	SetMusicPitch(*music, pitch);
+	return mrb_fixnum_value(pitch);
+}
+
+static mrb_value
+mrb_Music_seek(mrb_state* mrb, mrb_value self) {
+	mrb_float pos;
+    mrb_get_args(mrb, "f", &pos);
+	Music *music = DATA_GET_PTR(mrb, self, &Music_type, Music);
+	SeekMusicStream(*music, pos);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_Music_get_time_length(mrb_state* mrb, mrb_value self) {
+	Music *music = DATA_GET_PTR(mrb, self, &Music_type, Music);
+	return mrb_fixnum_value(GetMusicTimeLength(*music));
+}
+
+static mrb_value
+mrb_Music_get_time_played(mrb_state* mrb, mrb_value self) {
+	Music *music = DATA_GET_PTR(mrb, self, &Music_type, Music);
+	return mrb_fixnum_value(GetMusicTimePlayed(*music));
 }
 
 static mrb_value
@@ -615,6 +776,21 @@ mrb_init_audio_device(mrb_state* mrb, mrb_value self) {
 
 
 static mrb_value
+mrb_close_audio_device(mrb_state* mrb, mrb_value self) {
+    CloseAudioDevice();
+
+    return mrb_nil_value();
+}
+
+static mrb_value
+mrb_set_master_volume(mrb_state* mrb, mrb_value self) {
+	mrb_float volume;
+    mrb_get_args(mrb, "f", &volume);
+	SetMasterVolume(volume);
+	return mrb_nil_value();
+}
+
+static mrb_value
 mrb_init_window(mrb_state* mrb, mrb_value self) {
     mrb_int screenWidth = 800;
     mrb_int screenHeight = 600;
@@ -860,10 +1036,34 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
     mrb_define_method(mrb, color_class, "a", mrb_Color_get_alpha, MRB_ARGS_NONE());
     mrb_define_method(mrb, color_class, "a=", mrb_Color_set_alpha, MRB_ARGS_REQ(1));
 
+	mrb_define_class_method(mrb, raylib, "init_audio_device", mrb_init_audio_device, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb, raylib, "close_audio_device", mrb_close_audio_device, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb, raylib, "set_master_volume", mrb_set_master_volume, MRB_ARGS_REQ(1));
+
     struct RClass *sound_class = mrb_define_class_under(mrb, raylib, "Sound", mrb->object_class);
     MRB_SET_INSTANCE_TT(sound_class, MRB_TT_DATA);
     mrb_define_method(mrb, sound_class, "initialize", mrb_Sound_initialize, MRB_ARGS_REQ(1));
-    mrb_define_class_method(mrb, raylib, "init_audio_device", mrb_init_audio_device, MRB_ARGS_NONE());
+    mrb_define_method(mrb, sound_class, "play", mrb_Sound_play, MRB_ARGS_NONE());
+    mrb_define_method(mrb, sound_class, "stop", mrb_Sound_stop, MRB_ARGS_NONE());
+    mrb_define_method(mrb, sound_class, "pause", mrb_Sound_pause, MRB_ARGS_NONE());
+    mrb_define_method(mrb, sound_class, "resume", mrb_Sound_resume, MRB_ARGS_NONE());
+    mrb_define_method(mrb, sound_class, "volume=", mrb_Sound_set_volume, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, sound_class, "pitch=", mrb_Sound_set_pitch, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, sound_class, "playing?", mrb_Sound_is_playing, MRB_ARGS_NONE());
+
+    struct RClass *music_class = mrb_define_class_under(mrb, raylib, "Music", mrb->object_class);
+    MRB_SET_INSTANCE_TT(music_class, MRB_TT_DATA);
+    mrb_define_method(mrb, music_class, "initialize", mrb_Music_initialize, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, music_class, "play", mrb_Music_play, MRB_ARGS_NONE());
+    mrb_define_method(mrb, music_class, "stop", mrb_Music_stop, MRB_ARGS_NONE());
+    mrb_define_method(mrb, music_class, "pause", mrb_Music_pause, MRB_ARGS_NONE());
+    mrb_define_method(mrb, music_class, "resume", mrb_Music_resume, MRB_ARGS_NONE());
+    mrb_define_method(mrb, music_class, "volume=", mrb_Music_set_volume, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, music_class, "pitch=", mrb_Music_set_pitch, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, music_class, "seek", mrb_Music_seek, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, music_class, "playing?", mrb_Music_is_playing, MRB_ARGS_NONE());
+    mrb_define_method(mrb, music_class, "time_length", mrb_Music_get_time_length, MRB_ARGS_NONE());
+    mrb_define_method(mrb, music_class, "time_played", mrb_Music_get_time_played, MRB_ARGS_NONE());
 
     struct RClass *texture_class = mrb_define_class_under(mrb, raylib, "Texture", mrb->object_class);
     MRB_SET_INSTANCE_TT(texture_class, MRB_TT_DATA);
