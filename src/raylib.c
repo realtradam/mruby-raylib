@@ -96,43 +96,43 @@ mrb_NPatchInfo_initialize(mrb_state* mrb, mrb_value self) {
 }
 
 /* accessors probably not needed
-static mrb_value
-mrb_NPatchInfo_get_source_rec(mrb_state* mrb, mrb_value self) {
-	NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
-	struct RClass *c = mrb_module_get(mrb, "Raylib");
-	struct RClass *rec_class = mrb_class_get_under(mrb, c, Rectangle_type.struct_name);
-	return mrb_obj_value(Data_Wrap_Struct(mrb, rec_class, &Rectangle_type, &npi->source));
-}
+   static mrb_value
+   mrb_NPatchInfo_get_source_rec(mrb_state* mrb, mrb_value self) {
+   NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+   struct RClass *c = mrb_module_get(mrb, "Raylib");
+   struct RClass *rec_class = mrb_class_get_under(mrb, c, Rectangle_type.struct_name);
+   return mrb_obj_value(Data_Wrap_Struct(mrb, rec_class, &Rectangle_type, &npi->source));
+   }
 
-static mrb_value
-mrb_NPatchInfo_get_left(mrb_state* mrb, mrb_value self) {
-	NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
-	return mrb_fixnum_value(npi->left);
-}
+   static mrb_value
+   mrb_NPatchInfo_get_left(mrb_state* mrb, mrb_value self) {
+   NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+   return mrb_fixnum_value(npi->left);
+   }
 
-static mrb_value
-mrb_NPatchInfo_get_top(mrb_state* mrb, mrb_value self) {
-	NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
-	return mrb_fixnum_value(npi->top);
-}
+   static mrb_value
+   mrb_NPatchInfo_get_top(mrb_state* mrb, mrb_value self) {
+   NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+   return mrb_fixnum_value(npi->top);
+   }
 
-static mrb_value
-mrb_NPatchInfo_get_right(mrb_state* mrb, mrb_value self) {
-	NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
-	return mrb_fixnum_value(npi->right);
-}
+   static mrb_value
+   mrb_NPatchInfo_get_right(mrb_state* mrb, mrb_value self) {
+   NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+   return mrb_fixnum_value(npi->right);
+   }
 
-static mrb_value
-mrb_NPatchInfo_get_bottom(mrb_state* mrb, mrb_value self) {
-	NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
-	return mrb_fixnum_value(npi->bottom);
-}
+   static mrb_value
+   mrb_NPatchInfo_get_bottom(mrb_state* mrb, mrb_value self) {
+   NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+   return mrb_fixnum_value(npi->bottom);
+   }
 
-static mrb_value
-mrb_NPatchInfo_get_layout(mrb_state* mrb, mrb_value self) {
-	NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
-	return mrb_fixnum_value(npi->layout);
-}*/
+   static mrb_value
+   mrb_NPatchInfo_get_layout(mrb_state* mrb, mrb_value self) {
+   NPatchInfo *npi = DATA_GET_PTR(mrb, self, &NPatchInfo_type, NPatchInfo);
+   return mrb_fixnum_value(npi->layout);
+   }*/
 
 static mrb_value
 mrb_Rectangle_initialize(mrb_state* mrb, mrb_value self) {
@@ -774,6 +774,10 @@ mrb_init_audio_device(mrb_state* mrb, mrb_value self) {
 	return mrb_nil_value();
 }
 
+static mrb_value
+mrb_is_audio_device_ready(mrb_state* mrb, mrb_value self) {
+	return mrb_bool_value(IsAudioDeviceReady());
+}
 
 static mrb_value
 mrb_close_audio_device(mrb_state* mrb, mrb_value self) {
@@ -1037,6 +1041,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, color_class, "a=", mrb_Color_set_alpha, MRB_ARGS_REQ(1));
 
 	mrb_define_class_method(mrb, raylib, "init_audio_device", mrb_init_audio_device, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb, raylib, "audio_device_ready?", mrb_is_audio_device_ready, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "close_audio_device", mrb_close_audio_device, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "set_master_volume", mrb_set_master_volume, MRB_ARGS_REQ(1));
 
@@ -1116,12 +1121,12 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	struct RClass *npatch_info_class = mrb_define_class_under(mrb, raylib, "NPatchInfo", mrb->object_class);
 	mrb_define_method(mrb, npatch_info_class, "initialize", mrb_NPatchInfo_initialize, MRB_ARGS_REQ(1) | MRB_ARGS_OPT(5));
 	/* accessors probably not needed
-	mrb_define_method(mrb, npatch_info_class, "source_rec", mrb_NPatchInfo_get_source_rec, MRB_ARGS_NONE());
-	mrb_define_method(mrb, npatch_info_class, "left", mrb_NPatchInfo_get_left, MRB_ARGS_NONE());
-	mrb_define_method(mrb, npatch_info_class, "top", mrb_NPatchInfo_get_top, MRB_ARGS_NONE());
-	mrb_define_method(mrb, npatch_info_class, "right", mrb_NPatchInfo_get_right, MRB_ARGS_NONE());
-	mrb_define_method(mrb, npatch_info_class, "bottom", mrb_NPatchInfo_get_bottom, MRB_ARGS_NONE());
-	mrb_define_method(mrb, npatch_info_class, "layout", mrb_NPatchInfo_get_layout, MRB_ARGS_NONE());*/
+	   mrb_define_method(mrb, npatch_info_class, "source_rec", mrb_NPatchInfo_get_source_rec, MRB_ARGS_NONE());
+	   mrb_define_method(mrb, npatch_info_class, "left", mrb_NPatchInfo_get_left, MRB_ARGS_NONE());
+	   mrb_define_method(mrb, npatch_info_class, "top", mrb_NPatchInfo_get_top, MRB_ARGS_NONE());
+	   mrb_define_method(mrb, npatch_info_class, "right", mrb_NPatchInfo_get_right, MRB_ARGS_NONE());
+	   mrb_define_method(mrb, npatch_info_class, "bottom", mrb_NPatchInfo_get_bottom, MRB_ARGS_NONE());
+	   mrb_define_method(mrb, npatch_info_class, "layout", mrb_NPatchInfo_get_layout, MRB_ARGS_NONE());*/
 
 #if defined(PLATFORM_WEB)
 	mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
