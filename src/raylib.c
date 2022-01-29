@@ -763,6 +763,15 @@ mrb_get_mouse_y(mrb_state* mrb, mrb_value self) {
 }
 
 static mrb_value
+mrb_get_mouse_position(mrb_state* mrb, mrb_value self) {
+	Vector2 *pos = (Vector2 *)mrb_malloc(mrb, sizeof(Vector2));
+	*pos = GetMousePosition();
+	struct RClass *c = mrb_module_get(mrb, "Raylib");
+	struct RClass *vec_class = mrb_class_get_under(mrb, c, Vector2_type.struct_name);
+	return mrb_obj_value(Data_Wrap_Struct(mrb, vec_class, &Vector2_type, pos));
+}
+
+static mrb_value
 mrb_get_mouse_wheel_move(mrb_state* mrb, mrb_value self) {
 	return mrb_float_value(mrb, GetMouseWheelMove());
 }
@@ -927,6 +936,16 @@ mrb_Rectangle_collide_with_rec(mrb_state* mrb, mrb_value self) {
 	return mrb_bool_value(CheckCollisionRecs(*rec1, *rec2));
 }
 
+static mrb_value
+mrb_Rectangle_collide_with_point(mrb_state* mrb, mrb_value self) {
+	mrb_value vec_obj;
+	mrb_get_args(mrb, "o", &vec_obj);
+	Vector2 *point = DATA_GET_PTR(mrb, vec_obj, &Vector2_type, Vector2);
+	Rectangle *rec_self = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
+
+	return mrb_bool_value(CheckCollisionPointRec(*point, *rec_self));
+}
+
 bool
 check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rec_obj) {
 	mrb_value vector_obj = mrb_funcall(mrb, circle_obj, "vector", 0);
@@ -1022,6 +1041,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_class_method(mrb, raylib, "_next_key_pressed", mrb_get_key_pressed, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "mouse_x", mrb_get_mouse_x, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "mouse_y", mrb_get_mouse_y, MRB_ARGS_NONE());
+	mrb_define_class_method(mrb, raylib, "mouse_position", mrb_get_mouse_position, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "mouse_wheel", mrb_get_mouse_wheel_move, MRB_ARGS_NONE());
 	mrb_define_class_method(mrb, raylib, "begin_scissor_mode", mrb_begin_scissor_mode, MRB_ARGS_REQ(4));
 	mrb_define_class_method(mrb, raylib, "end_scissor_mode", mrb_end_scissor_mode, MRB_ARGS_NONE());
@@ -1111,6 +1131,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, rectangle_class, "collision_rec", mrb_Rectangle_get_collision_rec, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, rectangle_class, "collide_with_rec?", mrb_Rectangle_collide_with_rec, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, rectangle_class, "collide_with_circle?", mrb_Rectangle_collide_with_circ, MRB_ARGS_REQ(1));
+	mrb_define_method(mrb, rectangle_class, "collide_with_point?", mrb_Rectangle_collide_with_point, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, rectangle_class, "_draw", mrb_Rectangle_draw_rectangle_rec, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, rectangle_class, "_draw_lines", mrb_Rectangle_draw_rectangle_lines_ex, MRB_ARGS_REQ(2));
 
