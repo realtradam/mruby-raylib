@@ -808,9 +808,20 @@ mrb_init_window(mrb_state* mrb, mrb_value self) {
 	mrb_int screenWidth = 800;
 	mrb_int screenHeight = 600;
 	char* title = "Hello World from FelFlame!";
-	mrb_get_args(mrb, "|iiz", &screenWidth, &screenHeight, &title);
 
-	InitWindow(screenWidth, screenHeight, title);
+	const mrb_sym kw_names[2] = { 
+		mrb_intern_check_cstr(mrb, "width"), 
+		mrb_intern_check_cstr(mrb, "height")
+	};
+	mrb_value kw_values[2] = {};
+	const mrb_kwargs kwargs = { 2, 0, kw_names, kw_values, NULL };
+	//mrb_get_args(mrb, "|iiz", &screenWidth, &screenHeight, &title);
+	mrb_get_args(mrb, "z:", &title, &kwargs);
+	if (mrb_undef_p(kw_values[0])) { kw_values[0] = mrb_fixnum_value(800); }
+	if (mrb_undef_p(kw_values[1])) { kw_values[1] = mrb_fixnum_value(600); }
+
+	//InitWindow(screenWidth, screenHeight, title);
+	InitWindow(mrb_fixnum(kw_values[0]), mrb_fixnum(kw_values[1]), title);
 
 	return mrb_nil_value();
 }
