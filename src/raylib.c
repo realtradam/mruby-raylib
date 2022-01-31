@@ -810,8 +810,8 @@ mrb_init_window(mrb_state* mrb, mrb_value self) {
 	char* title = "Hello World from FelFlame!";
 
 	const mrb_sym kw_names[2] = { 
-		mrb_intern_check_cstr(mrb, "width"), 
-		mrb_intern_check_cstr(mrb, "height")
+		mrb_intern_lit(mrb, "width"), 
+		mrb_intern_lit(mrb, "height")
 	};
 	mrb_value kw_values[2] = {};
 	const mrb_kwargs kwargs = { 2, 0, kw_names, kw_values, NULL };
