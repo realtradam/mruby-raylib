@@ -1,0 +1,10 @@
+--markup markdown
+--plugin mruby
+--output-dir ./docs
+
+src/**/*.c
+mrblib/**/*.rb
+include/**/*.h
+
+src/*.c
+./mrblib/*.rb
