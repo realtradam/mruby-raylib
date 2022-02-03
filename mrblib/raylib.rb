@@ -1,5 +1,6 @@
 Rl = Raylib
 
+# This is a raylib module
 module Raylib
   class Rectangle
     def draw(color: Rl::Color.new(255,255,255,255))
