@@ -67,6 +67,7 @@ helper_music_free(mrb_state* mrb, void*ptr) {
 	mrb_free(mrb, ptr);
 }
 
+
 static mrb_value
 mrb_NPatchInfo_initialize(mrb_state* mrb, mrb_value self) {
 	mrb_value rect_source_obj;
@@ -803,6 +804,19 @@ mrb_set_master_volume(mrb_state* mrb, mrb_value self) {
 	return mrb_nil_value();
 }
 
+/*
+ * @overload init_window(screen_width, screen_height, title)
+ *
+ * Initialize window and OpenGL context.
+ *
+ * *Parameters:*
+ *
+ * * *screen_width* (+Integer+)
+ *
+ * * *screen_height* (+Integer+)
+ *
+ * * *title* (+String+)
+ */
 static mrb_value
 mrb_init_window(mrb_state* mrb, mrb_value self) {
 	mrb_int screenWidth = 800;
@@ -815,6 +829,13 @@ mrb_init_window(mrb_state* mrb, mrb_value self) {
 	return mrb_nil_value();
 }
 
+/*
+ * Returns a string telling if the platform is web or desktop.
+ *
+ * *Returns:*
+ *
+ * * +String+—Either "web" or "desktop".
+ */
 static mrb_value
 mrb_platform(mrb_state* mrb, mrb_value self) {
 #if defined(PLATFORM_WEB)
@@ -1015,38 +1036,38 @@ mrb_Rectangle_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value self) {
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	struct RClass *raylib = mrb_define_module(mrb, "Raylib");
-	mrb_define_class_method(mrb, raylib, "init_window", mrb_init_window, MRB_ARGS_OPT(3));
-	mrb_define_class_method(mrb, raylib, "platform", mrb_platform, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "_draw_text", mrb_draw_text, MRB_ARGS_OPT(5));
-	mrb_define_class_method(mrb, raylib, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "clear_background", mrb_clear_background, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "call_main_loop", mrb_call_main_loop, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "target_fps=", mrb_target_fps, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "fps", mrb_fps, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "_draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
-	mrb_define_class_method(mrb, raylib, "_draw_texture_ex", mrb_draw_texture_ex, MRB_ARGS_REQ(5));
-	mrb_define_class_method(mrb, raylib, "_draw_texture_pro", mrb_draw_texture_pro, MRB_ARGS_REQ(6));
-	mrb_define_class_method(mrb, raylib, "mouse_button_pressed?", mrb_is_mouse_button_pressed, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "mouse_button_down?", mrb_is_mouse_button_down, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "mouse_button_released?", mrb_is_mouse_button_released, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "mouse_button_up?", mrb_is_mouse_button_up, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "key_pressed?", mrb_is_key_pressed, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "key_down?", mrb_is_key_down, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "key_released?", mrb_is_key_released, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "key_up?", mrb_is_key_up, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "_next_key_pressed", mrb_get_key_pressed, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "mouse_x", mrb_get_mouse_x, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "mouse_y", mrb_get_mouse_y, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "mouse_position", mrb_get_mouse_position, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "mouse_wheel", mrb_get_mouse_wheel_move, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "begin_scissor_mode", mrb_begin_scissor_mode, MRB_ARGS_REQ(4));
-	mrb_define_class_method(mrb, raylib, "end_scissor_mode", mrb_end_scissor_mode, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "begin_blend_mode", mrb_begin_blend_mode, MRB_ARGS_REQ(1));
-	mrb_define_class_method(mrb, raylib, "end_blend_mode", mrb_end_blend_mode, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "init_window", mrb_init_window, MRB_ARGS_OPT(3));
+	mrb_define_module_function(mrb, raylib, "platform", mrb_platform, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "_draw_text", mrb_draw_text, MRB_ARGS_OPT(5));
+	mrb_define_module_function(mrb, raylib, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "clear_background", mrb_clear_background, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "call_main_loop", mrb_call_main_loop, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "target_fps=", mrb_target_fps, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "fps", mrb_fps, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "_draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
+	mrb_define_module_function(mrb, raylib, "_draw_texture_ex", mrb_draw_texture_ex, MRB_ARGS_REQ(5));
+	mrb_define_module_function(mrb, raylib, "_draw_texture_pro", mrb_draw_texture_pro, MRB_ARGS_REQ(6));
+	mrb_define_module_function(mrb, raylib, "mouse_button_pressed?", mrb_is_mouse_button_pressed, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "mouse_button_down?", mrb_is_mouse_button_down, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "mouse_button_released?", mrb_is_mouse_button_released, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "mouse_button_up?", mrb_is_mouse_button_up, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "key_pressed?", mrb_is_key_pressed, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "key_down?", mrb_is_key_down, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "key_released?", mrb_is_key_released, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "key_up?", mrb_is_key_up, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "_next_key_pressed", mrb_get_key_pressed, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "mouse_x", mrb_get_mouse_x, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "mouse_y", mrb_get_mouse_y, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "mouse_position", mrb_get_mouse_position, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "mouse_wheel", mrb_get_mouse_wheel_move, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "begin_scissor_mode", mrb_begin_scissor_mode, MRB_ARGS_REQ(4));
+	mrb_define_module_function(mrb, raylib, "end_scissor_mode", mrb_end_scissor_mode, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "begin_blend_mode", mrb_begin_blend_mode, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "end_blend_mode", mrb_end_blend_mode, MRB_ARGS_NONE());
 
 	struct RClass *color_class = mrb_define_class_under(mrb, raylib, "Color", mrb->object_class);
 	MRB_SET_INSTANCE_TT(color_class, MRB_TT_DATA);
@@ -1060,10 +1081,10 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, color_class, "a", mrb_Color_get_alpha, MRB_ARGS_NONE());
 	mrb_define_method(mrb, color_class, "a=", mrb_Color_set_alpha, MRB_ARGS_REQ(1));
 
-	mrb_define_class_method(mrb, raylib, "init_audio_device", mrb_init_audio_device, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "audio_device_ready?", mrb_is_audio_device_ready, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "close_audio_device", mrb_close_audio_device, MRB_ARGS_NONE());
-	mrb_define_class_method(mrb, raylib, "set_master_volume", mrb_set_master_volume, MRB_ARGS_REQ(1));
+	mrb_define_module_function(mrb, raylib, "init_audio_device", mrb_init_audio_device, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "audio_device_ready?", mrb_is_audio_device_ready, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "close_audio_device", mrb_close_audio_device, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "set_master_volume", mrb_set_master_volume, MRB_ARGS_REQ(1));
 
 	struct RClass *sound_class = mrb_define_class_under(mrb, raylib, "Sound", mrb->object_class);
 	MRB_SET_INSTANCE_TT(sound_class, MRB_TT_DATA);
@@ -1150,7 +1171,7 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	   mrb_define_method(mrb, npatch_info_class, "layout", mrb_NPatchInfo_get_layout, MRB_ARGS_NONE());*/
 
 #if defined(PLATFORM_WEB)
-	mrb_define_class_method(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "emscripten_set_main_loop", mrb_emscripten_set_main_loop, MRB_ARGS_NONE());
 #endif
 }
 

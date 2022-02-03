@@ -1,2 +1,3 @@
-src/raylib.c a6e9472ccd723550bb796f384ebc2c50f03b1933
+src/core.c 53bf1c494a689b572f53c53d66fc53ed075ba02d
+src/raylib.c 4a1f98604efd36c06c77d3eee319786851ae993e
 mrblib/raylib.rb 98d89744b3ffefff688c982d791944043c83bd2d

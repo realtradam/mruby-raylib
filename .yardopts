@@ -1,4 +1,5 @@
 --markup markdown
+--markup rdoc
 --plugin mruby
 --output-dir ./docs
 
