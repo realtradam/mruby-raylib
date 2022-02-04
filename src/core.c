@@ -1,17 +1,21 @@
 #include "raylib/core.h"
 
 /*
+ * @overload init_window(screen_width: 800, screen_height: 600, title: "Hello World from FelFlame!")
+ *	 @param [Integer] width ye
  * @overload init_window(screen_width, screen_height, title)
  *
  * Initialize window and OpenGL context.
  *
  * *Parameters:*
  *
- * * *screen_width* (+Integer+)
+ * * *width* (+Integer+)
  *
- * * *screen_height* (+Integer+)
+ * * *height* (+Integer+)
  *
  * * *title* (+String+)
+ *
+ * @return (Nil)
  */
 static mrb_value
 mrb_init_window(mrb_state* mrb, mrb_value self) {
@@ -21,7 +25,7 @@ mrb_init_window(mrb_state* mrb, mrb_value self) {
 
 	uint32_t kw_num = 3;
 	const mrb_sym kw_names[] = { 
-		mrb_intern_lit(mrb, "width"), 
+		mrb_intern_lit(mrb, "width"),
 		mrb_intern_lit(mrb, "height"),
 		mrb_intern_lit(mrb, "title"),
 	};
@@ -44,8 +48,16 @@ mrb_init_window(mrb_state* mrb, mrb_value self) {
 	return mrb_nil_value();
 }
 
+
+static mrb_value 
+mrb_window_should_close(mrb_state* mrb, mrb_value self) {
+	return mrb_bool_value(WindowShouldClose());
+}
+
+
 void
-mrb_raylib_core_init(mrb_state* mrb) {
+mrb_init_raylib_core(mrb_state* mrb) {
 	struct RClass *raylib = mrb_define_module(mrb, "Raylib");
 	mrb_define_module_function(mrb, raylib, "init_window", mrb_init_window, MRB_ARGS_OPT(3));
+	mrb_define_module_function(mrb, raylib, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
 }

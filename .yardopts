@@ -1,11 +1,11 @@
+--embed-mixin ClassMethods
+
 --markup markdown
+--markup textile
 --markup rdoc
---plugin mruby
 --output-dir ./docs
 
-src/**/*.c
 mrblib/**/*.rb
-include/**/*.h
-
-src/*.c
-./mrblib/*.rb
+mrblib/*.rb
+mrbdoc/**/*.rb
+mrbdoc/*.rb

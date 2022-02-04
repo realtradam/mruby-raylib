@@ -9,7 +9,7 @@
 #include <emscripten/emscripten.h>
 #endif
 
-void mrb_raylib_core_init(mrb_state*);
+void mrb_init_raylib_core(mrb_state*);
 
 #endif /* end of include guard MRUBY_RAYLIB_CORE_H */
 

@@ -1,3 +1,2 @@
-src/core.c 53bf1c494a689b572f53c53d66fc53ed075ba02d
-src/raylib.c 4a1f98604efd36c06c77d3eee319786851ae993e
-mrblib/raylib.rb 98d89744b3ffefff688c982d791944043c83bd2d
+mrblib/raylib.rb ce42382655c9ad1b0aa789cfb6d45d08be4eaf94
+mrbdoc/core.rb 5369d0cc12c20c57c3a60cccd64d624ee5070f87

@@ -865,11 +865,6 @@ mrb_call_main_loop(mrb_state* mrb, mrb_value self) {
 	return mrb_funcall(mrb, mrb_obj_value(c), "main_loop", 0);
 }
 
-static mrb_value 
-mrb_window_should_close(mrb_state* mrb, mrb_value self) {
-	return mrb_bool_value(WindowShouldClose());
-}
-
 #if defined(PLATFORM_WEB)
 static mrb_value 
 mrb_emscripten_set_main_loop(mrb_state* mrb, mrb_value self) {
@@ -1012,7 +1007,7 @@ mrb_Rectangle_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value self) {
 
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
-	mrb_raylib_core_init(mrb);
+	mrb_init_raylib_core(mrb);
 
 	struct RClass *raylib = mrb_define_module(mrb, "Raylib");
 	mrb_define_module_function(mrb, raylib, "platform", mrb_platform, MRB_ARGS_NONE());
@@ -1021,7 +1016,6 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_module_function(mrb, raylib, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "clear_background", mrb_clear_background, MRB_ARGS_REQ(1));
 	mrb_define_module_function(mrb, raylib, "call_main_loop", mrb_call_main_loop, MRB_ARGS_NONE());
-	mrb_define_module_function(mrb, raylib, "window_should_close?", mrb_window_should_close, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "target_fps=", mrb_target_fps, MRB_ARGS_REQ(1));
 	mrb_define_module_function(mrb, raylib, "fps", mrb_fps, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());

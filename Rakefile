@@ -9,6 +9,12 @@ task default: [:api]
 #  t.stats_options = ['--list-undoc']
 #end
 #
+YARD::Rake::YardocTask.new do |t|
+  t.files = ['mrblib/raylib.rb', 'mrbdoc/core.rb'] # ['system_manager.rb', 'component_manager.rb', 'entity_manager.rb', 'scene_manager.rb', 'stage_manager.rb', 'felecs.rb']
+  t.options = ['--output-dir', './docs', 'yardoc --markup=markdown|textile|rdoc(default)']
+  t.stats_options = ['--list-undoc']
+end
+
 desc 'generate yard docs'
 task :api do
   begin
