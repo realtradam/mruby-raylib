@@ -4,6 +4,7 @@
 #include <mruby/data.h>
 #include <mruby/class.h>
 #include <mruby/numeric.h>
+#include <mruby/string.h>
 #include <stdlib.h>
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
@@ -809,19 +810,27 @@ mrb_init_window(mrb_state* mrb, mrb_value self) {
 	mrb_int screenHeight = 600;
 	char* title = "Hello World from FelFlame!";
 
-	const mrb_sym kw_names[2] = { 
+	uint32_t kw_num = 3;
+	const mrb_sym kw_names[] = { 
 		mrb_intern_lit(mrb, "width"), 
-		mrb_intern_lit(mrb, "height")
+		mrb_intern_lit(mrb, "height"),
+		mrb_intern_lit(mrb, "title"),
 	};
-	mrb_value kw_values[2] = {};
-	const mrb_kwargs kwargs = { 2, 0, kw_names, kw_values, NULL };
-	//mrb_get_args(mrb, "|iiz", &screenWidth, &screenHeight, &title);
-	mrb_get_args(mrb, "z:", &title, &kwargs);
-	if (mrb_undef_p(kw_values[0])) { kw_values[0] = mrb_fixnum_value(800); }
-	if (mrb_undef_p(kw_values[1])) { kw_values[1] = mrb_fixnum_value(600); }
+	mrb_value kw_values[kw_num];
+	const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
+	mrb_get_args(mrb, "|iiz:", &screenWidth, &screenHeight, &title, &kwargs);
 
-	//InitWindow(screenWidth, screenHeight, title);
-	InitWindow(mrb_fixnum(kw_values[0]), mrb_fixnum(kw_values[1]), title);
+	if (mrb_undef_p(kw_values[0])) {
+		kw_values[0] = mrb_fixnum_value(screenWidth);
+	}
+	if (mrb_undef_p(kw_values[1])) {
+		kw_values[1] = mrb_fixnum_value(screenHeight);
+	}
+	if (mrb_undef_p(kw_values[2])) {
+		kw_values[2] = mrb_str_new_cstr(mrb, title);
+	}
+
+	InitWindow(mrb_fixnum(kw_values[0]), mrb_fixnum(kw_values[1]), mrb_str_to_cstr(mrb, kw_values[2]));
 
 	return mrb_nil_value();
 }
