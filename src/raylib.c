@@ -6,6 +6,7 @@
 #include <mruby/numeric.h>
 #include <mruby/string.h>
 #include <stdlib.h>
+#include "raylib/core.h"
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
 #endif
@@ -806,50 +807,6 @@ mrb_set_master_volume(mrb_state* mrb, mrb_value self) {
 }
 
 /*
- * @overload init_window(screen_width, screen_height, title)
- *
- * Initialize window and OpenGL context.
- *
- * *Parameters:*
- *
- * * *screen_width* (+Integer+)
- *
- * * *screen_height* (+Integer+)
- *
- * * *title* (+String+)
- */
-static mrb_value
-mrb_init_window(mrb_state* mrb, mrb_value self) {
-	mrb_int screenWidth = 800;
-	mrb_int screenHeight = 600;
-	char* title = "Hello World from FelFlame!";
-
-	uint32_t kw_num = 3;
-	const mrb_sym kw_names[] = { 
-		mrb_intern_lit(mrb, "width"), 
-		mrb_intern_lit(mrb, "height"),
-		mrb_intern_lit(mrb, "title"),
-	};
-	mrb_value kw_values[kw_num];
-	const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
-	mrb_get_args(mrb, "|iiz:", &screenWidth, &screenHeight, &title, &kwargs);
-
-	if (mrb_undef_p(kw_values[0])) {
-		kw_values[0] = mrb_fixnum_value(screenWidth);
-	}
-	if (mrb_undef_p(kw_values[1])) {
-		kw_values[1] = mrb_fixnum_value(screenHeight);
-	}
-	if (mrb_undef_p(kw_values[2])) {
-		kw_values[2] = mrb_str_new_cstr(mrb, title);
-	}
-
-	InitWindow(mrb_fixnum(kw_values[0]), mrb_fixnum(kw_values[1]), mrb_str_to_cstr(mrb, kw_values[2]));
-
-	return mrb_nil_value();
-}
-
-/*
  * Returns a string telling if the platform is web or desktop.
  *
  * *Returns:*
@@ -1055,8 +1012,9 @@ mrb_Rectangle_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value self) {
 
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
+	mrb_raylib_core_init(mrb);
+
 	struct RClass *raylib = mrb_define_module(mrb, "Raylib");
-	mrb_define_module_function(mrb, raylib, "init_window", mrb_init_window, MRB_ARGS_OPT(3));
 	mrb_define_module_function(mrb, raylib, "platform", mrb_platform, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "_draw_text", mrb_draw_text, MRB_ARGS_OPT(5));
 	mrb_define_module_function(mrb, raylib, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());
