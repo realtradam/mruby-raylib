@@ -20,9 +20,6 @@ void helper_music_free(mrb_state*, void*);
 
 bool check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rec_obj);
 
-static const struct mrb_data_type Color_type = {
-	"Color", mrb_free
-};
 
 static const struct mrb_data_type Texture_type = {
 	"Texture", helper_texture_free
@@ -850,14 +847,6 @@ mrb_end_drawing(mrb_state* mrb, mrb_value self) {
 	return mrb_nil_value();
 }
 
-static mrb_value
-mrb_clear_background(mrb_state* mrb, mrb_value self) {
-	mrb_value color_obj;
-	mrb_get_args(mrb, "o", &color_obj);
-	Color *color_data = DATA_GET_PTR(mrb, color_obj, &Color_type, Color);
-	ClearBackground(*color_data);
-	return mrb_nil_value();
-}
 
 static mrb_value 
 mrb_call_main_loop(mrb_state* mrb, mrb_value self) {
@@ -1014,7 +1003,6 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_module_function(mrb, raylib, "_draw_text", mrb_draw_text, MRB_ARGS_OPT(5));
 	mrb_define_module_function(mrb, raylib, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
-	mrb_define_module_function(mrb, raylib, "clear_background", mrb_clear_background, MRB_ARGS_REQ(1));
 	mrb_define_module_function(mrb, raylib, "call_main_loop", mrb_call_main_loop, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "target_fps=", mrb_target_fps, MRB_ARGS_REQ(1));
 	mrb_define_module_function(mrb, raylib, "fps", mrb_fps, MRB_ARGS_NONE());

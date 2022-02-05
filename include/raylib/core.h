@@ -9,6 +9,11 @@
 #include <emscripten/emscripten.h>
 #endif
 
+
+static const struct mrb_data_type Color_type = {
+	"Color", mrb_free
+};
+
 void mrb_init_raylib_core(mrb_state*);
 
 #endif /* end of include guard MRUBY_RAYLIB_CORE_H */

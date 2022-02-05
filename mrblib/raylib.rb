@@ -38,6 +38,14 @@ module Raylib
     end
   end
 
+  class Color
+    class << self
+      def raywhite
+        @raywhite ||= Color.new(245, 245, 245, 255)
+      end
+    end
+  end
+
   class << self
     attr_accessor :defined_loop
     attr_accessor :data_keys_pressed

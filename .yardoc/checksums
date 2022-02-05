@@ -1,3 +1,3 @@
 mrblib/raylib.rb ce42382655c9ad1b0aa789cfb6d45d08be4eaf94
-src/core.c 0500b1e45bbbecf8c2fa2828781070044bd676c7
-src/raylib.c eb2e710a0df02ee30563454790c715cede73189a
+src/core.c b6db3cd16136b72a42912955e51a0745dfc5429b
+src/raylib.c 4c1742dd879b28455ab020b4a51b7bda9916ee60
