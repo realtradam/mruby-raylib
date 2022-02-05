@@ -7,5 +7,5 @@
 
 mrblib/**/*.rb
 mrblib/*.rb
-mrbdoc/**/*.rb
-mrbdoc/*.rb
+src/**/*.c
+src/*.c
