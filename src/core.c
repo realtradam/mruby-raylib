@@ -1,6 +1,5 @@
 #include "raylib/core.h"
 
-
 /*
  * @overload init_window(width: 800, height: 600, title: "Hello World from Raylib!")
  *   @param width [Integer]
