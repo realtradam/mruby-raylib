@@ -431,6 +431,11 @@ mrb_Texture_initialize(mrb_state* mrb, mrb_value self) {
 	mrb_data_init(self, NULL, &Texture_type);
 	texture = (Texture *)mrb_malloc(mrb, sizeof(Texture));
 
+	/*
+	   Texture *texture = PREWRAPSTRUCT(Texture);
+	   WRAPSTRUCT(Texture, Texture_type, texture);
+	   */
+
 	*texture = LoadTexture(path);
 
 	mrb_data_init(self, texture, &Texture_type);
@@ -603,10 +608,7 @@ mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
 	mrb_int a = 255;
 	mrb_get_args(mrb, "|iiii", &r, &g, &b, &a);
 
-	Color *color = (Color *)DATA_PTR(self);
-	if(color) { mrb_free(mrb, color); }
-	mrb_data_init(self, NULL, &Color_type);
-	color = (Color *)mrb_malloc(mrb, sizeof(Color));
+	WRAPSTRUCT(Color, Color_type, self, color);
 
 	color->r = r;
 	color->g = g;
@@ -619,13 +621,13 @@ mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_red(mrb_state* mrb, mrb_value self) {
-	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, self, color);
 	return mrb_fixnum_value(color->r);
 }
 
 static mrb_value
 mrb_Color_set_red(mrb_state* mrb, mrb_value self) {
-	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, self, color);
 	mrb_int r;
 	mrb_get_args(mrb, "i", &r);
 	color->r = r;
@@ -635,13 +637,13 @@ mrb_Color_set_red(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_green(mrb_state* mrb, mrb_value self) {
-	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, self, color);
 	return mrb_fixnum_value(color->g);
 }
 
 static mrb_value
 mrb_Color_set_green(mrb_state* mrb, mrb_value self) {
-	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, self, color);
 	mrb_int g;
 	mrb_get_args(mrb, "i", &g);
 	color->g = g;
@@ -651,14 +653,14 @@ mrb_Color_set_green(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_blue(mrb_state* mrb, mrb_value self) {
-	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, self, color);
 
 	return mrb_fixnum_value(color->b);
 }
 
 static mrb_value
 mrb_Color_set_blue(mrb_state* mrb, mrb_value self) {
-	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, self, color);
 	mrb_int b;
 	mrb_get_args(mrb, "i", &b);
 	color->b = b;
@@ -668,13 +670,13 @@ mrb_Color_set_blue(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_alpha(mrb_state* mrb, mrb_value self) {
-	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, self, color);
 	return mrb_fixnum_value(color->a);
 }
 
 static mrb_value
 mrb_Color_set_alpha(mrb_state* mrb, mrb_value self) {
-	Color *color = DATA_GET_PTR(mrb, self, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, self, color);
 	mrb_int a;
 	mrb_get_args(mrb, "i", &a);
 	color->a = a;
@@ -830,7 +832,7 @@ mrb_draw_text(mrb_state* mrb, mrb_value self) {
 
 
 	mrb_get_args(mrb, "|ziiio", &text, &x, &y, &fontSize, &color_obj);
-	Color *color = DATA_GET_PTR(mrb, color_obj, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, color_obj, color);
 	DrawText(text, x, y, fontSize, *color);
 	return mrb_nil_value();
 }
@@ -974,7 +976,7 @@ mrb_Rectangle_draw_rectangle_rec(mrb_state* mrb, mrb_value self) {
 	mrb_value color_obj;
 	mrb_get_args(mrb, "o", &color_obj);
 
-	Color *color = DATA_GET_PTR(mrb, color_obj, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, color_obj, color);
 	Rectangle *rec_self = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
 	DrawRectangleRec(*rec_self, *color);
 
@@ -987,7 +989,7 @@ mrb_Rectangle_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value self) {
 	mrb_float line_thick;
 	mrb_get_args(mrb, "fo", &line_thick, &color_obj);
 
-	Color *color = DATA_GET_PTR(mrb, color_obj, &Color_type, Color);
+	UNWRAPSTRUCT(Color, Color_type, color_obj, color);
 	Rectangle *rec_self = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
 	DrawRectangleLinesEx(*rec_self, line_thick, *color);
 

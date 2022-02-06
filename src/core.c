@@ -1,5 +1,10 @@
 #include "raylib/core.h"
 
+const struct mrb_data_type Color_type = {
+	"Color", mrb_free
+};
+
+
 /*
  * @overload init_window(width: 800, height: 600, title: "Hello World from Raylib!")
  *   @param width [Integer]
