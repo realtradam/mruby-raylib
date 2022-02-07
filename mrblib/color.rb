@@ -2,7 +2,7 @@ module Raylib
 
   # In addition to creating custom colors, you can call
   # any of the default 140 HTML colors(in addition to
-  # RayWhite) seen here:
+  # RayWhite and Clear) seen here:
   # https://www.w3schools.com/colors/colors_names.asp  
   # 
   # When a default color is called it is created once and
@@ -16,19 +16,12 @@ module Raylib
   # You can also add custom default colors by adding it to the ColorList hash so that they can be called the same way.
   class Color
     class << self
-      # A fully transparent color.   
-      # +rgba(0, 0, 0, 0)+  
-      # The color is cached when this method creates it.
-      # @return [Color]
-      def clear
-        @clear ||= Color.new(0, 0, 0, 0)
-      end
 
       # @!visibility private
       def color_cache(color)
         @color_cache ||= {}
         if ColorList[color]
-          @color_cache[color] ||= Raylib::Color.new(ColorList[color][:r],ColorList[color][:g],ColorList[color][:b],255)
+          @color_cache[color] ||= Raylib::Color.new(ColorList[color][:r],ColorList[color][:g],ColorList[color][:b],ColorList[color][:a]||255)
         else
           raise 'Bad Colorname'
         end
@@ -59,6 +52,7 @@ module Raylib
 
     # Hash of all web colors
     ColorList  = {
+      :clear=>{:r=>0, :g=>0, :b=>0, :a=>0},
       :ray_white=>{:r=>245, :g=>245, :b=>245},
       :alice_blue=>{:r=>0, :g=>15, :b=>143},
       :antique_white=>{:r=>0, :g=>174, :b=>189},
