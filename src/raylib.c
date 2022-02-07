@@ -47,9 +47,6 @@ static const struct mrb_data_type Vector2_type = {
 	"Vector2", mrb_free
 };
 
-static const struct mrb_data_type Rectangle_type = {
-	"Rectangle", mrb_free
-};
 
 static const struct mrb_data_type NPatchInfo_type = {
 	"NPatchInfo", mrb_free
@@ -567,24 +564,6 @@ mrb_draw_texture_npatch(mrb_state* mrb, mrb_value self) {
 }
 
 static mrb_value
-mrb_begin_scissor_mode(mrb_state* mrb, mrb_value self) {
-	mrb_int x;
-	mrb_int y;
-	mrb_int width;
-	mrb_int height;
-	mrb_get_args(mrb, "iiii", &x, &y, &width, &height);
-
-	BeginScissorMode(x, y, width, height);
-	return mrb_nil_value();
-}
-
-static mrb_value
-mrb_end_scissor_mode(mrb_state* mrb, mrb_value self) {
-	EndScissorMode();
-	return mrb_nil_value();
-}
-
-static mrb_value
 mrb_begin_blend_mode(mrb_state* mrb, mrb_value self) {
 	mrb_int mode;
 	mrb_get_args(mrb, "i", &mode);
@@ -608,6 +587,7 @@ mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
 	mrb_int a = 255;
 	mrb_get_args(mrb, "|iiii", &r, &g, &b, &a);
 
+	Color *color;
 	WRAPSTRUCT(Color, Color_type, self, color);
 
 	color->r = r;
@@ -621,12 +601,14 @@ mrb_Color_initialize(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_red(mrb_state* mrb, mrb_value self) {
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, self, color);
 	return mrb_fixnum_value(color->r);
 }
 
 static mrb_value
 mrb_Color_set_red(mrb_state* mrb, mrb_value self) {
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, self, color);
 	mrb_int r;
 	mrb_get_args(mrb, "i", &r);
@@ -637,12 +619,14 @@ mrb_Color_set_red(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_green(mrb_state* mrb, mrb_value self) {
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, self, color);
 	return mrb_fixnum_value(color->g);
 }
 
 static mrb_value
 mrb_Color_set_green(mrb_state* mrb, mrb_value self) {
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, self, color);
 	mrb_int g;
 	mrb_get_args(mrb, "i", &g);
@@ -653,6 +637,7 @@ mrb_Color_set_green(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_blue(mrb_state* mrb, mrb_value self) {
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, self, color);
 
 	return mrb_fixnum_value(color->b);
@@ -660,6 +645,7 @@ mrb_Color_get_blue(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_set_blue(mrb_state* mrb, mrb_value self) {
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, self, color);
 	mrb_int b;
 	mrb_get_args(mrb, "i", &b);
@@ -670,12 +656,14 @@ mrb_Color_set_blue(mrb_state* mrb, mrb_value self) {
 
 static mrb_value
 mrb_Color_get_alpha(mrb_state* mrb, mrb_value self) {
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, self, color);
 	return mrb_fixnum_value(color->a);
 }
 
 static mrb_value
 mrb_Color_set_alpha(mrb_state* mrb, mrb_value self) {
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, self, color);
 	mrb_int a;
 	mrb_get_args(mrb, "i", &a);
@@ -832,23 +820,11 @@ mrb_draw_text(mrb_state* mrb, mrb_value self) {
 
 
 	mrb_get_args(mrb, "|ziiio", &text, &x, &y, &fontSize, &color_obj);
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, color_obj, color);
 	DrawText(text, x, y, fontSize, *color);
 	return mrb_nil_value();
 }
-
-static mrb_value
-mrb_begin_drawing(mrb_state* mrb, mrb_value self) {
-	BeginDrawing();
-	return mrb_nil_value();
-}
-
-static mrb_value
-mrb_end_drawing(mrb_state* mrb, mrb_value self) {
-	EndDrawing();
-	return mrb_nil_value();
-}
-
 
 static mrb_value 
 mrb_call_main_loop(mrb_state* mrb, mrb_value self) {
@@ -976,6 +952,7 @@ mrb_Rectangle_draw_rectangle_rec(mrb_state* mrb, mrb_value self) {
 	mrb_value color_obj;
 	mrb_get_args(mrb, "o", &color_obj);
 
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, color_obj, color);
 	Rectangle *rec_self = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
 	DrawRectangleRec(*rec_self, *color);
@@ -989,6 +966,7 @@ mrb_Rectangle_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value self) {
 	mrb_float line_thick;
 	mrb_get_args(mrb, "fo", &line_thick, &color_obj);
 
+	Color *color;
 	UNWRAPSTRUCT(Color, Color_type, color_obj, color);
 	Rectangle *rec_self = DATA_GET_PTR(mrb, self, &Rectangle_type, Rectangle);
 	DrawRectangleLinesEx(*rec_self, line_thick, *color);
@@ -1003,8 +981,6 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	struct RClass *raylib = mrb_define_module(mrb, "Raylib");
 	mrb_define_module_function(mrb, raylib, "platform", mrb_platform, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "_draw_text", mrb_draw_text, MRB_ARGS_OPT(5));
-	mrb_define_module_function(mrb, raylib, "begin_drawing", mrb_begin_drawing, MRB_ARGS_NONE());
-	mrb_define_module_function(mrb, raylib, "end_drawing", mrb_end_drawing, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "call_main_loop", mrb_call_main_loop, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "target_fps=", mrb_target_fps, MRB_ARGS_REQ(1));
 	mrb_define_module_function(mrb, raylib, "fps", mrb_fps, MRB_ARGS_NONE());
@@ -1026,8 +1002,6 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_module_function(mrb, raylib, "mouse_y", mrb_get_mouse_y, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "mouse_position", mrb_get_mouse_position, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "mouse_wheel", mrb_get_mouse_wheel_move, MRB_ARGS_NONE());
-	mrb_define_module_function(mrb, raylib, "begin_scissor_mode", mrb_begin_scissor_mode, MRB_ARGS_REQ(4));
-	mrb_define_module_function(mrb, raylib, "end_scissor_mode", mrb_end_scissor_mode, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "begin_blend_mode", mrb_begin_blend_mode, MRB_ARGS_REQ(1));
 	mrb_define_module_function(mrb, raylib, "end_blend_mode", mrb_end_blend_mode, MRB_ARGS_NONE());
 

@@ -60,7 +60,7 @@ module Raylib
       end
     end
 
-    # Hash of all web colors
+    # Hash of all web colors, RayWhite, and Clear
     ColorList  = {
       :clear=>{:r=>0, :g=>0, :b=>0, :a=>0},
       :ray_white=>{:r=>245, :g=>245, :b=>245},
