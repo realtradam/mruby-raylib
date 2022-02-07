@@ -62,7 +62,7 @@ static mrb_value
 mrb_clear_background(mrb_state* mrb, mrb_value self) {
 	struct RClass *raylib = mrb_module_get(mrb, "Raylib");
 	struct RClass *color = mrb_class_get_under(mrb, raylib, Color_type.struct_name);
-	mrb_value color_obj = mrb_funcall(mrb, mrb_obj_value(color), "raywhite", 0);
+	mrb_value color_obj = mrb_funcall(mrb, mrb_obj_value(color), "ray_white", 0);
 
 	uint32_t kw_num = 1;
 	const mrb_sym kw_names[] = { 

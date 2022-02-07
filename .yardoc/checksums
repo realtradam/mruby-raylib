@@ -1,3 +1,5 @@
-mrblib/raylib.rb ce42382655c9ad1b0aa789cfb6d45d08be4eaf94
-src/core.c b6db3cd16136b72a42912955e51a0745dfc5429b
-src/raylib.c 4c1742dd879b28455ab020b4a51b7bda9916ee60
+mrblib/core.rb d58457d61a6737b2dbdd58671a45dd404e745b77
+mrblib/color.rb b22db1494bc8b736f355981b924415d62513ff90
+mrblib/raylib.rb fbcdcf96e35dd357edb833327d61bf72ee396702
+src/core.c 205286b59e8a0bd65ebf695c482eb331dc2b4a36
+src/raylib.c 68ee756bb18a21e7663ac59cfbbb254d3523b61c
