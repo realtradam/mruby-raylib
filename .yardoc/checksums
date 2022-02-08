@@ -1,5 +1,8 @@
-mrblib/core.rb d58457d61a6737b2dbdd58671a45dd404e745b77
-mrblib/color.rb cf601fe4a21cf8d9c76faca9dee720bf54fde505
-mrblib/raylib.rb 12dcc2872a6ab8ab3411b891d1b5f1834ca3ceef
-src/core.c d1a045e9c516d16395c632bccf5a3a1a5ae59868
-src/raylib.c 6e2201eae6290f923e7e9455ed687c7b5cbf2d91
+mrblib/core.rb 3fa564deff611669b248016a9b339e1716087518
+mrblib/color.rb 57af07bba5ffe3db9b6c177aff1d05e6f09935ad
+mrblib/raylib.rb f6186e04cd023af6139daa94fb9a18dcd08ff9cb
+mrblib/texture.rb d2218beaa256e2668f70ccdbd01eb494ed8915f0
+src/core.c 104318a118d991d7e381b541222562709d8c4a58
+src/types.c e6ff14e90b8d4ee08c7db7203b2a4e0deb3ab317
+src/raylib.c f347e1f550958b7c5fb70e701b295486aff1f30d
+src/textures.c 7a0d22c21e7cc0989b5706e016fd2d8f0d924bd8

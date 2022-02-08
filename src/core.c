@@ -1,6 +1,7 @@
 #include "mruby-raylib/core.h"
 #include "mruby-raylib/types.h"
 #include <raylib.h>
+
 /*
  * @overload init_window(width: 800, height: 600, title: "Hello World from Raylib!")
  *   @param width [Integer]
@@ -68,11 +69,13 @@ mrb_clear_background(mrb_state* mrb, mrb_value self) {
 	const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 	mrb_get_args(mrb, "|o:", &color_obj, &kwargs);
 
-	if (mrb_undef_p(kw_values[0])) {
-		kw_values[0] = color_obj;
+	if (!mrb_undef_p(kw_values[0])) {
+		color_obj = kw_values[0];
 	}
 
-	Color *color_data = DATA_GET_PTR(mrb, kw_values[0], &Color_type, Color);
+	Color *color_data;
+	UNWRAPSTRUCT(Color, Color_type, color_obj, color_data);
+
 	ClearBackground(*color_data);
 	return mrb_nil_value();
 }

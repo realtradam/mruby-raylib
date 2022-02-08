@@ -1,5 +1,6 @@
 #include "mruby-raylib/types.h"
 #include "mruby-raylib/core.h"
+#include "mruby-raylib/textures.h"
 #include <raylib.h>
 #include <mruby/array.h>
 #include <mruby/class.h>
@@ -373,129 +374,6 @@ mrb_Music_get_time_played(mrb_state* mrb, mrb_value self) {
 	return mrb_fixnum_value(GetMusicTimePlayed(*music));
 }
 
-static mrb_value
-mrb_Texture_initialize(mrb_state* mrb, mrb_value self) {
-	char* path = NULL;
-	mrb_get_args(mrb, "z", &path);
-
-	Texture *texture = (Texture *)DATA_PTR(self);
-	if(texture) { mrb_free(mrb, texture); }
-	mrb_data_init(self, NULL, &Texture_type);
-	texture = (Texture *)mrb_malloc(mrb, sizeof(Texture));
-
-	/*
-	   Texture *texture = PREWRAPSTRUCT(Texture);
-	   WRAPSTRUCT(Texture, Texture_type, texture);
-	   */
-
-	*texture = LoadTexture(path);
-
-	mrb_data_init(self, texture, &Texture_type);
-	return self;
-}
-
-static mrb_value
-mrb_Texture_get_width(mrb_state* mrb, mrb_value self) {
-	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
-	return mrb_fixnum_value(texture->width);
-}
-
-static mrb_value
-mrb_Texture_set_width(mrb_state* mrb, mrb_value self) {
-	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
-	mrb_int width;
-	mrb_get_args(mrb, "i", &width);
-	texture->width = width;
-	return mrb_fixnum_value(texture->width);
-}
-
-static mrb_value
-mrb_Texture_get_height(mrb_state* mrb, mrb_value self) {
-	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
-	return mrb_fixnum_value(texture->height);
-}
-
-static mrb_value
-mrb_Texture_set_height(mrb_state* mrb, mrb_value self) {
-	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
-	mrb_int height;
-	mrb_get_args(mrb, "i", &height);
-	texture->height = height;
-	return mrb_fixnum_value(texture->height);
-}
-
-static mrb_value
-mrb_Texture_get_id(mrb_state* mrb, mrb_value self) {
-	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
-	return mrb_fixnum_value(texture->id);
-}
-
-static mrb_value
-mrb_Texture_get_mipmaps(mrb_state* mrb, mrb_value self) {
-	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
-	return mrb_fixnum_value(texture->mipmaps);
-}
-
-static mrb_value
-mrb_Texture_get_format(mrb_state* mrb, mrb_value self) {
-	Texture *texture = DATA_GET_PTR(mrb, self, &Texture_type, Texture);
-	return mrb_fixnum_value(texture->format);
-}
-
-static mrb_value
-mrb_draw_texture(mrb_state* mrb, mrb_value self) {
-	mrb_value texture_obj;
-	mrb_int x;
-	mrb_int y;
-	mrb_value tint_obj;
-	mrb_get_args(mrb, "oiio", &texture_obj, &x, &y, &tint_obj);
-
-	Texture *texture_data = DATA_GET_PTR(mrb, texture_obj, &Texture_type, Texture);
-	Color *tint_data = DATA_GET_PTR(mrb, tint_obj, &Color_type, Color);
-
-	DrawTexture(*texture_data, x, y, *tint_data);
-
-	return mrb_nil_value();
-}
-
-static mrb_value
-mrb_draw_texture_ex(mrb_state* mrb, mrb_value self) {
-	mrb_value texture_obj;
-	mrb_value pos_obj;
-	mrb_float rotation;
-	mrb_float scale;
-	mrb_value tint_obj;
-	mrb_get_args(mrb, "ooffo", &texture_obj, &pos_obj, &rotation, &scale, &tint_obj);
-
-	Texture *texture_data = DATA_GET_PTR(mrb, texture_obj, &Texture_type, Texture);
-	Vector2 *pos_data = DATA_GET_PTR(mrb, pos_obj, &Vector2_type, Vector2);
-	Color *tint_data = DATA_GET_PTR(mrb, tint_obj, &Color_type, Color);
-
-	DrawTextureEx(*texture_data, *pos_data, rotation, scale, *tint_data);
-
-	return mrb_nil_value();
-}
-
-static mrb_value
-mrb_draw_texture_pro(mrb_state* mrb, mrb_value self) {
-	mrb_value texture_obj;
-	mrb_value pos_obj;
-	mrb_value source_rec_obj;
-	mrb_value dest_rec_obj;
-	mrb_float rotation;
-	mrb_value tint_obj;
-	mrb_get_args(mrb, "oooofo", &texture_obj, &source_rec_obj, &dest_rec_obj, &pos_obj, &rotation, &tint_obj);
-
-	Texture *texture_data = DATA_GET_PTR(mrb, texture_obj, &Texture_type, Texture);
-	Vector2 *pos_data = DATA_GET_PTR(mrb, pos_obj, &Vector2_type, Vector2);
-	Rectangle *source_rec_data = DATA_GET_PTR(mrb, source_rec_obj, &Rectangle_type, Rectangle);
-	Rectangle *dest_rec_data = DATA_GET_PTR(mrb, dest_rec_obj, &Rectangle_type, Rectangle);
-	Color *tint_data = DATA_GET_PTR(mrb, tint_obj, &Color_type, Color);
-
-	DrawTexturePro(*texture_data, *source_rec_data, *dest_rec_data, *pos_data, rotation, *tint_data);
-
-	return mrb_nil_value();
-}
 
 static mrb_value
 mrb_draw_texture_npatch(mrb_state* mrb, mrb_value self) {
@@ -932,6 +810,7 @@ mrb_Rectangle_draw_rectangle_lines_ex(mrb_state* mrb, mrb_value self) {
 void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_init_raylib_core(mrb);
+	mrb_init_raylib_textures(mrb);
 
 	struct RClass *raylib = mrb_define_module(mrb, "Raylib");
 	mrb_define_module_function(mrb, raylib, "platform", mrb_platform, MRB_ARGS_NONE());
@@ -941,9 +820,6 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_module_function(mrb, raylib, "fps", mrb_fps, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "frame_time", mrb_frame_time, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, raylib, "time", mrb_time, MRB_ARGS_NONE());
-	mrb_define_module_function(mrb, raylib, "_draw_texture", mrb_draw_texture, MRB_ARGS_REQ(4));
-	mrb_define_module_function(mrb, raylib, "_draw_texture_ex", mrb_draw_texture_ex, MRB_ARGS_REQ(5));
-	mrb_define_module_function(mrb, raylib, "_draw_texture_pro", mrb_draw_texture_pro, MRB_ARGS_REQ(6));
 	mrb_define_module_function(mrb, raylib, "mouse_button_pressed?", mrb_is_mouse_button_pressed, MRB_ARGS_REQ(1));
 	mrb_define_module_function(mrb, raylib, "mouse_button_down?", mrb_is_mouse_button_down, MRB_ARGS_REQ(1));
 	mrb_define_module_function(mrb, raylib, "mouse_button_released?", mrb_is_mouse_button_released, MRB_ARGS_REQ(1));
@@ -1002,21 +878,6 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, music_class, "time_length", mrb_Music_get_time_length, MRB_ARGS_NONE());
 	mrb_define_method(mrb, music_class, "time_played", mrb_Music_get_time_played, MRB_ARGS_NONE());
 
-	struct RClass *texture_class = mrb_define_class_under(mrb, raylib, "Texture", mrb->object_class);
-	MRB_SET_INSTANCE_TT(texture_class, MRB_TT_DATA);
-	mrb_define_method(mrb, texture_class, "initialize", mrb_Texture_initialize, MRB_ARGS_REQ(1));
-	mrb_define_method(mrb, texture_class, "width", mrb_Texture_get_width, MRB_ARGS_NONE());
-	mrb_define_method(mrb, texture_class, "width=", mrb_Texture_set_width, MRB_ARGS_REQ(1));
-	mrb_define_method(mrb, texture_class, "w", mrb_Texture_get_width, MRB_ARGS_NONE());
-	mrb_define_method(mrb, texture_class, "w=", mrb_Texture_set_width, MRB_ARGS_REQ(1));
-	mrb_define_method(mrb, texture_class, "height", mrb_Texture_get_height, MRB_ARGS_NONE());
-	mrb_define_method(mrb, texture_class, "height=", mrb_Texture_set_height, MRB_ARGS_REQ(1));
-	mrb_define_method(mrb, texture_class, "h", mrb_Texture_get_height, MRB_ARGS_NONE());
-	mrb_define_method(mrb, texture_class, "h=", mrb_Texture_set_height, MRB_ARGS_REQ(1));
-	mrb_define_method(mrb, texture_class, "id", mrb_Texture_get_id, MRB_ARGS_NONE());
-	mrb_define_method(mrb, texture_class, "mipmaps", mrb_Texture_get_mipmaps, MRB_ARGS_NONE());
-	mrb_define_method(mrb, texture_class, "format", mrb_Texture_get_format, MRB_ARGS_NONE());
-
 	struct RClass *vector2_class = mrb_define_class_under(mrb, raylib, "Vector2", mrb->object_class);
 	MRB_SET_INSTANCE_TT(vector2_class, MRB_TT_DATA);
 	mrb_define_method(mrb, vector2_class, "initialize", mrb_Vector2_initialize, MRB_ARGS_OPT(2));
@@ -1069,4 +930,5 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 void
 mrb_mruby_raylib_gem_final(mrb_state* mrb) {
 	/* finalizer */
+	if (IsWindowReady()) { CloseWindow(); };
 }

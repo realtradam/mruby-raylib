@@ -1,11 +1,11 @@
 #ifndef MRUBY_RAYLIB_TEXTURES_H
 #define MRUBY_RAYLIB_TEXTURES_H
+#include "mruby-raylib/types.h"
 #include <raylib.h>
-#include <mruby.h>
 #include <mruby/string.h>
-#include <mruby/data.h>
 #include <mruby/numeric.h>
 #include <stdlib.h>
-#include "mruby-raylib/core.h"
+
+void mrb_init_raylib_textures(mrb_state*);
 
 #endif

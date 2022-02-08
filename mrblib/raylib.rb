@@ -64,7 +64,7 @@ module Raylib
     end
 
     def draw_texture(texture:, x:, y:, tint: Rl::Color.new(255,255,255,255))
-      self._draw_texture(texture, x, y, tint)
+      texture.draw(x, y, tint)
     end
 
     def draw_texture_ex(texture:, pos:, rotation: 0, scale: 1, tint: Rl::Color.new(255,255,255,255))
