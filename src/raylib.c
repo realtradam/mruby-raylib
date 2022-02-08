@@ -1,12 +1,11 @@
+#include "mruby-raylib/types.h"
+#include "mruby-raylib/core.h"
 #include <raylib.h>
-#include <mruby.h>
 #include <mruby/array.h>
-#include <mruby/data.h>
 #include <mruby/class.h>
 #include <mruby/numeric.h>
 #include <mruby/string.h>
 #include <stdlib.h>
-#include "raylib/core.h"
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
 #endif
@@ -14,54 +13,10 @@
 #if defined(PLATFORM_WEB)
 void execute_emscripten_block(void*);
 #endif
-void helper_texture_free(mrb_state*, void*);
-void helper_sound_free(mrb_state*, void*);
-void helper_music_free(mrb_state*, void*);
 
 bool check_collision_circle_rec(mrb_state* mrb, mrb_value circle_obj, mrb_value rec_obj);
 
 
-static const struct mrb_data_type Texture_type = {
-	"Texture", helper_texture_free
-};
-
-void
-helper_texture_free(mrb_state* mrb, void*ptr) {
-	Texture *texture = (Texture*)ptr;
-	UnloadTexture(*texture);
-	mrb_free(mrb, ptr);
-}
-
-static const struct mrb_data_type Sound_type = {
-	"Sound", helper_sound_free
-};
-
-void
-helper_sound_free(mrb_state* mrb, void*ptr) {
-	Sound *sound = (Sound*)ptr;
-	UnloadSound(*sound);
-	mrb_free(mrb, ptr);
-}
-
-static const struct mrb_data_type Vector2_type = {
-	"Vector2", mrb_free
-};
-
-
-static const struct mrb_data_type NPatchInfo_type = {
-	"NPatchInfo", mrb_free
-};
-
-static const struct mrb_data_type Music_type = {
-	"Music", helper_music_free
-};
-
-void
-helper_music_free(mrb_state* mrb, void*ptr) {
-	Music *music = (Music*)ptr;
-	UnloadMusicStream(*music);
-	mrb_free(mrb, ptr);
-}
 
 
 static mrb_value

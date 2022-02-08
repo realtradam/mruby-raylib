@@ -1,4 +1,4 @@
-MRuby::Gem::Specification.new('mruby_raylib') do |spec|
+MRuby::Gem::Specification.new('mruby-raylib') do |spec|
   spec.license = 'MIT'
   spec.author  = 'Tradam and Arnold'
 

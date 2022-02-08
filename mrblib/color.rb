@@ -58,6 +58,13 @@ module Raylib
         end
         self.send(result)
       end
+
+      def clone
+        Raylib::Color.new(r: self.r,
+                          g: self.g,
+                          b: self.b,
+                          a: self.a)
+      end
     end
 
     # Hash of all web colors, RayWhite, and Clear

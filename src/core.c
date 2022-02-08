@@ -1,13 +1,6 @@
-#include "raylib/core.h"
-
-const struct mrb_data_type Color_type = {
-	"Color", mrb_free
-};
-
-const struct mrb_data_type Rectangle_type = {
-	"Rectangle", mrb_free
-};
-
+#include "mruby-raylib/core.h"
+#include "mruby-raylib/types.h"
+#include <raylib.h>
 /*
  * @overload init_window(width: 800, height: 600, title: "Hello World from Raylib!")
  *   @param width [Integer]
@@ -138,6 +131,11 @@ mrb_begin_scissor_mode(mrb_state* mrb, mrb_value self) {
 		kw_values[1] = mrb_fixnum_value(y);
 		kw_values[2] = mrb_fixnum_value(width);
 		kw_values[3] = mrb_fixnum_value(height);
+	} else {
+		kw_values[0] = mrb_ensure_int_type(mrb, kw_values[0]);
+		kw_values[1] = mrb_ensure_int_type(mrb, kw_values[1]);
+		kw_values[2] = mrb_ensure_int_type(mrb, kw_values[2]);
+		kw_values[3] = mrb_ensure_int_type(mrb, kw_values[3]);
 	}
 	BeginScissorMode(mrb_fixnum(kw_values[0]), mrb_fixnum(kw_values[1]), mrb_fixnum(kw_values[2]), mrb_fixnum(kw_values[3]));
 	return mrb_nil_value();
