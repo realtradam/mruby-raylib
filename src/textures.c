@@ -152,7 +152,7 @@ mrb_Texture_draw_texture(mrb_state* mrb, mrb_value self) {
 	UNWRAPSTRUCT(Texture, Texture_type, self, texture_data);
 	//mrb_value tint_obj = mrb_funcall(mrb, mrb_obj_value(color), "white", 0);
 	//Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint
-	uint32_t kw_num = 7;
+	uint32_t kw_num = 5;
 	const mrb_sym kw_names[] = {
 		mrb_intern_lit(mrb, "source"),
 		mrb_intern_lit(mrb, "dest"),

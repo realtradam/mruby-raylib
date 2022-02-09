@@ -1,6 +1,9 @@
 module Raylib
   class Vector2
     class << self
+      # A vector initialized to (0,0). Useful when dont care about the vector
+      # value but you still need to pass it into a function/method and dont want
+      # to initialize a new one many times.
       def default
         @default ||= self.new(0, 0)
       end

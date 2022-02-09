@@ -1,6 +1,7 @@
 #include "mruby-raylib/types.h"
 #include "mruby-raylib/core.h"
 #include "mruby-raylib/textures.h"
+#include "mruby-raylib/text.h"
 #include <raylib.h>
 #include <mruby/array.h>
 #include <mruby/class.h>
@@ -811,6 +812,7 @@ void
 mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_init_raylib_core(mrb);
 	mrb_init_raylib_textures(mrb);
+	mrb_init_raylib_text(mrb);
 
 	struct RClass *raylib = mrb_define_module(mrb, "Raylib");
 	mrb_define_module_function(mrb, raylib, "platform", mrb_platform, MRB_ARGS_NONE());
