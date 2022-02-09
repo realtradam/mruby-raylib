@@ -1,4 +1,11 @@
 module Raylib
+  class Vector2
+    class << self
+      def default
+        @default ||= self.new(0, 0)
+      end
+    end
+  end
   class << self
     # The code block version of {Raylib.begin_scissor_mode} and {Raylib.end_scissor_mode}
     # @overload scissor_mode(x: 0, y: 0, width: 10, height: 10, &block)
