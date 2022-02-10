@@ -1,9 +1,11 @@
-mrblib/core.rb 1039b868b918485f263d7c275f8cdc4a1cb4d99b
+mrblib/core.rb 1a1984d6334e04a41504084cf2dccc98d708599a
+mrblib/text.rb fc7611cc1072fa3ebb9b143c7356148100338308
 mrblib/color.rb 57af07bba5ffe3db9b6c177aff1d05e6f09935ad
 mrblib/raylib.rb f6186e04cd023af6139daa94fb9a18dcd08ff9cb
 mrblib/shapes.rb 7e19b395ceba8223e11d13b1e7a2b5163c32be93
 mrblib/texture.rb d2218beaa256e2668f70ccdbd01eb494ed8915f0
 src/core.c 104318a118d991d7e381b541222562709d8c4a58
+src/text.c 4c68a61dd26af4f9377ea60faead0d2e76e83531
 src/types.c e6ff14e90b8d4ee08c7db7203b2a4e0deb3ab317
-src/raylib.c f347e1f550958b7c5fb70e701b295486aff1f30d
-src/textures.c a357a514f444a6aaafb4450cd085e2dc2c2a8b90
+src/raylib.c b19f06201b9fe98419eb6e28999221ca7034bedc
+src/textures.c 5d4eaeffd45997c67d4f5a9aaf671ff1a3c2dec7
