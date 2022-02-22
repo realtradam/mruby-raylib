@@ -50,3 +50,13 @@ const struct mrb_data_type NPatchInfo_type = {
 	"NPatchInfo", mrb_free
 };
 
+const struct mrb_data_type Font_type = {
+	"Font", helper_font_free
+};
+
+void
+helper_font_free(mrb_state* mrb, void*ptr) {
+	Font *font = (Font*)ptr;
+	UnloadFont(*font);
+	mrb_free(mrb, ptr);
+}

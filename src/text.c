@@ -7,7 +7,50 @@
 #include "mruby-raylib/text.h"
 #include "mruby-raylib/types.h"
 #include <raylib.h>
+#include <mruby/class.h>
 
+
+/* Create a new texture.
+ * @overload initialize(path:)
+ *   @param path [String] File path to the texture to be loaded
+ * @return [Texture]
+ */
+static mrb_value
+mrb_Font_initialize(mrb_state* mrb, mrb_value self) {
+	char* path;
+
+	uint32_t kw_num = 2;
+	const mrb_sym kw_names[] = { 
+		mrb_intern_lit(mrb, "path"),
+		mrb_intern_lit(mrb, "font_size"),
+	};
+	mrb_value kw_values[kw_num];
+	const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
+	mrb_get_args(mrb, "|:", &kwargs);
+
+	printf("wrapping struct");
+	fflush(stdout);
+	Font *font;
+	WRAPSTRUCT(Font, Font_type, self, font);
+
+	if(mrb_undef_p(kw_values[0])) {
+		*font = GetFontDefault();
+	} else {
+		path = mrb_str_to_cstr(mrb, kw_values[0]);
+		if(mrb_undef_p(kw_values[1])) {
+			printf("default size");
+			fflush(stdout);
+			*font = LoadFont(path);
+		} else {
+			printf("custom size");
+			fflush(stdout);
+			*font = LoadFontEx(path, mrb_as_int(mrb, kw_values[1]), NULL, 95);
+		}
+	}
+
+	mrb_data_init(self, font, &Font_type);
+	return self;
+}
 
 /*
  * Draw the string as text on the screen.
@@ -44,6 +87,14 @@ mrb_String_draw_text(mrb_state* mrb, mrb_value self) {
 	mrb_value kw_values[kw_num];
 	const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 	mrb_get_args(mrb, "|:", &kwargs);
+
+	if (!mrb_undef_p(kw_values[0])){
+
+		Font *tmp_font;
+		UNWRAPSTRUCT(Font, Font_type, kw_values[0], tmp_font);
+
+		default_font = *tmp_font;
+	}
 
 	// x
 	if (!mrb_undef_p(kw_values[1])) {
@@ -128,7 +179,7 @@ mrb_Raylib_draw_fps(mrb_state* mrb, mrb_value self) {
 	}
 
 	DrawFPS(x, y);
-	mrb_nil_value();
+	return mrb_nil_value();
 }
 
 
@@ -137,7 +188,9 @@ mrb_init_raylib_text(mrb_state* mrb) {
 	struct RClass *raylib = mrb_define_module(mrb, "Raylib");
 	struct RClass *string_extension = mrb_define_module_under(mrb, raylib, "StringExtension");
 	struct RClass *font_class = mrb_define_class_under(mrb, raylib, "Font", mrb->object_class);
+	MRB_SET_INSTANCE_TT(font_class, MRB_TT_DATA);
+	mrb_define_method(mrb, font_class, "initialize", mrb_Font_initialize, MRB_ARGS_OPT(1));
 	mrb_define_method(mrb, string_extension, "draw", mrb_String_draw_text, MRB_ARGS_OPT(1));
-	mrb_define_module_function(mrb, raylib, "draw_fps", mrb_Raylib_draw_fps, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, raylib, "draw_fps", mrb_Raylib_draw_fps, MRB_ARGS_OPT(1));
 }
 

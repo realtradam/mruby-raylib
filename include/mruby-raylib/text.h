@@ -6,8 +6,6 @@
 #include <mruby/numeric.h>
 #include <stdlib.h>
 
-
-
 void mrb_init_raylib_text(mrb_state*);
 
 #endif /* end of include guard TEXT_H */

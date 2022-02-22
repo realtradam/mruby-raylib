@@ -20,10 +20,12 @@ extern const struct mrb_data_type Sound_type;
 extern const struct mrb_data_type Music_type;
 extern const struct mrb_data_type Vector2_type;
 extern const struct mrb_data_type NPatchInfo_type;
+extern const struct mrb_data_type Font_type;
 
 void helper_texture_free(mrb_state*, void*);
 void helper_sound_free(mrb_state*, void*);
 void helper_music_free(mrb_state*, void*);
+void helper_font_free(mrb_state*, void*);
 
 #endif /* end of include guard MRUBY_RAYLIB_TYPES_H */
 

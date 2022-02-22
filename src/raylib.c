@@ -782,6 +782,121 @@ mrb_Rectangle_get_collision_rec(mrb_state* mrb, mrb_value self) {
 }
 
 static mrb_value
+mrb_draw_poly(mrb_state* mrb, mrb_value self) {
+	//	    void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);                // Draw a regular polygon (Vector version)
+	Vector2 center = {0};
+	int sides = 3;
+	float radius = 100;
+	float rotation = 0;
+	Color color = WHITE;
+
+	uint32_t kw_num = 5;
+	const mrb_sym kw_names[] = {
+		mrb_intern_lit(mrb, "center"),
+		mrb_intern_lit(mrb, "sides"),
+		mrb_intern_lit(mrb, "radius"),
+		mrb_intern_lit(mrb, "rotation"),
+		mrb_intern_lit(mrb, "color"),
+	};
+	mrb_value kw_values[kw_num];
+	const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
+	mrb_get_args(mrb, "|:", &kwargs);
+
+	//center
+	if (!(mrb_undef_p(kw_values[0]))) {
+		Vector2 *vector2_data;
+		UNWRAPSTRUCT(Vector2, Vector2_type, kw_values[0], vector2_data);
+		center = *vector2_data;
+	}
+
+	// sides
+	if (!(mrb_undef_p(kw_values[1]))) {
+		sides = mrb_as_int(mrb, kw_values[1]);
+	}
+
+	// radius
+	if (!(mrb_undef_p(kw_values[2]))) {
+		radius = mrb_as_float(mrb, kw_values[2]);
+	}
+
+	// rotation
+	if (!mrb_undef_p(kw_values[3])) {
+		rotation = mrb_as_float(mrb, kw_values[3]) / 0.017453;
+	}
+
+	// color
+	if (!mrb_undef_p(kw_values[4])) {
+		Color *color_data;
+		UNWRAPSTRUCT(Color, Color_type, kw_values[4], color_data);
+		color = *color_data;
+	}
+
+	DrawPoly(center, sides, radius, rotation, color);
+	return mrb_nil_value();
+}
+
+static mrb_value
+mrb_draw_poly_lines(mrb_state* mrb, mrb_value self) {
+	//	    void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);                // Draw a regular polygon (Vector version)
+	Vector2 center = {0};
+	int sides = 3;
+	float radius = 100;
+	float rotation = 0;
+	float line_thickness = 1;
+	Color color = WHITE;
+
+	uint32_t kw_num = 6;
+	const mrb_sym kw_names[] = {
+		mrb_intern_lit(mrb, "center"),
+		mrb_intern_lit(mrb, "sides"),
+		mrb_intern_lit(mrb, "radius"),
+		mrb_intern_lit(mrb, "rotation"),
+		mrb_intern_lit(mrb, "line_thickness"),
+		mrb_intern_lit(mrb, "color"),
+	};
+	mrb_value kw_values[kw_num];
+	const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
+	mrb_get_args(mrb, "|:", &kwargs);
+
+	//center
+	if (!(mrb_undef_p(kw_values[0]))) {
+		Vector2 *vector2_data;
+		UNWRAPSTRUCT(Vector2, Vector2_type, kw_values[0], vector2_data);
+		center = *vector2_data;
+	}
+
+	// sides
+	if (!(mrb_undef_p(kw_values[1]))) {
+		sides = mrb_as_int(mrb, kw_values[1]);
+	}
+
+	// radius
+	if (!(mrb_undef_p(kw_values[2]))) {
+		radius = mrb_as_float(mrb, kw_values[2]);
+	}
+
+	// rotation
+	if (!mrb_undef_p(kw_values[3])) {
+		rotation = mrb_as_float(mrb, kw_values[3]) / 0.017453;
+	}
+
+	// line_thickness
+	if (!mrb_undef_p(kw_values[4])) {
+		line_thickness = mrb_as_float(mrb, kw_values[4]);
+	}
+
+	// color
+	if (!mrb_undef_p(kw_values[5])) {
+		Color *color_data;
+		UNWRAPSTRUCT(Color, Color_type, kw_values[5], color_data);
+		color = *color_data;
+	}
+
+	DrawPolyLinesEx(center, sides, radius, rotation, line_thickness, color);
+	return mrb_nil_value();
+}
+
+static mrb_value
 mrb_Rectangle_draw_rectangle_rec(mrb_state* mrb, mrb_value self) {
 	mrb_value color_obj;
 	mrb_get_args(mrb, "o", &color_obj);
@@ -909,6 +1024,8 @@ mrb_mruby_raylib_gem_init(mrb_state* mrb) {
 	mrb_define_method(mrb, rectangle_class, "collide_with_point?", mrb_Rectangle_collide_with_point, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, rectangle_class, "_draw", mrb_Rectangle_draw_rectangle_rec, MRB_ARGS_REQ(1));
 	mrb_define_method(mrb, rectangle_class, "_draw_lines", mrb_Rectangle_draw_rectangle_lines_ex, MRB_ARGS_REQ(2));
+	mrb_define_module_function(mrb, raylib, "draw_poly", mrb_draw_poly, MRB_ARGS_OPT(1));
+	mrb_define_module_function(mrb, raylib, "draw_poly_lines", mrb_draw_poly_lines, MRB_ARGS_OPT(1));
 
 	struct RClass *circle_class = mrb_define_class_under(mrb, raylib, "Circle", mrb->object_class);
 	mrb_define_method(mrb, circle_class, "collide_with_rec?", mrb_Circle_collide_with_rec, MRB_ARGS_REQ(1));
