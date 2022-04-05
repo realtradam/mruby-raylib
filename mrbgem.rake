@@ -1,6 +1,6 @@
-MRuby::Gem::Specification.new('mruby-raylib') do |spec|
+MRuby::Gem::Specification.new('mruby-test') do |spec|
   spec.license = 'MIT'
-  spec.author  = 'Tradam and Arnold'
+  spec.author  = 'FelBind'
 
   # Add compile flags
   # spec.cc.flags << ''
