@@ -1,9 +1,3 @@
-// "char **" is not a function return datatype that can be currently autobound. From function: "GetDirectoryFiles"
-
-// "char **" is not a function return datatype that can be currently autobound. From function: "GetDroppedFiles"
-
-// "TextureCubemap" is not a function return datatype that can be currently autobound. From function: "LoadTextureCubemap"
-
 
 
 #include <raylib.h>
@@ -15,7 +9,7 @@
 #include <mruby/string.h>
 #include <mruby/compile.h>
 #include <stdlib.h>
-
+      
 
       
 
@@ -114,28 +108,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: a\"");
 } else {
 wrapped_value->a = mrb_as_int(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: b\"");
 } else {
 wrapped_value->b = mrb_as_int(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: g\"");
 } else {
 wrapped_value->g = mrb_as_int(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: r\"");
 } else {
 wrapped_value->r = mrb_as_int(mrb, kw_values[3]);
 
@@ -231,10 +225,10 @@ struct RClass *glyphinfo_mrb_class = mrb_class_get_under(mrb, test_mrb_module, m
 GlyphInfo *wrapped_value = (GlyphInfo *)mrb_malloc(mrb, sizeof(GlyphInfo));
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "advanceX"),
+mrb_intern_lit(mrb, "advance_x"),
 mrb_intern_lit(mrb, "image"),
-mrb_intern_lit(mrb, "offsetX"),
-mrb_intern_lit(mrb, "offsetY"),
+mrb_intern_lit(mrb, "offset_x"),
+mrb_intern_lit(mrb, "offset_y"),
 mrb_intern_lit(mrb, "value")
 };
 mrb_value kw_values[kw_num];
@@ -242,28 +236,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: advance_x\"");
 } else {
 wrapped_value->advanceX = mrb_as_int(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: offset_x\"");
 } else {
 wrapped_value->offsetX = mrb_as_int(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: offset_y\"");
 } else {
 wrapped_value->offsetY = mrb_as_int(mrb, kw_values[3]);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: value\"");
 } else {
 wrapped_value->value = mrb_as_int(mrb, kw_values[4]);
 
@@ -279,6 +273,186 @@ return self;
           mrb_free
         };
         
+      
+static mrb_value
+mrb_Mesh_get_animNormals(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_float_value(mrb, *struct_mesh->animNormals);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_animNormals(mrb_state* mrb, mrb_value self) {
+float parameter_animNormals;
+
+mrb_get_args(mrb, "f", &parameter_animNormals);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->animNormals = parameter_animNormals;
+return mrb_float_value(mrb, parameter_animNormals);
+
+}
+      
+static mrb_value
+mrb_Mesh_get_animVertices(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_float_value(mrb, *struct_mesh->animVertices);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_animVertices(mrb_state* mrb, mrb_value self) {
+float parameter_animVertices;
+
+mrb_get_args(mrb, "f", &parameter_animVertices);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->animVertices = parameter_animVertices;
+return mrb_float_value(mrb, parameter_animVertices);
+
+}
+      
+static mrb_value
+mrb_Mesh_get_boneIds(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_fixnum_value(*struct_mesh->boneIds);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_boneIds(mrb_state* mrb, mrb_value self) {
+int parameter_boneIds;
+
+mrb_get_args(mrb, "i", &parameter_boneIds);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->boneIds = parameter_boneIds;
+return mrb_fixnum_value(parameter_boneIds);
+
+}
+      
+static mrb_value
+mrb_Mesh_get_boneWeights(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_float_value(mrb, *struct_mesh->boneWeights);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_boneWeights(mrb_state* mrb, mrb_value self) {
+float parameter_boneWeights;
+
+mrb_get_args(mrb, "f", &parameter_boneWeights);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->boneWeights = parameter_boneWeights;
+return mrb_float_value(mrb, parameter_boneWeights);
+
+}
+      
+static mrb_value
+mrb_Mesh_get_colors(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_fixnum_value(*struct_mesh->colors);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_colors(mrb_state* mrb, mrb_value self) {
+int parameter_colors;
+
+mrb_get_args(mrb, "i", &parameter_colors);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->colors = parameter_colors;
+return mrb_fixnum_value(parameter_colors);
+
+}
+      
+static mrb_value
+mrb_Mesh_get_indices(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_fixnum_value(*struct_mesh->indices);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_indices(mrb_state* mrb, mrb_value self) {
+int parameter_indices;
+
+mrb_get_args(mrb, "i", &parameter_indices);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->indices = parameter_indices;
+return mrb_fixnum_value(parameter_indices);
+
+}
+      
+static mrb_value
+mrb_Mesh_get_normals(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_float_value(mrb, *struct_mesh->normals);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_normals(mrb_state* mrb, mrb_value self) {
+float parameter_normals;
+
+mrb_get_args(mrb, "f", &parameter_normals);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->normals = parameter_normals;
+return mrb_float_value(mrb, parameter_normals);
+
+}
+      
+static mrb_value
+mrb_Mesh_get_tangents(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_float_value(mrb, *struct_mesh->tangents);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_tangents(mrb_state* mrb, mrb_value self) {
+float parameter_tangents;
+
+mrb_get_args(mrb, "f", &parameter_tangents);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->tangents = parameter_tangents;
+return mrb_float_value(mrb, parameter_tangents);
+
+}
+      
+static mrb_value
+mrb_Mesh_get_texcoords(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_float_value(mrb, *struct_mesh->texcoords);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_texcoords(mrb_state* mrb, mrb_value self) {
+float parameter_texcoords;
+
+mrb_get_args(mrb, "f", &parameter_texcoords);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->texcoords = parameter_texcoords;
+return mrb_float_value(mrb, parameter_texcoords);
+
+}
+      
+static mrb_value
+mrb_Mesh_get_texcoords2(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_float_value(mrb, *struct_mesh->texcoords2);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_texcoords2(mrb_state* mrb, mrb_value self) {
+float parameter_texcoords2;
+
+mrb_get_args(mrb, "f", &parameter_texcoords2);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->texcoords2 = parameter_texcoords2;
+return mrb_float_value(mrb, parameter_texcoords2);
+
+}
       
 static mrb_value
 mrb_Mesh_get_triangleCount(mrb_state* mrb, mrb_value self) {
@@ -317,6 +491,24 @@ return mrb_fixnum_value(parameter_vaoId);
 }
       
 static mrb_value
+mrb_Mesh_get_vboId(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_fixnum_value(*struct_mesh->vboId);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_vboId(mrb_state* mrb, mrb_value self) {
+int parameter_vboId;
+
+mrb_get_args(mrb, "i", &parameter_vboId);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->vboId = parameter_vboId;
+return mrb_fixnum_value(parameter_vboId);
+
+}
+      
+static mrb_value
 mrb_Mesh_get_vertexCount(mrb_state* mrb, mrb_value self) {
 Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
 return mrb_fixnum_value(struct_mesh->vertexCount);
@@ -335,26 +527,44 @@ return mrb_fixnum_value(parameter_vertexCount);
 }
       
 static mrb_value
+mrb_Mesh_get_vertices(mrb_state* mrb, mrb_value self) {
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+return mrb_float_value(mrb, *struct_mesh->vertices);
+
+}
+      
+static mrb_value
+mrb_Mesh_set_vertices(mrb_state* mrb, mrb_value self) {
+float parameter_vertices;
+
+mrb_get_args(mrb, "f", &parameter_vertices);
+Mesh *struct_mesh = DATA_GET_PTR(mrb, self, &mrb_Mesh_struct, Mesh);
+*struct_mesh->vertices = parameter_vertices;
+return mrb_float_value(mrb, parameter_vertices);
+
+}
+      
+static mrb_value
 mrb_Mesh_initialize(mrb_state* mrb, mrb_value self) {
 struct RClass *test_mrb_module = mrb_module_get(mrb, "Test");
 struct RClass *mesh_mrb_class = mrb_class_get_under(mrb, test_mrb_module, mrb_Mesh_struct.struct_name);
 Mesh *wrapped_value = (Mesh *)mrb_malloc(mrb, sizeof(Mesh));
 uint32_t kw_num = 15;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "animNormals"),
-mrb_intern_lit(mrb, "animVertices"),
-mrb_intern_lit(mrb, "boneIds"),
-mrb_intern_lit(mrb, "boneWeights"),
+mrb_intern_lit(mrb, "anim_normals"),
+mrb_intern_lit(mrb, "anim_vertices"),
+mrb_intern_lit(mrb, "bone_ids"),
+mrb_intern_lit(mrb, "bone_weights"),
 mrb_intern_lit(mrb, "colors"),
 mrb_intern_lit(mrb, "indices"),
 mrb_intern_lit(mrb, "normals"),
 mrb_intern_lit(mrb, "tangents"),
 mrb_intern_lit(mrb, "texcoords"),
 mrb_intern_lit(mrb, "texcoords2"),
-mrb_intern_lit(mrb, "triangleCount"),
-mrb_intern_lit(mrb, "vaoId"),
-mrb_intern_lit(mrb, "vboId"),
-mrb_intern_lit(mrb, "vertexCount"),
+mrb_intern_lit(mrb, "triangle_count"),
+mrb_intern_lit(mrb, "vao_id"),
+mrb_intern_lit(mrb, "vbo_id"),
+mrb_intern_lit(mrb, "vertex_count"),
 mrb_intern_lit(mrb, "vertices")
 };
 mrb_value kw_values[kw_num];
@@ -362,21 +572,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[10])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: triangle_count\"");
 } else {
 wrapped_value->triangleCount = mrb_as_int(mrb, kw_values[10]);
 
 }
         
 if (mrb_undef_p(kw_values[11])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: vao_id\"");
 } else {
 wrapped_value->vaoId = mrb_as_int(mrb, kw_values[11]);
 
 }
         
 if (mrb_undef_p(kw_values[13])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: vertex_count\"");
 } else {
 wrapped_value->vertexCount = mrb_as_int(mrb, kw_values[13]);
 
@@ -454,9 +664,9 @@ struct RClass *font_mrb_class = mrb_class_get_under(mrb, test_mrb_module, mrb_Fo
 Font *wrapped_value = (Font *)mrb_malloc(mrb, sizeof(Font));
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "baseSize"),
-mrb_intern_lit(mrb, "glyphCount"),
-mrb_intern_lit(mrb, "glyphPadding"),
+mrb_intern_lit(mrb, "base_size"),
+mrb_intern_lit(mrb, "glyph_count"),
+mrb_intern_lit(mrb, "glyph_padding"),
 mrb_intern_lit(mrb, "glyphs"),
 mrb_intern_lit(mrb, "recs"),
 mrb_intern_lit(mrb, "texture")
@@ -466,21 +676,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: base_size\"");
 } else {
 wrapped_value->baseSize = mrb_as_int(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: glyph_count\"");
 } else {
 wrapped_value->glyphCount = mrb_as_int(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: glyph_padding\"");
 } else {
 wrapped_value->glyphPadding = mrb_as_int(mrb, kw_values[2]);
 
@@ -552,19 +762,37 @@ return mrb_fixnum_value(parameter_meshCount);
 }
       
 static mrb_value
+mrb_Model_get_meshMaterial(mrb_state* mrb, mrb_value self) {
+Model *struct_model = DATA_GET_PTR(mrb, self, &mrb_Model_struct, Model);
+return mrb_fixnum_value(*struct_model->meshMaterial);
+
+}
+      
+static mrb_value
+mrb_Model_set_meshMaterial(mrb_state* mrb, mrb_value self) {
+int parameter_meshMaterial;
+
+mrb_get_args(mrb, "i", &parameter_meshMaterial);
+Model *struct_model = DATA_GET_PTR(mrb, self, &mrb_Model_struct, Model);
+*struct_model->meshMaterial = parameter_meshMaterial;
+return mrb_fixnum_value(parameter_meshMaterial);
+
+}
+      
+static mrb_value
 mrb_Model_initialize(mrb_state* mrb, mrb_value self) {
 struct RClass *test_mrb_module = mrb_module_get(mrb, "Test");
 struct RClass *model_mrb_class = mrb_class_get_under(mrb, test_mrb_module, mrb_Model_struct.struct_name);
 Model *wrapped_value = (Model *)mrb_malloc(mrb, sizeof(Model));
 uint32_t kw_num = 9;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "bindPose"),
-mrb_intern_lit(mrb, "boneCount"),
+mrb_intern_lit(mrb, "bind_pose"),
+mrb_intern_lit(mrb, "bone_count"),
 mrb_intern_lit(mrb, "bones"),
-mrb_intern_lit(mrb, "materialCount"),
+mrb_intern_lit(mrb, "material_count"),
 mrb_intern_lit(mrb, "materials"),
-mrb_intern_lit(mrb, "meshCount"),
-mrb_intern_lit(mrb, "meshMaterial"),
+mrb_intern_lit(mrb, "mesh_count"),
+mrb_intern_lit(mrb, "mesh_material"),
 mrb_intern_lit(mrb, "meshes"),
 mrb_intern_lit(mrb, "transform")
 };
@@ -573,21 +801,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: bone_count\"");
 } else {
 wrapped_value->boneCount = mrb_as_int(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: material_count\"");
 } else {
 wrapped_value->materialCount = mrb_as_int(mrb, kw_values[3]);
 
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: mesh_count\"");
 } else {
 wrapped_value->meshCount = mrb_as_int(mrb, kw_values[5]);
 
@@ -647,24 +875,24 @@ struct RClass *modelanimation_mrb_class = mrb_class_get_under(mrb, test_mrb_modu
 ModelAnimation *wrapped_value = (ModelAnimation *)mrb_malloc(mrb, sizeof(ModelAnimation));
 uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "boneCount"),
+mrb_intern_lit(mrb, "bone_count"),
 mrb_intern_lit(mrb, "bones"),
-mrb_intern_lit(mrb, "frameCount"),
-mrb_intern_lit(mrb, "framePoses")
+mrb_intern_lit(mrb, "frame_count"),
+mrb_intern_lit(mrb, "frame_poses")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: bone_count\"");
 } else {
 wrapped_value->boneCount = mrb_as_int(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: frame_count\"");
 } else {
 wrapped_value->frameCount = mrb_as_int(mrb, kw_values[2]);
 
@@ -790,35 +1018,35 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: bottom\"");
 } else {
 wrapped_value->bottom = mrb_as_int(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: layout\"");
 } else {
 wrapped_value->layout = mrb_as_int(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: left\"");
 } else {
 wrapped_value->left = mrb_as_int(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: right\"");
 } else {
 wrapped_value->right = mrb_as_int(mrb, kw_values[3]);
 
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: top\"");
 } else {
 wrapped_value->top = mrb_as_int(mrb, kw_values[5]);
 
@@ -899,29 +1127,29 @@ const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "buffer"),
 mrb_intern_lit(mrb, "channels"),
 mrb_intern_lit(mrb, "processor"),
-mrb_intern_lit(mrb, "sampleRate"),
-mrb_intern_lit(mrb, "sampleSize")
+mrb_intern_lit(mrb, "sample_rate"),
+mrb_intern_lit(mrb, "sample_size")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: channels\"");
 } else {
 wrapped_value->channels = mrb_as_int(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: sample_rate\"");
 } else {
 wrapped_value->sampleRate = mrb_as_int(mrb, kw_values[3]);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: sample_size\"");
 } else {
 wrapped_value->sampleSize = mrb_as_int(mrb, kw_values[4]);
 
@@ -1019,37 +1247,37 @@ uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "channels"),
 mrb_intern_lit(mrb, "data"),
-mrb_intern_lit(mrb, "frameCount"),
-mrb_intern_lit(mrb, "sampleRate"),
-mrb_intern_lit(mrb, "sampleSize")
+mrb_intern_lit(mrb, "frame_count"),
+mrb_intern_lit(mrb, "sample_rate"),
+mrb_intern_lit(mrb, "sample_size")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: channels\"");
 } else {
 wrapped_value->channels = mrb_as_int(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: frame_count\"");
 } else {
 wrapped_value->frameCount = mrb_as_int(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: sample_rate\"");
 } else {
 wrapped_value->sampleRate = mrb_as_int(mrb, kw_values[3]);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: sample_size\"");
 } else {
 wrapped_value->sampleSize = mrb_as_int(mrb, kw_values[4]);
 
@@ -1217,72 +1445,72 @@ struct RClass *vrdeviceinfo_mrb_class = mrb_class_get_under(mrb, test_mrb_module
 VrDeviceInfo *wrapped_value = (VrDeviceInfo *)mrb_malloc(mrb, sizeof(VrDeviceInfo));
 uint32_t kw_num = 10;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "chromaAbCorrection"),
-mrb_intern_lit(mrb, "eyeToScreenDistance"),
-mrb_intern_lit(mrb, "hResolution"),
-mrb_intern_lit(mrb, "hScreenSize"),
-mrb_intern_lit(mrb, "interpupillaryDistance"),
-mrb_intern_lit(mrb, "lensDistortionValues"),
-mrb_intern_lit(mrb, "lensSeparationDistance"),
-mrb_intern_lit(mrb, "vResolution"),
-mrb_intern_lit(mrb, "vScreenCenter"),
-mrb_intern_lit(mrb, "vScreenSize")
+mrb_intern_lit(mrb, "chroma_ab_correction"),
+mrb_intern_lit(mrb, "eye_to_screen_distance"),
+mrb_intern_lit(mrb, "h_resolution"),
+mrb_intern_lit(mrb, "h_screen_size"),
+mrb_intern_lit(mrb, "interpupillary_distance"),
+mrb_intern_lit(mrb, "lens_distortion_values"),
+mrb_intern_lit(mrb, "lens_separation_distance"),
+mrb_intern_lit(mrb, "v_resolution"),
+mrb_intern_lit(mrb, "v_screen_center"),
+mrb_intern_lit(mrb, "v_screen_size")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: eye_to_screen_distance\"");
 } else {
 wrapped_value->eyeToScreenDistance = mrb_as_float(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: h_resolution\"");
 } else {
 wrapped_value->hResolution = mrb_as_int(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: h_screen_size\"");
 } else {
 wrapped_value->hScreenSize = mrb_as_float(mrb, kw_values[3]);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: interpupillary_distance\"");
 } else {
 wrapped_value->interpupillaryDistance = mrb_as_float(mrb, kw_values[4]);
 
 }
         
 if (mrb_undef_p(kw_values[6])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: lens_separation_distance\"");
 } else {
 wrapped_value->lensSeparationDistance = mrb_as_float(mrb, kw_values[6]);
 
 }
         
 if (mrb_undef_p(kw_values[7])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v_resolution\"");
 } else {
 wrapped_value->vResolution = mrb_as_int(mrb, kw_values[7]);
 
 }
         
 if (mrb_undef_p(kw_values[8])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v_screen_center\"");
 } else {
 wrapped_value->vScreenCenter = mrb_as_float(mrb, kw_values[8]);
 
 }
         
 if (mrb_undef_p(kw_values[9])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v_screen_size\"");
 } else {
 wrapped_value->vScreenSize = mrb_as_float(mrb, kw_values[9]);
 
@@ -1333,7 +1561,7 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: value\"");
 } else {
 wrapped_value->value = mrb_as_float(mrb, kw_values[2]);
 
@@ -1411,9 +1639,9 @@ struct RClass *music_mrb_class = mrb_class_get_under(mrb, test_mrb_module, mrb_M
 Music *wrapped_value = (Music *)mrb_malloc(mrb, sizeof(Music));
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "ctxData"),
-mrb_intern_lit(mrb, "ctxType"),
-mrb_intern_lit(mrb, "frameCount"),
+mrb_intern_lit(mrb, "ctx_data"),
+mrb_intern_lit(mrb, "ctx_type"),
+mrb_intern_lit(mrb, "frame_count"),
 mrb_intern_lit(mrb, "looping"),
 mrb_intern_lit(mrb, "stream")
 };
@@ -1422,21 +1650,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: ctx_type\"");
 } else {
 wrapped_value->ctxType = mrb_as_int(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: frame_count\"");
 } else {
 wrapped_value->frameCount = mrb_as_int(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: looping\"");
 } else {
 wrapped_value->looping = mrb_as_int(mrb, kw_values[3]);
 
@@ -1543,28 +1771,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: format\"");
 } else {
 wrapped_value->format = mrb_as_int(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: height\"");
 } else {
 wrapped_value->height = mrb_as_int(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: mipmaps\"");
 } else {
 wrapped_value->mipmaps = mrb_as_int(mrb, kw_values[3]);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: width\"");
 } else {
 wrapped_value->width = mrb_as_int(mrb, kw_values[4]);
 
@@ -1615,7 +1843,7 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: id\"");
 } else {
 wrapped_value->id = mrb_as_int(mrb, kw_values[1]);
 
@@ -1710,14 +1938,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: distance\"");
 } else {
 wrapped_value->distance = mrb_as_float(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: hit\"");
 } else {
 wrapped_value->hit = mrb_as_int(mrb, kw_values[1]);
 
@@ -1842,35 +2070,35 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: format\"");
 } else {
 wrapped_value->format = mrb_as_int(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: height\"");
 } else {
 wrapped_value->height = mrb_as_int(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: id\"");
 } else {
 wrapped_value->id = mrb_as_int(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: mipmaps\"");
 } else {
 wrapped_value->mipmaps = mrb_as_int(mrb, kw_values[3]);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: width\"");
 } else {
 wrapped_value->width = mrb_as_int(mrb, kw_values[4]);
 
@@ -1941,14 +2169,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: fovy\"");
 } else {
 wrapped_value->fovy = mrb_as_float(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: projection\"");
 } else {
 wrapped_value->projection = mrb_as_int(mrb, kw_values[2]);
 
@@ -1990,7 +2218,7 @@ struct RClass *sound_mrb_class = mrb_class_get_under(mrb, test_mrb_module, mrb_S
 Sound *wrapped_value = (Sound *)mrb_malloc(mrb, sizeof(Sound));
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "frameCount"),
+mrb_intern_lit(mrb, "frame_count"),
 mrb_intern_lit(mrb, "stream")
 };
 mrb_value kw_values[kw_num];
@@ -1998,7 +2226,7 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: frame_count\"");
 } else {
 wrapped_value->frameCount = mrb_as_int(mrb, kw_values[0]);
 
@@ -2104,28 +2332,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: height\"");
 } else {
 wrapped_value->height = mrb_as_float(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: width\"");
 } else {
 wrapped_value->width = mrb_as_float(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: x\"");
 } else {
 wrapped_value->x = mrb_as_float(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: y\"");
 } else {
 wrapped_value->y = mrb_as_float(mrb, kw_values[3]);
 
@@ -2161,6 +2389,24 @@ return mrb_fixnum_value(parameter_id);
 }
       
 static mrb_value
+mrb_Shader_get_locs(mrb_state* mrb, mrb_value self) {
+Shader *struct_shader = DATA_GET_PTR(mrb, self, &mrb_Shader_struct, Shader);
+return mrb_fixnum_value(*struct_shader->locs);
+
+}
+      
+static mrb_value
+mrb_Shader_set_locs(mrb_state* mrb, mrb_value self) {
+int parameter_locs;
+
+mrb_get_args(mrb, "i", &parameter_locs);
+Shader *struct_shader = DATA_GET_PTR(mrb, self, &mrb_Shader_struct, Shader);
+*struct_shader->locs = parameter_locs;
+return mrb_fixnum_value(parameter_locs);
+
+}
+      
+static mrb_value
 mrb_Shader_initialize(mrb_state* mrb, mrb_value self) {
 struct RClass *test_mrb_module = mrb_module_get(mrb, "Test");
 struct RClass *shader_mrb_class = mrb_class_get_under(mrb, test_mrb_module, mrb_Shader_struct.struct_name);
@@ -2175,7 +2421,7 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: id\"");
 } else {
 wrapped_value->id = mrb_as_int(mrb, kw_values[0]);
 
@@ -2199,14 +2445,14 @@ struct RClass *vrstereoconfig_mrb_class = mrb_class_get_under(mrb, test_mrb_modu
 VrStereoConfig *wrapped_value = (VrStereoConfig *)mrb_malloc(mrb, sizeof(VrStereoConfig));
 uint32_t kw_num = 8;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "leftLensCenter"),
-mrb_intern_lit(mrb, "leftScreenCenter"),
+mrb_intern_lit(mrb, "left_lens_center"),
+mrb_intern_lit(mrb, "left_screen_center"),
 mrb_intern_lit(mrb, "projection"),
-mrb_intern_lit(mrb, "rightLensCenter"),
-mrb_intern_lit(mrb, "rightScreenCenter"),
+mrb_intern_lit(mrb, "right_lens_center"),
+mrb_intern_lit(mrb, "right_screen_center"),
 mrb_intern_lit(mrb, "scale"),
-mrb_intern_lit(mrb, "scaleIn"),
-mrb_intern_lit(mrb, "viewOffset")
+mrb_intern_lit(mrb, "scale_in"),
+mrb_intern_lit(mrb, "view_offset")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
@@ -2540,112 +2786,112 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m0\"");
 } else {
 wrapped_value->m0 = mrb_as_float(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m1\"");
 } else {
 wrapped_value->m1 = mrb_as_float(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m10\"");
 } else {
 wrapped_value->m10 = mrb_as_float(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m11\"");
 } else {
 wrapped_value->m11 = mrb_as_float(mrb, kw_values[3]);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m12\"");
 } else {
 wrapped_value->m12 = mrb_as_float(mrb, kw_values[4]);
 
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m13\"");
 } else {
 wrapped_value->m13 = mrb_as_float(mrb, kw_values[5]);
 
 }
         
 if (mrb_undef_p(kw_values[6])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m14\"");
 } else {
 wrapped_value->m14 = mrb_as_float(mrb, kw_values[6]);
 
 }
         
 if (mrb_undef_p(kw_values[7])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m15\"");
 } else {
 wrapped_value->m15 = mrb_as_float(mrb, kw_values[7]);
 
 }
         
 if (mrb_undef_p(kw_values[8])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m2\"");
 } else {
 wrapped_value->m2 = mrb_as_float(mrb, kw_values[8]);
 
 }
         
 if (mrb_undef_p(kw_values[9])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m3\"");
 } else {
 wrapped_value->m3 = mrb_as_float(mrb, kw_values[9]);
 
 }
         
 if (mrb_undef_p(kw_values[10])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m4\"");
 } else {
 wrapped_value->m4 = mrb_as_float(mrb, kw_values[10]);
 
 }
         
 if (mrb_undef_p(kw_values[11])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m5\"");
 } else {
 wrapped_value->m5 = mrb_as_float(mrb, kw_values[11]);
 
 }
         
 if (mrb_undef_p(kw_values[12])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m6\"");
 } else {
 wrapped_value->m6 = mrb_as_float(mrb, kw_values[12]);
 
 }
         
 if (mrb_undef_p(kw_values[13])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m7\"");
 } else {
 wrapped_value->m7 = mrb_as_float(mrb, kw_values[13]);
 
 }
         
 if (mrb_undef_p(kw_values[14])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m8\"");
 } else {
 wrapped_value->m8 = mrb_as_float(mrb, kw_values[14]);
 
 }
         
 if (mrb_undef_p(kw_values[15])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: m9\"");
 } else {
 wrapped_value->m9 = mrb_as_float(mrb, kw_values[15]);
 
@@ -2746,7 +2992,7 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: parent\"");
 } else {
 wrapped_value->parent = mrb_as_int(mrb, kw_values[1]);
 
@@ -2816,14 +3062,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rotation\"");
 } else {
 wrapped_value->rotation = mrb_as_float(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: zoom\"");
 } else {
 wrapped_value->zoom = mrb_as_float(mrb, kw_values[3]);
 
@@ -2955,28 +3201,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: w\"");
 } else {
 wrapped_value->w = mrb_as_float(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: x\"");
 } else {
 wrapped_value->x = mrb_as_float(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: y\"");
 } else {
 wrapped_value->y = mrb_as_float(mrb, kw_values[2]);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: z\"");
 } else {
 wrapped_value->z = mrb_as_float(mrb, kw_values[3]);
 
@@ -3044,14 +3290,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: x\"");
 } else {
 wrapped_value->x = mrb_as_float(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: y\"");
 } else {
 wrapped_value->y = mrb_as_float(mrb, kw_values[1]);
 
@@ -3138,21 +3384,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: x\"");
 } else {
 wrapped_value->x = mrb_as_float(mrb, kw_values[0]);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: y\"");
 } else {
 wrapped_value->y = mrb_as_float(mrb, kw_values[1]);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: z\"");
 } else {
 wrapped_value->z = mrb_as_float(mrb, kw_values[2]);
 
@@ -3226,25 +3472,25 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"x\"");
 } else {
 parameter_x = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"y\"");
 } else {
 parameter_y = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[3]);
 }
@@ -3323,21 +3569,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: box\"");
 } else {
 parameter_box = DATA_GET_PTR(mrb, kw_values[0], &mrb_BoundingBox_struct, BoundingBox);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[2]);
 }
@@ -3364,14 +3610,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: box1\"");
 } else {
 parameter_box1 = DATA_GET_PTR(mrb, kw_values[0], &mrb_BoundingBox_struct, BoundingBox);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: box2\"");
 } else {
 parameter_box2 = DATA_GET_PTR(mrb, kw_values[1], &mrb_BoundingBox_struct, BoundingBox);
 
@@ -3401,20 +3647,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[2], &mrb_Rectangle_struct, Rectangle);
 
@@ -3446,27 +3692,27 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center1\"");
 } else {
 parameter_center1 = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius1\"");
 } else {
 parameter_radius1 = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center2\"");
 } else {
 parameter_center2 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius2\"");
 } else {
 parameter_radius2 = mrb_as_float(mrb, kw_values[3]);
 }
@@ -3488,46 +3734,46 @@ Vector2 *parameter_collisionPoint;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "startPos1"),
-mrb_intern_lit(mrb, "endPos1"),
-mrb_intern_lit(mrb, "startPos2"),
-mrb_intern_lit(mrb, "endPos2"),
-mrb_intern_lit(mrb, "collisionPoint")
+mrb_intern_lit(mrb, "start_pos1"),
+mrb_intern_lit(mrb, "end_pos1"),
+mrb_intern_lit(mrb, "start_pos2"),
+mrb_intern_lit(mrb, "end_pos2"),
+mrb_intern_lit(mrb, "collision_point")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_pos1\"");
 } else {
 parameter_startPos1 = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_pos1\"");
 } else {
 parameter_endPos1 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_pos2\"");
 } else {
 parameter_startPos2 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_pos2\"");
 } else {
 parameter_endPos2 = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: collision_point\"");
 } else {
 parameter_collisionPoint = DATA_GET_PTR(mrb, kw_values[4], &mrb_Vector2_struct, Vector2);
 
@@ -3557,21 +3803,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: point\"");
 } else {
 parameter_point = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[2]);
 }
@@ -3602,28 +3848,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: point\"");
 } else {
 parameter_point = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p1\"");
 } else {
 parameter_p1 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p2\"");
 } else {
 parameter_p2 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"threshold\"");
 } else {
 parameter_threshold = mrb_as_int(mrb, kw_values[3]);
 }
@@ -3650,14 +3896,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: point\"");
 } else {
 parameter_point = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
@@ -3689,28 +3935,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: point\"");
 } else {
 parameter_point = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p1\"");
 } else {
 parameter_p1 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p2\"");
 } else {
 parameter_p2 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p3\"");
 } else {
 parameter_p3 = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector2_struct, Vector2);
 
@@ -3738,14 +3984,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec1\"");
 } else {
 parameter_rec1 = DATA_GET_PTR(mrb, kw_values[0], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec2\"");
 } else {
 parameter_rec2 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
@@ -3777,27 +4023,27 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center1\"");
 } else {
 parameter_center1 = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius1\"");
 } else {
 parameter_radius1 = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center2\"");
 } else {
 parameter_center2 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius2\"");
 } else {
 parameter_radius2 = mrb_as_float(mrb, kw_values[3]);
 }
@@ -3873,20 +4119,20 @@ int parameter_byteSize;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "codepoint"),
-mrb_intern_lit(mrb, "byteSize")
+mrb_intern_lit(mrb, "byte_size")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"codepoint\"");
 } else {
 parameter_codepoint = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"byte_size\"");
 } else {
 parameter_byteSize = mrb_as_int(mrb, kw_values[1]);
 }
@@ -3913,14 +4159,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[0], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"alpha\"");
 } else {
 parameter_alpha = mrb_as_float(mrb, kw_values[1]);
 }
@@ -3951,21 +4197,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: src\"");
 } else {
 parameter_src = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -3997,19 +4243,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"hue\"");
 } else {
 parameter_hue = mrb_as_float(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"saturation\"");
 } else {
 parameter_saturation = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"value\"");
 } else {
 parameter_value = mrb_as_float(mrb, kw_values[2]);
 }
@@ -4120,14 +4366,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: box\"");
 } else {
 parameter_box = DATA_GET_PTR(mrb, kw_values[0], &mrb_BoundingBox_struct, BoundingBox);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
@@ -4148,8 +4394,8 @@ Color *parameter_color;
 
 uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "centerX"),
-mrb_intern_lit(mrb, "centerY"),
+mrb_intern_lit(mrb, "center_x"),
+mrb_intern_lit(mrb, "center_y"),
 mrb_intern_lit(mrb, "radius"),
 mrb_intern_lit(mrb, "color")
 };
@@ -4158,25 +4404,25 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_x\"");
 } else {
 parameter_centerX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_y\"");
 } else {
 parameter_centerY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -4200,8 +4446,8 @@ uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "center"),
 mrb_intern_lit(mrb, "radius"),
-mrb_intern_lit(mrb, "rotationAxis"),
-mrb_intern_lit(mrb, "rotationAngle"),
+mrb_intern_lit(mrb, "rotation_axis"),
+mrb_intern_lit(mrb, "rotation_angle"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -4209,33 +4455,33 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rotation_axis\"");
 } else {
 parameter_rotationAxis = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation_angle\"");
 } else {
 parameter_rotationAngle = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -4257,8 +4503,8 @@ Color *parameter_color2;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "centerX"),
-mrb_intern_lit(mrb, "centerY"),
+mrb_intern_lit(mrb, "center_x"),
+mrb_intern_lit(mrb, "center_y"),
 mrb_intern_lit(mrb, "radius"),
 mrb_intern_lit(mrb, "color1"),
 mrb_intern_lit(mrb, "color2")
@@ -4268,32 +4514,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_x\"");
 } else {
 parameter_centerX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_y\"");
 } else {
 parameter_centerY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color1\"");
 } else {
 parameter_color1 = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color2\"");
 } else {
 parameter_color2 = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -4314,8 +4560,8 @@ Color *parameter_color;
 
 uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "centerX"),
-mrb_intern_lit(mrb, "centerY"),
+mrb_intern_lit(mrb, "center_x"),
+mrb_intern_lit(mrb, "center_y"),
 mrb_intern_lit(mrb, "radius"),
 mrb_intern_lit(mrb, "color")
 };
@@ -4324,25 +4570,25 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_x\"");
 } else {
 parameter_centerX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_y\"");
 } else {
 parameter_centerY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -4367,8 +4613,8 @@ uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "center"),
 mrb_intern_lit(mrb, "radius"),
-mrb_intern_lit(mrb, "startAngle"),
-mrb_intern_lit(mrb, "endAngle"),
+mrb_intern_lit(mrb, "start_angle"),
+mrb_intern_lit(mrb, "end_angle"),
 mrb_intern_lit(mrb, "segments"),
 mrb_intern_lit(mrb, "color")
 };
@@ -4377,38 +4623,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"start_angle\"");
 } else {
 parameter_startAngle = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"end_angle\"");
 } else {
 parameter_endAngle = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"segments\"");
 } else {
 parameter_segments = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -4433,8 +4679,8 @@ uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "center"),
 mrb_intern_lit(mrb, "radius"),
-mrb_intern_lit(mrb, "startAngle"),
-mrb_intern_lit(mrb, "endAngle"),
+mrb_intern_lit(mrb, "start_angle"),
+mrb_intern_lit(mrb, "end_angle"),
 mrb_intern_lit(mrb, "segments"),
 mrb_intern_lit(mrb, "color")
 };
@@ -4443,38 +4689,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"start_angle\"");
 } else {
 parameter_startAngle = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"end_angle\"");
 } else {
 parameter_endAngle = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"segments\"");
 } else {
 parameter_segments = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -4503,20 +4749,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -4549,32 +4795,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"length\"");
 } else {
 parameter_length = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -4609,39 +4855,39 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"length\"");
 } else {
 parameter_length = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -4678,46 +4924,46 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: source\"");
 } else {
 parameter_source = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"length\"");
 } else {
 parameter_length = mrb_as_float(mrb, kw_values[5]);
 }
         
 if (mrb_undef_p(kw_values[6])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[6], &mrb_Color_struct, Color);
 
@@ -4746,21 +4992,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: size\"");
 } else {
 parameter_size = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -4793,32 +5039,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"length\"");
 } else {
 parameter_length = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -4847,21 +5093,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: size\"");
 } else {
 parameter_size = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -4885,8 +5131,8 @@ Color *parameter_color;
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "position"),
-mrb_intern_lit(mrb, "radiusTop"),
-mrb_intern_lit(mrb, "radiusBottom"),
+mrb_intern_lit(mrb, "radius_top"),
+mrb_intern_lit(mrb, "radius_bottom"),
 mrb_intern_lit(mrb, "height"),
 mrb_intern_lit(mrb, "slices"),
 mrb_intern_lit(mrb, "color")
@@ -4896,38 +5142,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius_top\"");
 } else {
 parameter_radiusTop = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius_bottom\"");
 } else {
 parameter_radiusBottom = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"slices\"");
 } else {
 parameter_slices = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -4950,10 +5196,10 @@ Color *parameter_color;
 
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "startPos"),
-mrb_intern_lit(mrb, "endPos"),
-mrb_intern_lit(mrb, "startRadius"),
-mrb_intern_lit(mrb, "endRadius"),
+mrb_intern_lit(mrb, "start_pos"),
+mrb_intern_lit(mrb, "end_pos"),
+mrb_intern_lit(mrb, "start_radius"),
+mrb_intern_lit(mrb, "end_radius"),
 mrb_intern_lit(mrb, "sides"),
 mrb_intern_lit(mrb, "color")
 };
@@ -4962,39 +5208,39 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_pos\"");
 } else {
 parameter_startPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_pos\"");
 } else {
 parameter_endPos = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"start_radius\"");
 } else {
 parameter_startRadius = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"end_radius\"");
 } else {
 parameter_endRadius = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sides\"");
 } else {
 parameter_sides = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -5018,8 +5264,8 @@ Color *parameter_color;
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "position"),
-mrb_intern_lit(mrb, "radiusTop"),
-mrb_intern_lit(mrb, "radiusBottom"),
+mrb_intern_lit(mrb, "radius_top"),
+mrb_intern_lit(mrb, "radius_bottom"),
 mrb_intern_lit(mrb, "height"),
 mrb_intern_lit(mrb, "slices"),
 mrb_intern_lit(mrb, "color")
@@ -5029,38 +5275,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius_top\"");
 } else {
 parameter_radiusTop = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius_bottom\"");
 } else {
 parameter_radiusBottom = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"slices\"");
 } else {
 parameter_slices = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -5083,10 +5329,10 @@ Color *parameter_color;
 
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "startPos"),
-mrb_intern_lit(mrb, "endPos"),
-mrb_intern_lit(mrb, "startRadius"),
-mrb_intern_lit(mrb, "endRadius"),
+mrb_intern_lit(mrb, "start_pos"),
+mrb_intern_lit(mrb, "end_pos"),
+mrb_intern_lit(mrb, "start_radius"),
+mrb_intern_lit(mrb, "end_radius"),
 mrb_intern_lit(mrb, "sides"),
 mrb_intern_lit(mrb, "color")
 };
@@ -5095,39 +5341,39 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_pos\"");
 } else {
 parameter_startPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_pos\"");
 } else {
 parameter_endPos = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"start_radius\"");
 } else {
 parameter_startRadius = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"end_radius\"");
 } else {
 parameter_endRadius = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sides\"");
 } else {
 parameter_sides = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -5149,10 +5395,10 @@ Color *parameter_color;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "centerX"),
-mrb_intern_lit(mrb, "centerY"),
-mrb_intern_lit(mrb, "radiusH"),
-mrb_intern_lit(mrb, "radiusV"),
+mrb_intern_lit(mrb, "center_x"),
+mrb_intern_lit(mrb, "center_y"),
+mrb_intern_lit(mrb, "radius_h"),
+mrb_intern_lit(mrb, "radius_v"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -5160,31 +5406,31 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_x\"");
 } else {
 parameter_centerX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_y\"");
 } else {
 parameter_centerY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius_h\"");
 } else {
 parameter_radiusH = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius_v\"");
 } else {
 parameter_radiusV = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -5206,10 +5452,10 @@ Color *parameter_color;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "centerX"),
-mrb_intern_lit(mrb, "centerY"),
-mrb_intern_lit(mrb, "radiusH"),
-mrb_intern_lit(mrb, "radiusV"),
+mrb_intern_lit(mrb, "center_x"),
+mrb_intern_lit(mrb, "center_y"),
+mrb_intern_lit(mrb, "radius_h"),
+mrb_intern_lit(mrb, "radius_v"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -5217,31 +5463,31 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_x\"");
 } else {
 parameter_centerX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_y\"");
 } else {
 parameter_centerY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius_h\"");
 } else {
 parameter_radiusH = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius_v\"");
 } else {
 parameter_radiusV = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -5260,21 +5506,21 @@ int parameter_posY;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY")
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[1]);
 }
@@ -5300,13 +5546,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"slices\"");
 } else {
 parameter_slices = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"spacing\"");
 } else {
 parameter_spacing = mrb_as_float(mrb, kw_values[1]);
 }
@@ -5327,10 +5573,10 @@ Color *parameter_color;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "startPosX"),
-mrb_intern_lit(mrb, "startPosY"),
-mrb_intern_lit(mrb, "endPosX"),
-mrb_intern_lit(mrb, "endPosY"),
+mrb_intern_lit(mrb, "start_pos_x"),
+mrb_intern_lit(mrb, "start_pos_y"),
+mrb_intern_lit(mrb, "end_pos_x"),
+mrb_intern_lit(mrb, "end_pos_y"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -5338,31 +5584,31 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"start_pos_x\"");
 } else {
 parameter_startPosX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"start_pos_y\"");
 } else {
 parameter_startPosY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"end_pos_x\"");
 } else {
 parameter_endPosX = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"end_pos_y\"");
 } else {
 parameter_endPosY = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -5382,8 +5628,8 @@ Color *parameter_color;
 
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "startPos"),
-mrb_intern_lit(mrb, "endPos"),
+mrb_intern_lit(mrb, "start_pos"),
+mrb_intern_lit(mrb, "end_pos"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -5391,21 +5637,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_pos\"");
 } else {
 parameter_startPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_pos\"");
 } else {
 parameter_endPos = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -5426,8 +5672,8 @@ Color *parameter_color;
 
 uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "startPos"),
-mrb_intern_lit(mrb, "endPos"),
+mrb_intern_lit(mrb, "start_pos"),
+mrb_intern_lit(mrb, "end_pos"),
 mrb_intern_lit(mrb, "thick"),
 mrb_intern_lit(mrb, "color")
 };
@@ -5436,27 +5682,27 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_pos\"");
 } else {
 parameter_startPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_pos\"");
 } else {
 parameter_endPos = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"thick\"");
 } else {
 parameter_thick = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -5479,10 +5725,10 @@ Color *parameter_color;
 
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "startPos"),
-mrb_intern_lit(mrb, "endPos"),
-mrb_intern_lit(mrb, "startControlPos"),
-mrb_intern_lit(mrb, "endControlPos"),
+mrb_intern_lit(mrb, "start_pos"),
+mrb_intern_lit(mrb, "end_pos"),
+mrb_intern_lit(mrb, "start_control_pos"),
+mrb_intern_lit(mrb, "end_control_pos"),
 mrb_intern_lit(mrb, "thick"),
 mrb_intern_lit(mrb, "color")
 };
@@ -5491,41 +5737,41 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_pos\"");
 } else {
 parameter_startPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_pos\"");
 } else {
 parameter_endPos = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_control_pos\"");
 } else {
 parameter_startControlPos = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_control_pos\"");
 } else {
 parameter_endControlPos = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"thick\"");
 } else {
 parameter_thick = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -5547,9 +5793,9 @@ Color *parameter_color;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "startPos"),
-mrb_intern_lit(mrb, "endPos"),
-mrb_intern_lit(mrb, "controlPos"),
+mrb_intern_lit(mrb, "start_pos"),
+mrb_intern_lit(mrb, "end_pos"),
+mrb_intern_lit(mrb, "control_pos"),
 mrb_intern_lit(mrb, "thick"),
 mrb_intern_lit(mrb, "color")
 };
@@ -5558,34 +5804,34 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_pos\"");
 } else {
 parameter_startPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_pos\"");
 } else {
 parameter_endPos = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: control_pos\"");
 } else {
 parameter_controlPos = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"thick\"");
 } else {
 parameter_thick = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -5606,8 +5852,8 @@ Color *parameter_color;
 
 uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "startPos"),
-mrb_intern_lit(mrb, "endPos"),
+mrb_intern_lit(mrb, "start_pos"),
+mrb_intern_lit(mrb, "end_pos"),
 mrb_intern_lit(mrb, "thick"),
 mrb_intern_lit(mrb, "color")
 };
@@ -5616,27 +5862,27 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_pos\"");
 } else {
 parameter_startPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_pos\"");
 } else {
 parameter_endPos = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"thick\"");
 } else {
 parameter_thick = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -5657,7 +5903,7 @@ Color *parameter_color;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "points"),
-mrb_intern_lit(mrb, "pointCount"),
+mrb_intern_lit(mrb, "point_count"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -5665,20 +5911,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: points\"");
 } else {
 parameter_points = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"point_count\"");
 } else {
 parameter_pointCount = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -5698,8 +5944,8 @@ Color *parameter_color;
 
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "startPos"),
-mrb_intern_lit(mrb, "endPos"),
+mrb_intern_lit(mrb, "start_pos"),
+mrb_intern_lit(mrb, "end_pos"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -5707,21 +5953,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start_pos\"");
 } else {
 parameter_startPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end_pos\"");
 } else {
 parameter_endPos = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -5750,21 +5996,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: mesh\"");
 } else {
 parameter_mesh = DATA_GET_PTR(mrb, kw_values[0], &mrb_Mesh_struct, Mesh);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: material\"");
 } else {
 parameter_material = DATA_GET_PTR(mrb, kw_values[1], &mrb_Material_struct, Material);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: transform\"");
 } else {
 parameter_transform = DATA_GET_PTR(mrb, kw_values[2], &mrb_Matrix_struct, Matrix);
 
@@ -5795,27 +6041,27 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: model\"");
 } else {
 parameter_model = DATA_GET_PTR(mrb, kw_values[0], &mrb_Model_struct, Model);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"scale\"");
 } else {
 parameter_scale = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -5840,8 +6086,8 @@ uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "model"),
 mrb_intern_lit(mrb, "position"),
-mrb_intern_lit(mrb, "rotationAxis"),
-mrb_intern_lit(mrb, "rotationAngle"),
+mrb_intern_lit(mrb, "rotation_axis"),
+mrb_intern_lit(mrb, "rotation_angle"),
 mrb_intern_lit(mrb, "scale"),
 mrb_intern_lit(mrb, "tint")
 };
@@ -5850,41 +6096,41 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: model\"");
 } else {
 parameter_model = DATA_GET_PTR(mrb, kw_values[0], &mrb_Model_struct, Model);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rotation_axis\"");
 } else {
 parameter_rotationAxis = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation_angle\"");
 } else {
 parameter_rotationAngle = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: scale\"");
 } else {
 parameter_scale = DATA_GET_PTR(mrb, kw_values[4], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -5915,27 +6161,27 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: model\"");
 } else {
 parameter_model = DATA_GET_PTR(mrb, kw_values[0], &mrb_Model_struct, Model);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"scale\"");
 } else {
 parameter_scale = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -5960,8 +6206,8 @@ uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "model"),
 mrb_intern_lit(mrb, "position"),
-mrb_intern_lit(mrb, "rotationAxis"),
-mrb_intern_lit(mrb, "rotationAngle"),
+mrb_intern_lit(mrb, "rotation_axis"),
+mrb_intern_lit(mrb, "rotation_angle"),
 mrb_intern_lit(mrb, "scale"),
 mrb_intern_lit(mrb, "tint")
 };
@@ -5970,41 +6216,41 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: model\"");
 } else {
 parameter_model = DATA_GET_PTR(mrb, kw_values[0], &mrb_Model_struct, Model);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rotation_axis\"");
 } else {
 parameter_rotationAxis = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation_angle\"");
 } else {
 parameter_rotationAngle = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: scale\"");
 } else {
 parameter_scale = DATA_GET_PTR(mrb, kw_values[4], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -6024,8 +6270,8 @@ Color *parameter_color;
 
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY"),
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -6033,19 +6279,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -6072,14 +6318,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
@@ -6099,7 +6345,7 @@ Color *parameter_color;
 
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "centerPos"),
+mrb_intern_lit(mrb, "center_pos"),
 mrb_intern_lit(mrb, "size"),
 mrb_intern_lit(mrb, "color")
 };
@@ -6108,21 +6354,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center_pos\"");
 } else {
 parameter_centerPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: size\"");
 } else {
 parameter_size = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -6149,14 +6395,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
@@ -6189,32 +6435,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sides\"");
 } else {
 parameter_sides = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation\"");
 } else {
 parameter_rotation = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -6247,32 +6493,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sides\"");
 } else {
 parameter_sides = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation\"");
 } else {
 parameter_rotation = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -6299,7 +6545,7 @@ mrb_intern_lit(mrb, "center"),
 mrb_intern_lit(mrb, "sides"),
 mrb_intern_lit(mrb, "radius"),
 mrb_intern_lit(mrb, "rotation"),
-mrb_intern_lit(mrb, "lineThick"),
+mrb_intern_lit(mrb, "line_thick"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -6307,38 +6553,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sides\"");
 } else {
 parameter_sides = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation\"");
 } else {
 parameter_rotation = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"line_thick\"");
 } else {
 parameter_lineThick = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -6365,14 +6611,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: ray\"");
 } else {
 parameter_ray = DATA_GET_PTR(mrb, kw_values[0], &mrb_Ray_struct, Ray);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
@@ -6394,8 +6640,8 @@ Color *parameter_color;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY"),
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y"),
 mrb_intern_lit(mrb, "width"),
 mrb_intern_lit(mrb, "height"),
 mrb_intern_lit(mrb, "color")
@@ -6405,31 +6651,31 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -6462,35 +6708,35 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[0], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: col1\"");
 } else {
 parameter_col1 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: col2\"");
 } else {
 parameter_col2 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: col3\"");
 } else {
 parameter_col3 = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: col4\"");
 } else {
 parameter_col4 = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -6513,8 +6759,8 @@ Color *parameter_color2;
 
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY"),
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y"),
 mrb_intern_lit(mrb, "width"),
 mrb_intern_lit(mrb, "height"),
 mrb_intern_lit(mrb, "color1"),
@@ -6525,38 +6771,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color1\"");
 } else {
 parameter_color1 = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color2\"");
 } else {
 parameter_color2 = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -6579,8 +6825,8 @@ Color *parameter_color2;
 
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY"),
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y"),
 mrb_intern_lit(mrb, "width"),
 mrb_intern_lit(mrb, "height"),
 mrb_intern_lit(mrb, "color1"),
@@ -6591,38 +6837,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color1\"");
 } else {
 parameter_color1 = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color2\"");
 } else {
 parameter_color2 = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -6644,8 +6890,8 @@ Color *parameter_color;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY"),
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y"),
 mrb_intern_lit(mrb, "width"),
 mrb_intern_lit(mrb, "height"),
 mrb_intern_lit(mrb, "color")
@@ -6655,31 +6901,31 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -6700,7 +6946,7 @@ Color *parameter_color;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "rec"),
-mrb_intern_lit(mrb, "lineThick"),
+mrb_intern_lit(mrb, "line_thick"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -6708,20 +6954,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[0], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"line_thick\"");
 } else {
 parameter_lineThick = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -6752,27 +6998,27 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[0], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: origin\"");
 } else {
 parameter_origin = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation\"");
 } else {
 parameter_rotation = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -6799,14 +7045,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[0], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
@@ -6837,26 +7083,26 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[0], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"roundness\"");
 } else {
 parameter_roundness = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"segments\"");
 } else {
 parameter_segments = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -6881,7 +7127,7 @@ const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "rec"),
 mrb_intern_lit(mrb, "roundness"),
 mrb_intern_lit(mrb, "segments"),
-mrb_intern_lit(mrb, "lineThick"),
+mrb_intern_lit(mrb, "line_thick"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -6889,32 +7135,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[0], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"roundness\"");
 } else {
 parameter_roundness = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"segments\"");
 } else {
 parameter_segments = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"line_thick\"");
 } else {
 parameter_lineThick = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -6943,21 +7189,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: size\"");
 } else {
 parameter_size = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -6982,10 +7228,10 @@ Color *parameter_color;
 uint32_t kw_num = 7;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "center"),
-mrb_intern_lit(mrb, "innerRadius"),
-mrb_intern_lit(mrb, "outerRadius"),
-mrb_intern_lit(mrb, "startAngle"),
-mrb_intern_lit(mrb, "endAngle"),
+mrb_intern_lit(mrb, "inner_radius"),
+mrb_intern_lit(mrb, "outer_radius"),
+mrb_intern_lit(mrb, "start_angle"),
+mrb_intern_lit(mrb, "end_angle"),
 mrb_intern_lit(mrb, "segments"),
 mrb_intern_lit(mrb, "color")
 };
@@ -6994,44 +7240,44 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"inner_radius\"");
 } else {
 parameter_innerRadius = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"outer_radius\"");
 } else {
 parameter_outerRadius = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"start_angle\"");
 } else {
 parameter_startAngle = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"end_angle\"");
 } else {
 parameter_endAngle = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"segments\"");
 } else {
 parameter_segments = mrb_as_int(mrb, kw_values[5]);
 }
         
 if (mrb_undef_p(kw_values[6])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[6], &mrb_Color_struct, Color);
 
@@ -7056,10 +7302,10 @@ Color *parameter_color;
 uint32_t kw_num = 7;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "center"),
-mrb_intern_lit(mrb, "innerRadius"),
-mrb_intern_lit(mrb, "outerRadius"),
-mrb_intern_lit(mrb, "startAngle"),
-mrb_intern_lit(mrb, "endAngle"),
+mrb_intern_lit(mrb, "inner_radius"),
+mrb_intern_lit(mrb, "outer_radius"),
+mrb_intern_lit(mrb, "start_angle"),
+mrb_intern_lit(mrb, "end_angle"),
 mrb_intern_lit(mrb, "segments"),
 mrb_intern_lit(mrb, "color")
 };
@@ -7068,44 +7314,44 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"inner_radius\"");
 } else {
 parameter_innerRadius = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"outer_radius\"");
 } else {
 parameter_outerRadius = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"start_angle\"");
 } else {
 parameter_startAngle = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"end_angle\"");
 } else {
 parameter_endAngle = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"segments\"");
 } else {
 parameter_segments = mrb_as_int(mrb, kw_values[5]);
 }
         
 if (mrb_undef_p(kw_values[6])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[6], &mrb_Color_struct, Color);
 
@@ -7125,7 +7371,7 @@ Color *parameter_color;
 
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "centerPos"),
+mrb_intern_lit(mrb, "center_pos"),
 mrb_intern_lit(mrb, "radius"),
 mrb_intern_lit(mrb, "color")
 };
@@ -7134,20 +7380,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center_pos\"");
 } else {
 parameter_centerPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -7169,7 +7415,7 @@ Color *parameter_color;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "centerPos"),
+mrb_intern_lit(mrb, "center_pos"),
 mrb_intern_lit(mrb, "radius"),
 mrb_intern_lit(mrb, "rings"),
 mrb_intern_lit(mrb, "slices"),
@@ -7180,32 +7426,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center_pos\"");
 } else {
 parameter_centerPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rings\"");
 } else {
 parameter_rings = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"slices\"");
 } else {
 parameter_slices = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -7227,7 +7473,7 @@ Color *parameter_color;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "centerPos"),
+mrb_intern_lit(mrb, "center_pos"),
 mrb_intern_lit(mrb, "radius"),
 mrb_intern_lit(mrb, "rings"),
 mrb_intern_lit(mrb, "slices"),
@@ -7238,32 +7484,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center_pos\"");
 } else {
 parameter_centerPos = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rings\"");
 } else {
 parameter_rings = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"slices\"");
 } else {
 parameter_slices = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -7286,9 +7532,9 @@ Color *parameter_color;
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "text"),
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY"),
-mrb_intern_lit(mrb, "fontSize"),
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y"),
+mrb_intern_lit(mrb, "font_size"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -7296,31 +7542,31 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -7345,7 +7591,7 @@ const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "font"),
 mrb_intern_lit(mrb, "codepoint"),
 mrb_intern_lit(mrb, "position"),
-mrb_intern_lit(mrb, "fontSize"),
+mrb_intern_lit(mrb, "font_size"),
 mrb_intern_lit(mrb, "tint")
 };
 mrb_value kw_values[kw_num];
@@ -7353,33 +7599,33 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: font\"");
 } else {
 parameter_font = DATA_GET_PTR(mrb, kw_values[0], &mrb_Font_struct, Font);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"codepoint\"");
 } else {
 parameter_codepoint = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -7405,7 +7651,7 @@ const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "font"),
 mrb_intern_lit(mrb, "text"),
 mrb_intern_lit(mrb, "position"),
-mrb_intern_lit(mrb, "fontSize"),
+mrb_intern_lit(mrb, "font_size"),
 mrb_intern_lit(mrb, "spacing"),
 mrb_intern_lit(mrb, "tint")
 };
@@ -7414,39 +7660,39 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: font\"");
 } else {
 parameter_font = DATA_GET_PTR(mrb, kw_values[0], &mrb_Font_struct, Font);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"spacing\"");
 } else {
 parameter_spacing = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -7476,7 +7722,7 @@ mrb_intern_lit(mrb, "text"),
 mrb_intern_lit(mrb, "position"),
 mrb_intern_lit(mrb, "origin"),
 mrb_intern_lit(mrb, "rotation"),
-mrb_intern_lit(mrb, "fontSize"),
+mrb_intern_lit(mrb, "font_size"),
 mrb_intern_lit(mrb, "spacing"),
 mrb_intern_lit(mrb, "tint")
 };
@@ -7485,52 +7731,52 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: font\"");
 } else {
 parameter_font = DATA_GET_PTR(mrb, kw_values[0], &mrb_Font_struct, Font);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: origin\"");
 } else {
 parameter_origin = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation\"");
 } else {
 parameter_rotation = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_float(mrb, kw_values[5]);
 }
         
 if (mrb_undef_p(kw_values[6])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"spacing\"");
 } else {
 parameter_spacing = mrb_as_float(mrb, kw_values[6]);
 }
         
 if (mrb_undef_p(kw_values[7])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[7], &mrb_Color_struct, Color);
 
@@ -7552,8 +7798,8 @@ Color *parameter_tint;
 uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "texture"),
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY"),
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y"),
 mrb_intern_lit(mrb, "tint")
 };
 mrb_value kw_values[kw_num];
@@ -7561,26 +7807,26 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -7613,33 +7859,33 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation\"");
 } else {
 parameter_rotation = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"scale\"");
 } else {
 parameter_scale = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -7663,7 +7909,7 @@ Color *parameter_tint;
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "texture"),
-mrb_intern_lit(mrb, "nPatchInfo"),
+mrb_intern_lit(mrb, "n_patch_info"),
 mrb_intern_lit(mrb, "dest"),
 mrb_intern_lit(mrb, "origin"),
 mrb_intern_lit(mrb, "rotation"),
@@ -7674,41 +7920,41 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: n_patch_info\"");
 } else {
 parameter_nPatchInfo = DATA_GET_PTR(mrb, kw_values[1], &mrb_NPatchInfo_struct, NPatchInfo);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dest\"");
 } else {
 parameter_dest = DATA_GET_PTR(mrb, kw_values[2], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: origin\"");
 } else {
 parameter_origin = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation\"");
 } else {
 parameter_rotation = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -7735,7 +7981,7 @@ mrb_intern_lit(mrb, "texture"),
 mrb_intern_lit(mrb, "center"),
 mrb_intern_lit(mrb, "points"),
 mrb_intern_lit(mrb, "texcoords"),
-mrb_intern_lit(mrb, "pointCount"),
+mrb_intern_lit(mrb, "point_count"),
 mrb_intern_lit(mrb, "tint")
 };
 mrb_value kw_values[kw_num];
@@ -7743,41 +7989,41 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: points\"");
 } else {
 parameter_points = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texcoords\"");
 } else {
 parameter_texcoords = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"point_count\"");
 } else {
 parameter_pointCount = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -7812,41 +8058,41 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: source\"");
 } else {
 parameter_source = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dest\"");
 } else {
 parameter_dest = DATA_GET_PTR(mrb, kw_values[2], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: origin\"");
 } else {
 parameter_origin = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation\"");
 } else {
 parameter_rotation = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -7879,35 +8125,35 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tiling\"");
 } else {
 parameter_tiling = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: offset\"");
 } else {
 parameter_offset = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: quad\"");
 } else {
 parameter_quad = DATA_GET_PTR(mrb, kw_values[3], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -7938,28 +8184,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: source\"");
 } else {
 parameter_source = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -7996,47 +8242,47 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: source\"");
 } else {
 parameter_source = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dest\"");
 } else {
 parameter_dest = DATA_GET_PTR(mrb, kw_values[2], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: origin\"");
 } else {
 parameter_origin = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rotation\"");
 } else {
 parameter_rotation = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"scale\"");
 } else {
 parameter_scale = mrb_as_float(mrb, kw_values[5]);
 }
         
 if (mrb_undef_p(kw_values[6])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[6], &mrb_Color_struct, Color);
 
@@ -8065,21 +8311,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -8110,28 +8356,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v1\"");
 } else {
 parameter_v1 = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v2\"");
 } else {
 parameter_v2 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v3\"");
 } else {
 parameter_v3 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -8162,28 +8408,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v1\"");
 } else {
 parameter_v1 = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v2\"");
 } else {
 parameter_v2 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v3\"");
 } else {
 parameter_v3 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -8204,7 +8450,7 @@ Color *parameter_color;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "points"),
-mrb_intern_lit(mrb, "pointCount"),
+mrb_intern_lit(mrb, "point_count"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -8212,20 +8458,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: points\"");
 } else {
 parameter_points = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"point_count\"");
 } else {
 parameter_pointCount = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -8256,28 +8502,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v1\"");
 } else {
 parameter_v1 = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v2\"");
 } else {
 parameter_v2 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: v3\"");
 } else {
 parameter_v3 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -8298,7 +8544,7 @@ Color *parameter_color;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "points"),
-mrb_intern_lit(mrb, "pointCount"),
+mrb_intern_lit(mrb, "point_count"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -8306,20 +8552,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: points\"");
 } else {
 parameter_points = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"point_count\"");
 } else {
 parameter_pointCount = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -8340,7 +8586,7 @@ Color *parameter_color;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "points"),
-mrb_intern_lit(mrb, "pointCount"),
+mrb_intern_lit(mrb, "point_count"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -8348,20 +8594,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: points\"");
 } else {
 parameter_points = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"point_count\"");
 } else {
 parameter_pointCount = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -8453,21 +8699,21 @@ char * parameter_fileName;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "font"),
-mrb_intern_lit(mrb, "fileName")
+mrb_intern_lit(mrb, "file_name")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: font\"");
 } else {
 parameter_font = DATA_GET_PTR(mrb, kw_values[0], &mrb_Font_struct, Font);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -8487,21 +8733,21 @@ char * parameter_fileName;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "image"),
-mrb_intern_lit(mrb, "fileName")
+mrb_intern_lit(mrb, "file_name")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -8521,21 +8767,21 @@ char * parameter_fileName;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "image"),
-mrb_intern_lit(mrb, "fileName")
+mrb_intern_lit(mrb, "file_name")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -8555,21 +8801,21 @@ char * parameter_fileName;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "mesh"),
-mrb_intern_lit(mrb, "fileName")
+mrb_intern_lit(mrb, "file_name")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: mesh\"");
 } else {
 parameter_mesh = DATA_GET_PTR(mrb, kw_values[0], &mrb_Mesh_struct, Mesh);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -8589,21 +8835,21 @@ char * parameter_fileName;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "wave"),
-mrb_intern_lit(mrb, "fileName")
+mrb_intern_lit(mrb, "file_name")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: wave\"");
 } else {
 parameter_wave = DATA_GET_PTR(mrb, kw_values[0], &mrb_Wave_struct, Wave);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -8623,21 +8869,21 @@ char * parameter_fileName;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "wave"),
-mrb_intern_lit(mrb, "fileName")
+mrb_intern_lit(mrb, "file_name")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: wave\"");
 } else {
 parameter_wave = DATA_GET_PTR(mrb, kw_values[0], &mrb_Wave_struct, Wave);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -8664,14 +8910,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[0], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"alpha\"");
 } else {
 parameter_alpha = mrb_as_float(mrb, kw_values[1]);
 }
@@ -8707,26 +8953,26 @@ uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "width"),
 mrb_intern_lit(mrb, "height"),
-mrb_intern_lit(mrb, "tileSize")
+mrb_intern_lit(mrb, "tile_size")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"tile_size\"");
 } else {
 parameter_tileSize = mrb_as_int(mrb, kw_values[2]);
 }
@@ -8753,8 +8999,8 @@ uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "width"),
 mrb_intern_lit(mrb, "height"),
-mrb_intern_lit(mrb, "checksX"),
-mrb_intern_lit(mrb, "checksY"),
+mrb_intern_lit(mrb, "checks_x"),
+mrb_intern_lit(mrb, "checks_y"),
 mrb_intern_lit(mrb, "col1"),
 mrb_intern_lit(mrb, "col2")
 };
@@ -8763,38 +9009,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"checks_x\"");
 } else {
 parameter_checksX = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"checks_y\"");
 } else {
 parameter_checksY = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: col1\"");
 } else {
 parameter_col1 = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: col2\"");
 } else {
 parameter_col2 = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -8826,19 +9072,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -8872,26 +9118,26 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: left\"");
 } else {
 parameter_left = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: right\"");
 } else {
 parameter_right = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -8927,32 +9173,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"density\"");
 } else {
 parameter_density = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: inner\"");
 } else {
 parameter_inner = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: outer\"");
 } else {
 parameter_outer = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -8986,26 +9232,26 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: top\"");
 } else {
 parameter_top = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: bottom\"");
 } else {
 parameter_bottom = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -9037,19 +9283,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"factor\"");
 } else {
 parameter_factor = mrb_as_float(mrb, kw_values[2]);
 }
@@ -9093,19 +9339,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"slices\"");
 } else {
 parameter_slices = mrb_as_int(mrb, kw_values[2]);
 }
@@ -9136,19 +9382,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_float(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"length\"");
 } else {
 parameter_length = mrb_as_float(mrb, kw_values[2]);
 }
@@ -9170,21 +9416,21 @@ Vector3 *parameter_cubeSize;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "cubicmap"),
-mrb_intern_lit(mrb, "cubeSize")
+mrb_intern_lit(mrb, "cube_size")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: cubicmap\"");
 } else {
 parameter_cubicmap = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: cube_size\"");
 } else {
 parameter_cubeSize = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
@@ -9216,19 +9462,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"slices\"");
 } else {
 parameter_slices = mrb_as_int(mrb, kw_values[2]);
 }
@@ -9257,14 +9503,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: heightmap\"");
 } else {
 parameter_heightmap = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: size\"");
 } else {
 parameter_size = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
@@ -9296,19 +9542,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rings\"");
 } else {
 parameter_rings = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"slices\"");
 } else {
 parameter_slices = mrb_as_int(mrb, kw_values[2]);
 }
@@ -9333,7 +9579,7 @@ uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "radius"),
 mrb_intern_lit(mrb, "size"),
-mrb_intern_lit(mrb, "radSeg"),
+mrb_intern_lit(mrb, "rad_seg"),
 mrb_intern_lit(mrb, "sides")
 };
 mrb_value kw_values[kw_num];
@@ -9341,25 +9587,25 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"size\"");
 } else {
 parameter_size = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rad_seg\"");
 } else {
 parameter_radSeg = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sides\"");
 } else {
 parameter_sides = mrb_as_int(mrb, kw_values[3]);
 }
@@ -9384,33 +9630,33 @@ uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "width"),
 mrb_intern_lit(mrb, "length"),
-mrb_intern_lit(mrb, "resX"),
-mrb_intern_lit(mrb, "resZ")
+mrb_intern_lit(mrb, "res_x"),
+mrb_intern_lit(mrb, "res_z")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_float(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"length\"");
 } else {
 parameter_length = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"res_x\"");
 } else {
 parameter_resX = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"res_z\"");
 } else {
 parameter_resZ = mrb_as_int(mrb, kw_values[3]);
 }
@@ -9439,13 +9685,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sides\"");
 } else {
 parameter_sides = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[1]);
 }
@@ -9476,19 +9722,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rings\"");
 } else {
 parameter_rings = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"slices\"");
 } else {
 parameter_slices = mrb_as_int(mrb, kw_values[2]);
 }
@@ -9526,7 +9772,7 @@ uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "radius"),
 mrb_intern_lit(mrb, "size"),
-mrb_intern_lit(mrb, "radSeg"),
+mrb_intern_lit(mrb, "rad_seg"),
 mrb_intern_lit(mrb, "sides")
 };
 mrb_value kw_values[kw_num];
@@ -9534,25 +9780,25 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"size\"");
 } else {
 parameter_size = mrb_as_float(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"rad_seg\"");
 } else {
 parameter_radSeg = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sides\"");
 } else {
 parameter_sides = mrb_as_int(mrb, kw_values[3]);
 }
@@ -9617,20 +9863,20 @@ int parameter_bytesProcessed;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "text"),
-mrb_intern_lit(mrb, "bytesProcessed")
+mrb_intern_lit(mrb, "bytes_processed")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"bytes_processed\"");
 } else {
 parameter_bytesProcessed = mrb_as_int(mrb, kw_values[1]);
 }
@@ -9669,14 +9915,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec1\"");
 } else {
 parameter_rec1 = DATA_GET_PTR(mrb, kw_values[0], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec2\"");
 } else {
 parameter_rec2 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
@@ -9842,13 +10088,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"gamepad\"");
 } else {
 parameter_gamepad = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"axis\"");
 } else {
 parameter_axis = mrb_as_int(mrb, kw_values[1]);
 }
@@ -9954,14 +10200,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: font\"");
 } else {
 parameter_font = DATA_GET_PTR(mrb, kw_values[0], &mrb_Font_struct, Font);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"codepoint\"");
 } else {
 parameter_codepoint = mrb_as_int(mrb, kw_values[1]);
 }
@@ -9990,14 +10236,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: font\"");
 } else {
 parameter_font = DATA_GET_PTR(mrb, kw_values[0], &mrb_Font_struct, Font);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"codepoint\"");
 } else {
 parameter_codepoint = mrb_as_int(mrb, kw_values[1]);
 }
@@ -10024,14 +10270,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: font\"");
 } else {
 parameter_font = DATA_GET_PTR(mrb, kw_values[0], &mrb_Font_struct, Font);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"codepoint\"");
 } else {
 parameter_codepoint = mrb_as_int(mrb, kw_values[1]);
 }
@@ -10060,14 +10306,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"threshold\"");
 } else {
 parameter_threshold = mrb_as_float(mrb, kw_values[1]);
 }
@@ -10098,20 +10344,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"x\"");
 } else {
 parameter_x = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"y\"");
 } else {
 parameter_y = mrb_as_int(mrb, kw_values[2]);
 }
@@ -10355,19 +10601,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"format\"");
 } else {
 parameter_format = mrb_as_int(mrb, kw_values[2]);
 }
@@ -10406,13 +10652,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"min\"");
 } else {
 parameter_min = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"max\"");
 } else {
 parameter_max = mrb_as_int(mrb, kw_values[1]);
 }
@@ -10439,14 +10685,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: ray\"");
 } else {
 parameter_ray = DATA_GET_PTR(mrb, kw_values[0], &mrb_Ray_struct, Ray);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: box\"");
 } else {
 parameter_box = DATA_GET_PTR(mrb, kw_values[1], &mrb_BoundingBox_struct, BoundingBox);
 
@@ -10478,21 +10724,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: ray\"");
 } else {
 parameter_ray = DATA_GET_PTR(mrb, kw_values[0], &mrb_Ray_struct, Ray);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: mesh\"");
 } else {
 parameter_mesh = DATA_GET_PTR(mrb, kw_values[1], &mrb_Mesh_struct, Mesh);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: transform\"");
 } else {
 parameter_transform = DATA_GET_PTR(mrb, kw_values[2], &mrb_Matrix_struct, Matrix);
 
@@ -10528,35 +10774,35 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: ray\"");
 } else {
 parameter_ray = DATA_GET_PTR(mrb, kw_values[0], &mrb_Ray_struct, Ray);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p1\"");
 } else {
 parameter_p1 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p2\"");
 } else {
 parameter_p2 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p3\"");
 } else {
 parameter_p3 = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p4\"");
 } else {
 parameter_p4 = DATA_GET_PTR(mrb, kw_values[4], &mrb_Vector3_struct, Vector3);
 
@@ -10588,21 +10834,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: ray\"");
 } else {
 parameter_ray = DATA_GET_PTR(mrb, kw_values[0], &mrb_Ray_struct, Ray);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_float(mrb, kw_values[2]);
 }
@@ -10635,28 +10881,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: ray\"");
 } else {
 parameter_ray = DATA_GET_PTR(mrb, kw_values[0], &mrb_Ray_struct, Ray);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p1\"");
 } else {
 parameter_p1 = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p2\"");
 } else {
 parameter_p2 = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector3_struct, Vector3);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: p3\"");
 } else {
 parameter_p3 = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector3_struct, Vector3);
 
@@ -10713,14 +10959,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: camera\"");
 } else {
 parameter_camera = DATA_GET_PTR(mrb, kw_values[1], &mrb_Camera2D_struct, Camera2D);
 
@@ -10752,21 +10998,21 @@ char * parameter_uniformName;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "shader"),
-mrb_intern_lit(mrb, "uniformName")
+mrb_intern_lit(mrb, "uniform_name")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: shader\"");
 } else {
 parameter_shader = DATA_GET_PTR(mrb, kw_values[0], &mrb_Shader_struct, Shader);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"uniform_name\"");
 } else {
 parameter_uniformName = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -10786,21 +11032,21 @@ char * parameter_attribName;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "shader"),
-mrb_intern_lit(mrb, "attribName")
+mrb_intern_lit(mrb, "attrib_name")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: shader\"");
 } else {
 parameter_shader = DATA_GET_PTR(mrb, kw_values[0], &mrb_Shader_struct, Shader);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"attrib_name\"");
 } else {
 parameter_attribName = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -10929,14 +11175,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[0], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: camera\"");
 } else {
 parameter_camera = DATA_GET_PTR(mrb, kw_values[1], &mrb_Camera2D_struct, Camera2D);
 
@@ -10976,21 +11222,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"threshold\"");
 } else {
 parameter_threshold = mrb_as_float(mrb, kw_values[2]);
 }
@@ -11016,14 +11262,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"threshold\"");
 } else {
 parameter_threshold = mrb_as_float(mrb, kw_values[1]);
 }
@@ -11042,21 +11288,21 @@ Image *parameter_alphaMask;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "image"),
-mrb_intern_lit(mrb, "alphaMask")
+mrb_intern_lit(mrb, "alpha_mask")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: alpha_mask\"");
 } else {
 parameter_alphaMask = DATA_GET_PTR(mrb, kw_values[1], &mrb_Image_struct, Image);
 
@@ -11096,14 +11342,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
@@ -11130,14 +11376,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"brightness\"");
 } else {
 parameter_brightness = mrb_as_int(mrb, kw_values[1]);
 }
@@ -11163,14 +11409,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"contrast\"");
 } else {
 parameter_contrast = mrb_as_float(mrb, kw_values[1]);
 }
@@ -11224,21 +11470,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: replace\"");
 } else {
 parameter_replace = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -11265,14 +11511,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
@@ -11315,14 +11561,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: crop\"");
 } else {
 parameter_crop = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
@@ -11345,42 +11591,42 @@ int parameter_aBpp;
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "image"),
-mrb_intern_lit(mrb, "rBpp"),
-mrb_intern_lit(mrb, "gBpp"),
-mrb_intern_lit(mrb, "bBpp"),
-mrb_intern_lit(mrb, "aBpp")
+mrb_intern_lit(mrb, "r_bpp"),
+mrb_intern_lit(mrb, "g_bpp"),
+mrb_intern_lit(mrb, "b_bpp"),
+mrb_intern_lit(mrb, "a_bpp")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"r_bpp\"");
 } else {
 parameter_rBpp = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"g_bpp\"");
 } else {
 parameter_gBpp = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"b_bpp\"");
 } else {
 parameter_bBpp = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"a_bpp\"");
 } else {
 parameter_aBpp = mrb_as_int(mrb, kw_values[4]);
 }
@@ -11403,8 +11649,8 @@ uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "dst"),
 mrb_intern_lit(mrb, "src"),
-mrb_intern_lit(mrb, "srcRec"),
-mrb_intern_lit(mrb, "dstRec"),
+mrb_intern_lit(mrb, "src_rec"),
+mrb_intern_lit(mrb, "dst_rec"),
 mrb_intern_lit(mrb, "tint")
 };
 mrb_value kw_values[kw_num];
@@ -11412,35 +11658,35 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: src\"");
 } else {
 parameter_src = DATA_GET_PTR(mrb, kw_values[1], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: src_rec\"");
 } else {
 parameter_srcRec = DATA_GET_PTR(mrb, kw_values[2], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst_rec\"");
 } else {
 parameter_dstRec = DATA_GET_PTR(mrb, kw_values[3], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -11463,8 +11709,8 @@ Color *parameter_color;
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "dst"),
-mrb_intern_lit(mrb, "centerX"),
-mrb_intern_lit(mrb, "centerY"),
+mrb_intern_lit(mrb, "center_x"),
+mrb_intern_lit(mrb, "center_y"),
 mrb_intern_lit(mrb, "radius"),
 mrb_intern_lit(mrb, "color")
 };
@@ -11473,32 +11719,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_x\"");
 } else {
 parameter_centerX = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"center_y\"");
 } else {
 parameter_centerY = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -11529,27 +11775,27 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: center\"");
 } else {
 parameter_center = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"radius\"");
 } else {
 parameter_radius = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -11573,10 +11819,10 @@ Color *parameter_color;
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "dst"),
-mrb_intern_lit(mrb, "startPosX"),
-mrb_intern_lit(mrb, "startPosY"),
-mrb_intern_lit(mrb, "endPosX"),
-mrb_intern_lit(mrb, "endPosY"),
+mrb_intern_lit(mrb, "start_pos_x"),
+mrb_intern_lit(mrb, "start_pos_y"),
+mrb_intern_lit(mrb, "end_pos_x"),
+mrb_intern_lit(mrb, "end_pos_y"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -11584,38 +11830,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"start_pos_x\"");
 } else {
 parameter_startPosX = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"start_pos_y\"");
 } else {
 parameter_startPosY = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"end_pos_x\"");
 } else {
 parameter_endPosX = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"end_pos_y\"");
 } else {
 parameter_endPosY = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -11646,28 +11892,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: start\"");
 } else {
 parameter_start = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: end\"");
 } else {
 parameter_end = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -11689,8 +11935,8 @@ Color *parameter_color;
 uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "dst"),
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY"),
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -11698,26 +11944,26 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -11746,21 +11992,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -11784,8 +12030,8 @@ Color *parameter_color;
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "dst"),
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY"),
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y"),
 mrb_intern_lit(mrb, "width"),
 mrb_intern_lit(mrb, "height"),
 mrb_intern_lit(mrb, "color")
@@ -11795,38 +12041,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -11857,27 +12103,27 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"thick\"");
 } else {
 parameter_thick = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -11906,21 +12152,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -11951,28 +12197,28 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[1], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: size\"");
 } else {
 parameter_size = DATA_GET_PTR(mrb, kw_values[2], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[3], &mrb_Color_struct, Color);
 
@@ -11997,9 +12243,9 @@ uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "dst"),
 mrb_intern_lit(mrb, "text"),
-mrb_intern_lit(mrb, "posX"),
-mrb_intern_lit(mrb, "posY"),
-mrb_intern_lit(mrb, "fontSize"),
+mrb_intern_lit(mrb, "pos_x"),
+mrb_intern_lit(mrb, "pos_y"),
+mrb_intern_lit(mrb, "font_size"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -12007,38 +12253,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_x\"");
 } else {
 parameter_posX = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pos_y\"");
 } else {
 parameter_posY = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -12066,7 +12312,7 @@ mrb_intern_lit(mrb, "dst"),
 mrb_intern_lit(mrb, "font"),
 mrb_intern_lit(mrb, "text"),
 mrb_intern_lit(mrb, "position"),
-mrb_intern_lit(mrb, "fontSize"),
+mrb_intern_lit(mrb, "font_size"),
 mrb_intern_lit(mrb, "spacing"),
 mrb_intern_lit(mrb, "tint")
 };
@@ -12075,46 +12321,46 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: dst\"");
 } else {
 parameter_dst = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: font\"");
 } else {
 parameter_font = DATA_GET_PTR(mrb, kw_values[1], &mrb_Font_struct, Font);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: position\"");
 } else {
 parameter_position = DATA_GET_PTR(mrb, kw_values[3], &mrb_Vector2_struct, Vector2);
 
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_float(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"spacing\"");
 } else {
 parameter_spacing = mrb_as_float(mrb, kw_values[5]);
 }
         
 if (mrb_undef_p(kw_values[6])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[6], &mrb_Color_struct, Color);
 
@@ -12160,21 +12406,21 @@ int parameter_newFormat;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "image"),
-mrb_intern_lit(mrb, "newFormat")
+mrb_intern_lit(mrb, "new_format")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"new_format\"");
 } else {
 parameter_newFormat = mrb_as_int(mrb, kw_values[1]);
 }
@@ -12200,14 +12446,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: rec\"");
 } else {
 parameter_rec = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
@@ -12244,28 +12490,28 @@ int parameter_newHeight;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "image"),
-mrb_intern_lit(mrb, "newWidth"),
-mrb_intern_lit(mrb, "newHeight")
+mrb_intern_lit(mrb, "new_width"),
+mrb_intern_lit(mrb, "new_height")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"new_width\"");
 } else {
 parameter_newWidth = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"new_height\"");
 } else {
 parameter_newHeight = mrb_as_int(mrb, kw_values[2]);
 }
@@ -12288,10 +12534,10 @@ Color *parameter_fill;
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "image"),
-mrb_intern_lit(mrb, "newWidth"),
-mrb_intern_lit(mrb, "newHeight"),
-mrb_intern_lit(mrb, "offsetX"),
-mrb_intern_lit(mrb, "offsetY"),
+mrb_intern_lit(mrb, "new_width"),
+mrb_intern_lit(mrb, "new_height"),
+mrb_intern_lit(mrb, "offset_x"),
+mrb_intern_lit(mrb, "offset_y"),
 mrb_intern_lit(mrb, "fill")
 };
 mrb_value kw_values[kw_num];
@@ -12299,38 +12545,38 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"new_width\"");
 } else {
 parameter_newWidth = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"new_height\"");
 } else {
 parameter_newHeight = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"offset_x\"");
 } else {
 parameter_offsetX = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"offset_y\"");
 } else {
 parameter_offsetY = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: fill\"");
 } else {
 parameter_fill = DATA_GET_PTR(mrb, kw_values[5], &mrb_Color_struct, Color);
 
@@ -12351,28 +12597,28 @@ int parameter_newHeight;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "image"),
-mrb_intern_lit(mrb, "newWidth"),
-mrb_intern_lit(mrb, "newHeight")
+mrb_intern_lit(mrb, "new_width"),
+mrb_intern_lit(mrb, "new_height")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"new_width\"");
 } else {
 parameter_newWidth = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"new_height\"");
 } else {
 parameter_newHeight = mrb_as_int(mrb, kw_values[2]);
 }
@@ -12418,7 +12664,7 @@ Color *parameter_color;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "text"),
-mrb_intern_lit(mrb, "fontSize"),
+mrb_intern_lit(mrb, "font_size"),
 mrb_intern_lit(mrb, "color")
 };
 mrb_value kw_values[kw_num];
@@ -12426,19 +12672,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: color\"");
 } else {
 parameter_color = DATA_GET_PTR(mrb, kw_values[2], &mrb_Color_struct, Color);
 
@@ -12465,7 +12711,7 @@ uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "font"),
 mrb_intern_lit(mrb, "text"),
-mrb_intern_lit(mrb, "fontSize"),
+mrb_intern_lit(mrb, "font_size"),
 mrb_intern_lit(mrb, "spacing"),
 mrb_intern_lit(mrb, "tint")
 };
@@ -12474,32 +12720,32 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: font\"");
 } else {
 parameter_font = DATA_GET_PTR(mrb, kw_values[0], &mrb_Font_struct, Font);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"spacing\"");
 } else {
 parameter_spacing = mrb_as_float(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: tint\"");
 } else {
 parameter_tint = DATA_GET_PTR(mrb, kw_values[4], &mrb_Color_struct, Color);
 
@@ -12529,14 +12775,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: fill\"");
 } else {
 parameter_fill = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
@@ -12573,19 +12819,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"title\"");
 } else {
 parameter_title = mrb_str_to_cstr(mrb, kw_values[2]);
 }
@@ -12667,7 +12913,7 @@ char * parameter_ext;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "fileName"),
+mrb_intern_lit(mrb, "file_name"),
 mrb_intern_lit(mrb, "ext")
 };
 mrb_value kw_values[kw_num];
@@ -12675,13 +12921,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"ext\"");
 } else {
 parameter_ext = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -12720,13 +12966,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"gamepad\"");
 } else {
 parameter_gamepad = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"button\"");
 } else {
 parameter_button = mrb_as_int(mrb, kw_values[1]);
 }
@@ -12753,13 +12999,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"gamepad\"");
 } else {
 parameter_gamepad = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"button\"");
 } else {
 parameter_button = mrb_as_int(mrb, kw_values[1]);
 }
@@ -12786,13 +13032,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"gamepad\"");
 } else {
 parameter_gamepad = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"button\"");
 } else {
 parameter_button = mrb_as_int(mrb, kw_values[1]);
 }
@@ -12819,13 +13065,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"gamepad\"");
 } else {
 parameter_gamepad = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"button\"");
 } else {
 parameter_button = mrb_as_int(mrb, kw_values[1]);
 }
@@ -12912,14 +13158,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: model\"");
 } else {
 parameter_model = DATA_GET_PTR(mrb, kw_values[0], &mrb_Model_struct, Model);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: anim\"");
 } else {
 parameter_anim = DATA_GET_PTR(mrb, kw_values[1], &mrb_ModelAnimation_struct, ModelAnimation);
 
@@ -13091,8 +13337,8 @@ int parameter_channels;
 
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "sampleRate"),
-mrb_intern_lit(mrb, "sampleSize"),
+mrb_intern_lit(mrb, "sample_rate"),
+mrb_intern_lit(mrb, "sample_size"),
 mrb_intern_lit(mrb, "channels")
 };
 mrb_value kw_values[kw_num];
@@ -13100,19 +13346,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sample_rate\"");
 } else {
 parameter_sampleRate = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sample_size\"");
 } else {
 parameter_sampleSize = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"channels\"");
 } else {
 parameter_channels = mrb_as_int(mrb, kw_values[2]);
 }
@@ -13141,13 +13387,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"count\"");
 } else {
 parameter_count = mrb_as_int(mrb, kw_values[1]);
 }
@@ -13166,21 +13412,21 @@ int parameter_bytesRead;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "fileName"),
-mrb_intern_lit(mrb, "bytesRead")
+mrb_intern_lit(mrb, "file_name"),
+mrb_intern_lit(mrb, "bytes_read")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"bytes_read\"");
 } else {
 parameter_bytesRead = mrb_as_int(mrb, kw_values[1]);
 }
@@ -13227,35 +13473,35 @@ int parameter_glyphCount;
 
 uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "fileName"),
-mrb_intern_lit(mrb, "fontSize"),
-mrb_intern_lit(mrb, "fontChars"),
-mrb_intern_lit(mrb, "glyphCount")
+mrb_intern_lit(mrb, "file_name"),
+mrb_intern_lit(mrb, "font_size"),
+mrb_intern_lit(mrb, "font_chars"),
+mrb_intern_lit(mrb, "glyph_count")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_chars\"");
 } else {
 parameter_fontChars = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"glyph_count\"");
 } else {
 parameter_glyphCount = mrb_as_int(mrb, kw_values[3]);
 }
@@ -13279,28 +13525,28 @@ uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "image"),
 mrb_intern_lit(mrb, "key"),
-mrb_intern_lit(mrb, "firstChar")
+mrb_intern_lit(mrb, "first_char")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: key\"");
 } else {
 parameter_key = DATA_GET_PTR(mrb, kw_values[1], &mrb_Color_struct, Color);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"first_char\"");
 } else {
 parameter_firstChar = mrb_as_int(mrb, kw_values[2]);
 }
@@ -13335,7 +13581,7 @@ int parameter_frames;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "fileName"),
+mrb_intern_lit(mrb, "file_name"),
 mrb_intern_lit(mrb, "frames")
 };
 mrb_value kw_values[kw_num];
@@ -13343,13 +13589,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"frames\"");
 } else {
 parameter_frames = mrb_as_int(mrb, kw_values[1]);
 }
@@ -13415,28 +13661,28 @@ int parameter_colorCount;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "image"),
-mrb_intern_lit(mrb, "maxPaletteSize"),
-mrb_intern_lit(mrb, "colorCount")
+mrb_intern_lit(mrb, "max_palette_size"),
+mrb_intern_lit(mrb, "color_count")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: image\"");
 } else {
 parameter_image = DATA_GET_PTR(mrb, kw_values[0], &mrb_Image_struct, Image);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"max_palette_size\"");
 } else {
 parameter_maxPaletteSize = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"color_count\"");
 } else {
 parameter_colorCount = mrb_as_int(mrb, kw_values[2]);
 }
@@ -13460,42 +13706,42 @@ int parameter_headerSize;
 
 uint32_t kw_num = 5;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "fileName"),
+mrb_intern_lit(mrb, "file_name"),
 mrb_intern_lit(mrb, "width"),
 mrb_intern_lit(mrb, "height"),
 mrb_intern_lit(mrb, "format"),
-mrb_intern_lit(mrb, "headerSize")
+mrb_intern_lit(mrb, "header_size")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"format\"");
 } else {
 parameter_format = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"header_size\"");
 } else {
 parameter_headerSize = mrb_as_int(mrb, kw_values[4]);
 }
@@ -13527,21 +13773,21 @@ int parameter_materialCount;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "fileName"),
-mrb_intern_lit(mrb, "materialCount")
+mrb_intern_lit(mrb, "file_name"),
+mrb_intern_lit(mrb, "material_count")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"material_count\"");
 } else {
 parameter_materialCount = mrb_as_int(mrb, kw_values[1]);
 }
@@ -13576,21 +13822,21 @@ int parameter_animCount;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "fileName"),
-mrb_intern_lit(mrb, "animCount")
+mrb_intern_lit(mrb, "file_name"),
+mrb_intern_lit(mrb, "anim_count")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"anim_count\"");
 } else {
 parameter_animCount = mrb_as_int(mrb, kw_values[1]);
 }
@@ -13641,21 +13887,21 @@ char * parameter_fsFileName;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "vsFileName"),
-mrb_intern_lit(mrb, "fsFileName")
+mrb_intern_lit(mrb, "vs_file_name"),
+mrb_intern_lit(mrb, "fs_file_name")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"vs_file_name\"");
 } else {
 parameter_vsFileName = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"fs_file_name\"");
 } else {
 parameter_fsFileName = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -13676,21 +13922,21 @@ char * parameter_fsCode;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "vsCode"),
-mrb_intern_lit(mrb, "fsCode")
+mrb_intern_lit(mrb, "vs_code"),
+mrb_intern_lit(mrb, "fs_code")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"vs_code\"");
 } else {
 parameter_vsCode = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"fs_code\"");
 } else {
 parameter_fsCode = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -13806,20 +14052,20 @@ int parameter_fontSize;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "text"),
-mrb_intern_lit(mrb, "fontSize")
+mrb_intern_lit(mrb, "font_size")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_int(mrb, kw_values[1]);
 }
@@ -13842,7 +14088,7 @@ uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "font"),
 mrb_intern_lit(mrb, "text"),
-mrb_intern_lit(mrb, "fontSize"),
+mrb_intern_lit(mrb, "font_size"),
 mrb_intern_lit(mrb, "spacing")
 };
 mrb_value kw_values[kw_num];
@@ -13850,26 +14096,26 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: font\"");
 } else {
 parameter_font = DATA_GET_PTR(mrb, kw_values[0], &mrb_Font_struct, Font);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"font_size\"");
 } else {
 parameter_fontSize = mrb_as_float(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"spacing\"");
 } else {
 parameter_spacing = mrb_as_float(mrb, kw_values[3]);
 }
@@ -14055,7 +14301,7 @@ char * parameter_text;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "fileName"),
+mrb_intern_lit(mrb, "file_name"),
 mrb_intern_lit(mrb, "text")
 };
 mrb_value kw_values[kw_num];
@@ -14063,13 +14309,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"file_name\"");
 } else {
 parameter_fileName = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -14096,13 +14342,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"position\"");
 } else {
 parameter_position = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"value\"");
 } else {
 parameter_value = mrb_as_int(mrb, kw_values[1]);
 }
@@ -14129,14 +14375,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: music\"");
 } else {
 parameter_music = DATA_GET_PTR(mrb, kw_values[0], &mrb_Music_struct, Music);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"position\"");
 } else {
 parameter_position = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14173,14 +14419,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: stream\"");
 } else {
 parameter_stream = DATA_GET_PTR(mrb, kw_values[0], &mrb_AudioStream_struct, AudioStream);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pan\"");
 } else {
 parameter_pan = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14206,14 +14452,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: stream\"");
 } else {
 parameter_stream = DATA_GET_PTR(mrb, kw_values[0], &mrb_AudioStream_struct, AudioStream);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pitch\"");
 } else {
 parameter_pitch = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14239,14 +14485,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: stream\"");
 } else {
 parameter_stream = DATA_GET_PTR(mrb, kw_values[0], &mrb_AudioStream_struct, AudioStream);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"volume\"");
 } else {
 parameter_volume = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14279,49 +14525,49 @@ int parameter_keyDown;
 
 uint32_t kw_num = 6;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "keyFront"),
-mrb_intern_lit(mrb, "keyBack"),
-mrb_intern_lit(mrb, "keyRight"),
-mrb_intern_lit(mrb, "keyLeft"),
-mrb_intern_lit(mrb, "keyUp"),
-mrb_intern_lit(mrb, "keyDown")
+mrb_intern_lit(mrb, "key_front"),
+mrb_intern_lit(mrb, "key_back"),
+mrb_intern_lit(mrb, "key_right"),
+mrb_intern_lit(mrb, "key_left"),
+mrb_intern_lit(mrb, "key_up"),
+mrb_intern_lit(mrb, "key_down")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"key_front\"");
 } else {
 parameter_keyFront = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"key_back\"");
 } else {
 parameter_keyBack = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"key_right\"");
 } else {
 parameter_keyRight = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"key_left\"");
 } else {
 parameter_keyLeft = mrb_as_int(mrb, kw_values[3]);
 }
         
 if (mrb_undef_p(kw_values[4])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"key_up\"");
 } else {
 parameter_keyUp = mrb_as_int(mrb, kw_values[4]);
 }
         
 if (mrb_undef_p(kw_values[5])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"key_down\"");
 } else {
 parameter_keyDown = mrb_as_int(mrb, kw_values[5]);
 }
@@ -14430,7 +14676,7 @@ Texture *parameter_texture;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "material"),
-mrb_intern_lit(mrb, "mapType"),
+mrb_intern_lit(mrb, "map_type"),
 mrb_intern_lit(mrb, "texture")
 };
 mrb_value kw_values[kw_num];
@@ -14438,20 +14684,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: material\"");
 } else {
 parameter_material = DATA_GET_PTR(mrb, kw_values[0], &mrb_Material_struct, Material);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"map_type\"");
 } else {
 parameter_mapType = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[2], &mrb_Texture_struct, Texture);
 
@@ -14472,28 +14718,28 @@ int parameter_materialId;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "model"),
-mrb_intern_lit(mrb, "meshId"),
-mrb_intern_lit(mrb, "materialId")
+mrb_intern_lit(mrb, "mesh_id"),
+mrb_intern_lit(mrb, "material_id")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: model\"");
 } else {
 parameter_model = DATA_GET_PTR(mrb, kw_values[0], &mrb_Model_struct, Model);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"mesh_id\"");
 } else {
 parameter_meshId = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"material_id\"");
 } else {
 parameter_materialId = mrb_as_int(mrb, kw_values[2]);
 }
@@ -14522,21 +14768,21 @@ int parameter_offsetY;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "offsetX"),
-mrb_intern_lit(mrb, "offsetY")
+mrb_intern_lit(mrb, "offset_x"),
+mrb_intern_lit(mrb, "offset_y")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"offset_x\"");
 } else {
 parameter_offsetX = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"offset_y\"");
 } else {
 parameter_offsetY = mrb_as_int(mrb, kw_values[1]);
 }
@@ -14562,13 +14808,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"x\"");
 } else {
 parameter_x = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"y\"");
 } else {
 parameter_y = mrb_as_int(mrb, kw_values[1]);
 }
@@ -14586,21 +14832,21 @@ float parameter_scaleY;
 
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
-mrb_intern_lit(mrb, "scaleX"),
-mrb_intern_lit(mrb, "scaleY")
+mrb_intern_lit(mrb, "scale_x"),
+mrb_intern_lit(mrb, "scale_y")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"scale_x\"");
 } else {
 parameter_scaleX = mrb_as_float(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"scale_y\"");
 } else {
 parameter_scaleY = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14626,14 +14872,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: music\"");
 } else {
 parameter_music = DATA_GET_PTR(mrb, kw_values[0], &mrb_Music_struct, Music);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pan\"");
 } else {
 parameter_pan = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14659,14 +14905,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: music\"");
 } else {
 parameter_music = DATA_GET_PTR(mrb, kw_values[0], &mrb_Music_struct, Music);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pitch\"");
 } else {
 parameter_pitch = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14692,14 +14938,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: music\"");
 } else {
 parameter_music = DATA_GET_PTR(mrb, kw_values[0], &mrb_Music_struct, Music);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"volume\"");
 } else {
 parameter_volume = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14730,7 +14976,7 @@ Matrix *parameter_mat;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "shader"),
-mrb_intern_lit(mrb, "locIndex"),
+mrb_intern_lit(mrb, "loc_index"),
 mrb_intern_lit(mrb, "mat")
 };
 mrb_value kw_values[kw_num];
@@ -14738,20 +14984,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: shader\"");
 } else {
 parameter_shader = DATA_GET_PTR(mrb, kw_values[0], &mrb_Shader_struct, Shader);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"loc_index\"");
 } else {
 parameter_locIndex = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: mat\"");
 } else {
 parameter_mat = DATA_GET_PTR(mrb, kw_values[2], &mrb_Matrix_struct, Matrix);
 
@@ -14772,7 +15018,7 @@ Texture *parameter_texture;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "shader"),
-mrb_intern_lit(mrb, "locIndex"),
+mrb_intern_lit(mrb, "loc_index"),
 mrb_intern_lit(mrb, "texture")
 };
 mrb_value kw_values[kw_num];
@@ -14780,20 +15026,20 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: shader\"");
 } else {
 parameter_shader = DATA_GET_PTR(mrb, kw_values[0], &mrb_Shader_struct, Shader);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"loc_index\"");
 } else {
 parameter_locIndex = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[2], &mrb_Texture_struct, Texture);
 
@@ -14820,14 +15066,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: source\"");
 } else {
 parameter_source = DATA_GET_PTR(mrb, kw_values[1], &mrb_Rectangle_struct, Rectangle);
 
@@ -14854,14 +15100,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: sound\"");
 } else {
 parameter_sound = DATA_GET_PTR(mrb, kw_values[0], &mrb_Sound_struct, Sound);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pan\"");
 } else {
 parameter_pan = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14887,14 +15133,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: sound\"");
 } else {
 parameter_sound = DATA_GET_PTR(mrb, kw_values[0], &mrb_Sound_struct, Sound);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"pitch\"");
 } else {
 parameter_pitch = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14920,14 +15166,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: sound\"");
 } else {
 parameter_sound = DATA_GET_PTR(mrb, kw_values[0], &mrb_Sound_struct, Sound);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"volume\"");
 } else {
 parameter_volume = mrb_as_float(mrb, kw_values[1]);
 }
@@ -14964,14 +15210,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"filter\"");
 } else {
 parameter_filter = mrb_as_int(mrb, kw_values[1]);
 }
@@ -14997,14 +15243,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: texture\"");
 } else {
 parameter_texture = DATA_GET_PTR(mrb, kw_values[0], &mrb_Texture_struct, Texture);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"wrap\"");
 } else {
 parameter_wrap = mrb_as_int(mrb, kw_values[1]);
 }
@@ -15054,13 +15300,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
@@ -15108,13 +15354,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"x\"");
 } else {
 parameter_x = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"y\"");
 } else {
 parameter_y = mrb_as_int(mrb, kw_values[1]);
 }
@@ -15140,13 +15386,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
@@ -15270,19 +15516,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"append\"");
 } else {
 parameter_append = mrb_str_to_cstr(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"position\"");
 } else {
 parameter_position = mrb_as_int(mrb, kw_values[2]);
 }
@@ -15308,13 +15554,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"dst\"");
 } else {
 parameter_dst = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"src\"");
 } else {
 parameter_src = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -15341,13 +15587,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"find\"");
 } else {
 parameter_find = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -15376,19 +15622,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"insert\"");
 } else {
 parameter_insert = mrb_str_to_cstr(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"position\"");
 } else {
 parameter_position = mrb_as_int(mrb, kw_values[2]);
 }
@@ -15415,13 +15661,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text1\"");
 } else {
 parameter_text1 = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text2\"");
 } else {
 parameter_text2 = mrb_str_to_cstr(mrb, kw_values[1]);
 }
@@ -15462,19 +15708,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"replace\"");
 } else {
 parameter_replace = mrb_str_to_cstr(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"by\"");
 } else {
 parameter_by = mrb_str_to_cstr(mrb, kw_values[2]);
 }
@@ -15503,19 +15749,19 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"text\"");
 } else {
 parameter_text = mrb_str_to_cstr(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"position\"");
 } else {
 parameter_position = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"length\"");
 } else {
 parameter_length = mrb_as_int(mrb, kw_values[2]);
 }
@@ -15650,21 +15896,21 @@ int parameter_glyphCount;
 uint32_t kw_num = 2;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "chars"),
-mrb_intern_lit(mrb, "glyphCount")
+mrb_intern_lit(mrb, "glyph_count")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: chars\"");
 } else {
 parameter_chars = DATA_GET_PTR(mrb, kw_values[0], &mrb_GlyphInfo_struct, GlyphInfo);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"glyph_count\"");
 } else {
 parameter_glyphCount = mrb_as_int(mrb, kw_values[1]);
 }
@@ -15781,14 +16027,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: animations\"");
 } else {
 parameter_animations = DATA_GET_PTR(mrb, kw_values[0], &mrb_ModelAnimation_struct, ModelAnimation);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"count\"");
 } else {
 parameter_count = mrb_as_int(mrb, kw_values[1]);
 }
@@ -15931,21 +16177,21 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: model\"");
 } else {
 parameter_model = DATA_GET_PTR(mrb, kw_values[0], &mrb_Model_struct, Model);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: anim\"");
 } else {
 parameter_anim = DATA_GET_PTR(mrb, kw_values[1], &mrb_ModelAnimation_struct, ModelAnimation);
 
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"frame\"");
 } else {
 parameter_frame = mrb_as_int(mrb, kw_values[2]);
 }
@@ -15984,14 +16230,14 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: mesh\"");
 } else {
 parameter_mesh = DATA_GET_PTR(mrb, kw_values[0], &mrb_Mesh_struct, Mesh);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"dynamic\"");
 } else {
 parameter_dynamic = mrb_as_int(mrb, kw_values[1]);
 }
@@ -16038,28 +16284,28 @@ int parameter_finalSample;
 uint32_t kw_num = 3;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "wave"),
-mrb_intern_lit(mrb, "initSample"),
-mrb_intern_lit(mrb, "finalSample")
+mrb_intern_lit(mrb, "init_sample"),
+mrb_intern_lit(mrb, "final_sample")
 };
 mrb_value kw_values[kw_num];
 const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: wave\"");
 } else {
 parameter_wave = DATA_GET_PTR(mrb, kw_values[0], &mrb_Wave_struct, Wave);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"init_sample\"");
 } else {
 parameter_initSample = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"final_sample\"");
 } else {
 parameter_finalSample = mrb_as_int(mrb, kw_values[2]);
 }
@@ -16080,8 +16326,8 @@ int parameter_channels;
 uint32_t kw_num = 4;
 const mrb_sym kw_names[] = {
 mrb_intern_lit(mrb, "wave"),
-mrb_intern_lit(mrb, "sampleRate"),
-mrb_intern_lit(mrb, "sampleSize"),
+mrb_intern_lit(mrb, "sample_rate"),
+mrb_intern_lit(mrb, "sample_size"),
 mrb_intern_lit(mrb, "channels")
 };
 mrb_value kw_values[kw_num];
@@ -16089,26 +16335,26 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"Missing kwarg: wave\"");
 } else {
 parameter_wave = DATA_GET_PTR(mrb, kw_values[0], &mrb_Wave_struct, Wave);
 
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sample_rate\"");
 } else {
 parameter_sampleRate = mrb_as_int(mrb, kw_values[1]);
 }
         
 if (mrb_undef_p(kw_values[2])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"sample_size\"");
 } else {
 parameter_sampleSize = mrb_as_int(mrb, kw_values[2]);
 }
         
 if (mrb_undef_p(kw_values[3])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"channels\"");
 } else {
 parameter_channels = mrb_as_int(mrb, kw_values[3]);
 }
@@ -16143,13 +16389,13 @@ const mrb_kwargs kwargs = { kw_num, 0, kw_names, kw_values, NULL };
 mrb_get_args(mrb, "|:", &kwargs);
         
 if (mrb_undef_p(kw_values[0])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"width\"");
 } else {
 parameter_width = mrb_as_int(mrb, kw_values[0]);
 }
         
 if (mrb_undef_p(kw_values[1])) {
-mrb_load_string(mrb, "raise ArgumentError.new \"Missing Keyword Argument\"");
+mrb_load_string(mrb, "raise ArgumentError.new \"height\"");
 } else {
 parameter_height = mrb_as_int(mrb, kw_values[1]);
 }
@@ -16223,12 +16469,36 @@ MRB_SET_INSTANCE_TT(glyphinfo_class, MRB_TT_DATA);
       
           struct RClass *mesh_class = mrb_define_class_under(mrb, test, "Mesh", mrb->object_class);
 MRB_SET_INSTANCE_TT(mesh_class, MRB_TT_DATA);
+      mrb_define_method(mrb, mesh_class, "anim_normals", mrb_Mesh_get_animNormals, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "anim_normals=", mrb_Mesh_set_animNormals, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "anim_vertices", mrb_Mesh_get_animVertices, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "anim_vertices=", mrb_Mesh_set_animVertices, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "bone_ids", mrb_Mesh_get_boneIds, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "bone_ids=", mrb_Mesh_set_boneIds, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "bone_weights", mrb_Mesh_get_boneWeights, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "bone_weights=", mrb_Mesh_set_boneWeights, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "colors", mrb_Mesh_get_colors, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "colors=", mrb_Mesh_set_colors, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "indices", mrb_Mesh_get_indices, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "indices=", mrb_Mesh_set_indices, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "normals", mrb_Mesh_get_normals, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "normals=", mrb_Mesh_set_normals, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "tangents", mrb_Mesh_get_tangents, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "tangents=", mrb_Mesh_set_tangents, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "texcoords", mrb_Mesh_get_texcoords, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "texcoords=", mrb_Mesh_set_texcoords, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "texcoords2", mrb_Mesh_get_texcoords2, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "texcoords2=", mrb_Mesh_set_texcoords2, MRB_ARGS_REQ(1));
       mrb_define_method(mrb, mesh_class, "triangle_count", mrb_Mesh_get_triangleCount, MRB_ARGS_NONE());
       mrb_define_method(mrb, mesh_class, "triangle_count=", mrb_Mesh_set_triangleCount, MRB_ARGS_REQ(1));
       mrb_define_method(mrb, mesh_class, "vao_id", mrb_Mesh_get_vaoId, MRB_ARGS_NONE());
       mrb_define_method(mrb, mesh_class, "vao_id=", mrb_Mesh_set_vaoId, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "vbo_id", mrb_Mesh_get_vboId, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "vbo_id=", mrb_Mesh_set_vboId, MRB_ARGS_REQ(1));
       mrb_define_method(mrb, mesh_class, "vertex_count", mrb_Mesh_get_vertexCount, MRB_ARGS_NONE());
       mrb_define_method(mrb, mesh_class, "vertex_count=", mrb_Mesh_set_vertexCount, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, mesh_class, "vertices", mrb_Mesh_get_vertices, MRB_ARGS_NONE());
+      mrb_define_method(mrb, mesh_class, "vertices=", mrb_Mesh_set_vertices, MRB_ARGS_REQ(1));
       mrb_define_method(mrb, mesh_class, "initialize", mrb_Mesh_initialize, MRB_ARGS_OPT(1));
       
           struct RClass *font_class = mrb_define_class_under(mrb, test, "Font", mrb->object_class);
@@ -16249,6 +16519,8 @@ MRB_SET_INSTANCE_TT(model_class, MRB_TT_DATA);
       mrb_define_method(mrb, model_class, "material_count=", mrb_Model_set_materialCount, MRB_ARGS_REQ(1));
       mrb_define_method(mrb, model_class, "mesh_count", mrb_Model_get_meshCount, MRB_ARGS_NONE());
       mrb_define_method(mrb, model_class, "mesh_count=", mrb_Model_set_meshCount, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, model_class, "mesh_material", mrb_Model_get_meshMaterial, MRB_ARGS_NONE());
+      mrb_define_method(mrb, model_class, "mesh_material=", mrb_Model_set_meshMaterial, MRB_ARGS_REQ(1));
       mrb_define_method(mrb, model_class, "initialize", mrb_Model_initialize, MRB_ARGS_OPT(1));
       
           struct RClass *modelanimation_class = mrb_define_class_under(mrb, test, "ModelAnimation", mrb->object_class);
@@ -16405,6 +16677,8 @@ MRB_SET_INSTANCE_TT(rectangle_class, MRB_TT_DATA);
 MRB_SET_INSTANCE_TT(shader_class, MRB_TT_DATA);
       mrb_define_method(mrb, shader_class, "id", mrb_Shader_get_id, MRB_ARGS_NONE());
       mrb_define_method(mrb, shader_class, "id=", mrb_Shader_set_id, MRB_ARGS_REQ(1));
+      mrb_define_method(mrb, shader_class, "locs", mrb_Shader_get_locs, MRB_ARGS_NONE());
+      mrb_define_method(mrb, shader_class, "locs=", mrb_Shader_set_locs, MRB_ARGS_REQ(1));
       mrb_define_method(mrb, shader_class, "initialize", mrb_Shader_initialize, MRB_ARGS_OPT(1));
       
           struct RClass *vrstereoconfig_class = mrb_define_class_under(mrb, test, "VrStereoConfig", mrb->object_class);
@@ -17404,7 +17678,7 @@ mrb_mruby_test_gem_final(mrb_state* mrb) {
 
 }
       
-/* Unbound:
+      /* Unbound:
 void * MemAlloc
 void AttachAudioStreamProcessor
 unsigned char * CompressData
@@ -17460,165 +17734,6 @@ void UpdateTextureRec
 */
 //Bound Functions: 447 / 499
 //---
-//Struct Accessors: 91 / 156
+//Struct Accessors: 105 / 156
 //---
 
-/*
-["Image image",
- "float * animNormals",
- "float * animVertices",
- "unsigned char * boneIds",
- "float * boneWeights",
- "unsigned char * colors",
- "unsigned short * indices",
- "float * normals",
- "float * tangents",
- "float * texcoords",
- "float * texcoords2",
- "unsigned int * vboId",
- "float * vertices",
- "GlyphInfo * glyphs",
- "Rectangle * recs",
- "Texture2D texture",
- "Transform * bindPose",
- "BoneInfo * bones",
- "Material * materials",
- "int * meshMaterial",
- "Mesh * meshes",
- "Matrix transform",
- "BoneInfo * bones",
- "Transform ** framePoses",
- "Rectangle source",
- "rAudioBuffer * buffer",
- "rAudioProcessor * processor",
- "void * data",
- "float[4] chromaAbCorrection",
- "float[4] lensDistortionValues",
- "Color color",
- "Texture2D texture",
- "void * ctxData",
- "AudioStream stream",
- "void * data",
- "Texture depth",
- "Texture texture",
- "Vector3 direction",
- "Vector3 position",
- "Vector3 normal",
- "Vector3 point",
- "Vector3 position",
- "Vector3 target",
- "Vector3 up",
- "AudioStream stream",
- "int * locs",
- "float[2] leftLensCenter",
- "float[2] leftScreenCenter",
- "Matrix[2] projection",
- "float[2] rightLensCenter",
- "float[2] rightScreenCenter",
- "float[2] scale",
- "float[2] scaleIn",
- "Matrix[2] viewOffset",
- "MaterialMap * maps",
- "float[4] params",
- "Shader shader",
- "Vector3 max",
- "Vector3 min",
- "char[32] name",
- "Vector2 offset",
- "Vector2 target",
- "Quaternion rotation",
- "Vector3 scale",
- "Vector3 translation"]
-
-["unsigned char a",
- "unsigned char b",
- "unsigned char g",
- "unsigned char r",
- "int advanceX",
- "int offsetX",
- "int offsetY",
- "int value",
- "int triangleCount",
- "unsigned int vaoId",
- "int vertexCount",
- "int baseSize",
- "int glyphCount",
- "int glyphPadding",
- "int boneCount",
- "int materialCount",
- "int meshCount",
- "int boneCount",
- "int frameCount",
- "int bottom",
- "int layout",
- "int left",
- "int right",
- "int top",
- "unsigned int channels",
- "unsigned int sampleRate",
- "unsigned int sampleSize",
- "unsigned int channels",
- "unsigned int frameCount",
- "unsigned int sampleRate",
- "unsigned int sampleSize",
- "float eyeToScreenDistance",
- "int hResolution",
- "float hScreenSize",
- "float interpupillaryDistance",
- "float lensSeparationDistance",
- "int vResolution",
- "float vScreenCenter",
- "float vScreenSize",
- "float value",
- "int ctxType",
- "unsigned int frameCount",
- "bool looping",
- "int format",
- "int height",
- "int mipmaps",
- "int width",
- "unsigned int id",
- "float distance",
- "bool hit",
- "int format",
- "int height",
- "unsigned int id",
- "int mipmaps",
- "int width",
- "float fovy",
- "int projection",
- "unsigned int frameCount",
- "float height",
- "float width",
- "float x",
- "float y",
- "unsigned int id",
- "float m0",
- "float m1",
- "float m10",
- "float m11",
- "float m12",
- "float m13",
- "float m14",
- "float m15",
- "float m2",
- "float m3",
- "float m4",
- "float m5",
- "float m6",
- "float m7",
- "float m8",
- "float m9",
- "int parent",
- "float rotation",
- "float zoom",
- "float w",
- "float x",
- "float y",
- "float z",
- "float x",
- "float y",
- "float x",
- "float y",
- "float z"]
-*/
